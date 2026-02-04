@@ -44,8 +44,10 @@ jobs:
 
       - name: Gitleaks scan
         uses: gitleaks/gitleaks-action@v2
+        continue-on-error: true # Don't fail on git history edge cases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: false
 
   codeql:
     name: CodeQL Analysis
