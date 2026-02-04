@@ -1,9 +1,11 @@
 # PROMPT 1: Project Initialization & Git Setup
 
 ## Task
+
 Initialize Next.js 15 project with TypeScript and configure Git repository
 
 ## Context
+
 - Repository: git@github.com:SkourtsidisGiorgos/portfolio-website.git
 - Working directory: /home/gskourts/opt/projects/websites/viterby-site
 
@@ -14,6 +16,7 @@ Initialize Next.js 15 project with TypeScript and configure Git repository
 2. Create .gitignore for Next.js project
 
 3. Initialize Next.js 15 with App Router and TypeScript:
+
    ```bash
    npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
    ```
@@ -34,8 +37,10 @@ Initialize Next.js 15 project with TypeScript and configure Git repository
 6. Commit: "chore: initialize next.js 15 project with typescript"
 
 ## Requirements
+
 - Follow conventional commits
 - Update CHANGELOG.md with actions taken
 
 ## Output
+
 Initialized project with folder structure ready for development

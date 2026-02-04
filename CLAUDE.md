@@ -6,34 +6,37 @@ This is an interactive 3D portfolio website for **Giorgos Skourtsidis**, a Big D
 
 ## Technology Stack
 
-| Layer | Technology |
-|-------|------------|
-| Framework | Next.js 15+ (App Router) |
-| Language | TypeScript 5.x |
+| Layer       | Technology                            |
+| ----------- | ------------------------------------- |
+| Framework   | Next.js 15+ (App Router)              |
+| Language    | TypeScript 5.x                        |
 | 3D Graphics | React Three Fiber + @react-three/drei |
-| Animation | Framer Motion + GSAP |
-| Styling | Tailwind CSS 4.x |
-| State | Zustand |
-| Forms | React Hook Form + Zod |
-| Testing | Vitest (unit), Playwright (E2E) |
-| Pre-commit | Husky + lint-staged + commitlint |
-| CI/CD | GitHub Actions |
-| Hosting | Vercel |
+| Animation   | Framer Motion + GSAP                  |
+| Styling     | Tailwind CSS 4.x                      |
+| State       | Zustand                               |
+| Forms       | React Hook Form + Zod                 |
+| Testing     | Vitest (unit), Playwright (E2E)       |
+| Pre-commit  | Husky + lint-staged + commitlint      |
+| CI/CD       | GitHub Actions                        |
+| Hosting     | Vercel                                |
 
 ## Development Principles
 
 ### DDD (Domain-Driven Design)
+
 - **Domain Layer** (`src/domain/`): Business entities, value objects, repository interfaces
 - **Application Layer** (`src/application/`): Use cases, DTOs, mappers
 - **Infrastructure Layer** (`src/infrastructure/`): Repository implementations, external services
 - **Presentation Layer** (`src/presentation/`): UI components, 3D graphics, hooks
 
 ### TDD (Test-Driven Development)
+
 - Write tests before implementation
 - Maintain 80%+ code coverage
 - Unit tests with Vitest, E2E tests with Playwright
 
 ### SOLID Principles
+
 - **S**ingle Responsibility: One reason to change per module
 - **O**pen/Closed: Open for extension, closed for modification
 - **L**iskov Substitution: Subtypes must be substitutable
@@ -41,6 +44,7 @@ This is an interactive 3D portfolio website for **Giorgos Skourtsidis**, a Big D
 - **D**ependency Inversion: Depend on abstractions, not concretions
 
 ### DRY (Don't Repeat Yourself)
+
 - Extract reusable components and utilities
 - Use barrel exports for clean imports
 

@@ -238,13 +238,13 @@ ATOMS (ui/)          MOLECULES (ui/)       ORGANISMS (sections/)
 
 ## Testing Strategy
 
-| Layer | Test Type | Tool | Coverage Target |
-|-------|-----------|------|-----------------|
-| Domain | Unit | Vitest | 90% |
-| Application | Unit | Vitest | 90% |
-| Infrastructure | Integration | Vitest | 80% |
-| Presentation | Unit + Integration | Vitest + RTL | 80% |
-| E2E | End-to-End | Playwright | Critical paths |
+| Layer          | Test Type          | Tool         | Coverage Target |
+| -------------- | ------------------ | ------------ | --------------- |
+| Domain         | Unit               | Vitest       | 90%             |
+| Application    | Unit               | Vitest       | 90%             |
+| Infrastructure | Integration        | Vitest       | 80%             |
+| Presentation   | Unit + Integration | Vitest + RTL | 80%             |
+| E2E            | End-to-End         | Playwright   | Critical paths  |
 
 ## CI/CD Pipeline
 
@@ -265,17 +265,20 @@ ATOMS (ui/)          MOLECULES (ui/)       ORGANISMS (sections/)
 ## Performance Considerations
 
 ### 3D Optimization
+
 - Use `InstancedMesh` for particles (10k+ instances)
 - Implement LOD (Level of Detail) for complex meshes
 - Dispose unused geometries and materials
 - Use object pooling for frequently created objects
 
 ### Bundle Optimization
+
 - Dynamic imports for 3D scenes (code splitting)
 - Tree shaking for Three.js imports
 - Image optimization with Next.js Image component
 
 ### Runtime Performance
+
 - Target 60fps for all animations
 - Progressive enhancement for low-end devices
 - Respect `prefers-reduced-motion` media query
