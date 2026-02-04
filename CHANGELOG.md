@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - Initialized Next.js 15+ project with TypeScript and Tailwind CSS 4
 - Created DDD folder structure:
   - `src/domain/` - Domain layer (entities, value-objects, repositories, services)
@@ -23,6 +24,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Created implementation prompts in `prompts/` folder (24 sequential prompts)
 - Set up public asset directories (models, textures, images, fonts)
 - Set up test directories (unit, integration, e2e)
+- Configured pre-commit hooks with Husky:
+  - `pre-commit`: Runs lint-staged for code quality
+  - `commit-msg`: Runs commitlint for conventional commits
+  - `pre-push`: Runs type-check and lint
+- Added ESLint configuration with:
+  - TypeScript support
+  - React and React Hooks rules
+  - JSX accessibility rules (eslint-plugin-jsx-a11y)
+  - Prettier integration
+- Added Prettier configuration with Tailwind CSS plugin
+- Added lint-staged configuration for staged file checks
+- Added commitlint with conventional commits enforcement
 
 ---
 
