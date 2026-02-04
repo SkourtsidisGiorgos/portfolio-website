@@ -52,6 +52,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Testing Library for React component testing
   - Code coverage with v8 provider (80% threshold)
 - Added test scripts: test, test:unit, test:unit:watch, test:coverage, test:e2e
+- Added shared utilities and configuration:
+  - Site configuration (metadata, social links)
+  - Navigation configuration
+  - Color palette constants (primary, accent, success)
+  - Breakpoint constants and media queries
+  - Common TypeScript types (Result, AsyncState, etc.)
+  - `cn()` utility for class name merging (clsx + tailwind-merge)
+  - Formatters (formatDate, formatDateRange, truncate, slugify, etc.)
 
 ---
 
