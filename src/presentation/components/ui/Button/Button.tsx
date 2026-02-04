@@ -38,6 +38,47 @@ const sizeStyles: Record<ButtonSize, string> = {
   lg: 'px-6 py-3 text-lg',
 };
 
+const baseStyles = cn(
+  'inline-flex items-center justify-center gap-2',
+  'rounded-lg font-medium',
+  'transition-colors duration-200',
+  'focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:outline-none',
+  'disabled:cursor-not-allowed disabled:opacity-50'
+);
+
+interface ButtonContentProps {
+  isLoading: boolean;
+  loadingText?: string;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
+  children: ReactNode;
+}
+
+function ButtonContent({
+  isLoading,
+  loadingText,
+  leftIcon,
+  rightIcon,
+  children,
+}: ButtonContentProps): ReactNode {
+  if (isLoading) {
+    return (
+      <>
+        <Loader size="sm" />
+        {loadingText || children}
+      </>
+    );
+  }
+
+  return (
+    <>
+      {leftIcon && <span className="flex-shrink-0">{leftIcon}</span>}
+      {children}
+      {rightIcon && <span className="flex-shrink-0">{rightIcon}</span>}
+    </>
+  );
+}
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -56,18 +97,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const isDisabled = disabled || isLoading;
+    const hoverAnimation = isDisabled ? undefined : { scale: 1.02 };
+    const tapAnimation = isDisabled ? undefined : { scale: 0.98 };
 
     return (
       <motion.button
         ref={ref}
-        whileHover={!isDisabled ? { scale: 1.02 } : undefined}
-        whileTap={!isDisabled ? { scale: 0.98 } : undefined}
+        whileHover={hoverAnimation}
+        whileTap={tapAnimation}
         className={cn(
-          'inline-flex items-center justify-center gap-2',
-          'rounded-lg font-medium',
-          'transition-colors duration-200',
-          'focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:outline-none',
-          'disabled:cursor-not-allowed disabled:opacity-50',
+          baseStyles,
           variantStyles[variant],
           sizeStyles[size],
           fullWidth && 'w-full',
@@ -77,18 +116,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         aria-busy={isLoading}
         {...(props as HTMLMotionProps<'button'>)}
       >
-        {isLoading ? (
-          <>
-            <Loader size="sm" />
-            {loadingText || children}
-          </>
-        ) : (
-          <>
-            {leftIcon && <span className="flex-shrink-0">{leftIcon}</span>}
-            {children}
-            {rightIcon && <span className="flex-shrink-0">{rightIcon}</span>}
-          </>
-        )}
+        <ButtonContent
+          isLoading={isLoading}
+          loadingText={loadingText}
+          leftIcon={leftIcon}
+          rightIcon={rightIcon}
+        >
+          {children}
+        </ButtonContent>
       </motion.button>
     );
   }
