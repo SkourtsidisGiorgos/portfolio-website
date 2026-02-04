@@ -69,6 +69,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `Skill` - Technical skill with proficiency levels
   - `Email` - Validated email address value object
   - `ContactMessage` - Contact form message entity
+- Added repository interfaces for domain entities:
+  - `IExperienceRepository` - Experience data access
+  - `IProjectRepository` - Project data access
+  - `ISkillRepository` - Skill data access
+- Added domain services:
+  - `PortfolioService` - Aggregates portfolio data operations
+  - `ContactService` - Handles contact form submissions
+  - `IEmailService` - Email service interface
+- Added barrel exports for domain modules
 
 ---
 
