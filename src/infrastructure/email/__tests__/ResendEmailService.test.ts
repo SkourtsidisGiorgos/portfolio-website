@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ContactMessage } from '@/domain/contact/entities/ContactMessage';
+import { ResendEmailService } from '../ResendEmailService';
 
 // Create module-level mock
 const mockSend = vi.fn();
@@ -14,9 +15,6 @@ vi.mock('resend', () => {
     },
   };
 });
-
-// Import after mock setup
-import { ResendEmailService } from '../ResendEmailService';
 
 describe('ResendEmailService', () => {
   let service: ResendEmailService;
