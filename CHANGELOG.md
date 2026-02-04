@@ -163,6 +163,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Value object tests (Position3D, Color3D, AnimationConfig)
   - Animation helper tests
   - Factory tests
+- Implemented Hero Section with 3D ETL Pipeline Visualization (Prompt 14):
+  - Domain value objects:
+    - `ETLNode` - Immutable value object for pipeline nodes (source, transform, load, analytics)
+    - `PipelineConfig` - Configuration with nodes, connections, and particle settings
+    - Quality presets: high (10k particles), medium (5k), low (1k)
+  - Custom GLSL shaders:
+    - Data flow vertex/fragment shaders for particle effects
+    - Glow shaders for node halos
+    - Connection shaders for animated data flow lines
+    - Shader material factories with time-based animation uniforms
+  - 3D scene components:
+    - `DataParticleSystem` - High-performance instanced mesh particles (10k+)
+    - `ETLNode3D` - 3D node with glow, text label, and animations
+    - `DataPacket` - Animated data traveling along connection paths
+    - `ETLPipelineVisualization` - Full pipeline with nodes and connections
+    - `HeroScene` - Composition root with lighting, effects, and parallax
+    - `useHeroScene` - Hook for scene orchestration and quality-based config
+  - UI components:
+    - `ScrollIndicator` - Bouncing arrow that fades on scroll
+    - `HeroCanvas` - R3F Canvas wrapper with WebGL detection and fallbacks
+    - `HeroContent` - Animated text content with CTA buttons
+    - `Hero` - Main composition with 3D background and content overlay
+  - Accessibility features:
+    - Skip link for keyboard navigation
+    - `prefers-reduced-motion` support (disables 3D)
+    - Proper heading hierarchy (h1 for name)
+    - `aria-hidden` on decorative 3D elements
+  - Performance features:
+    - Quality-based particle counts (high/medium/low)
+    - Seeded random for deterministic particle positions
+    - useSyncExternalStore for WebGL detection (no effect setState)
+  - Tests (64 new tests):
+    - ETLNode value object tests (27 tests)
+    - PipelineConfig value object tests (37 tests)
+    - Hero component tests (14 tests)
+    - HeroContent tests (9 tests)
+    - ScrollIndicator tests (7 tests)
+  - Barrel exports for HeroScene and Hero components
 
 ---
 

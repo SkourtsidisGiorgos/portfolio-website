@@ -2,6 +2,11 @@
 
 import { forwardRef, type InputHTMLAttributes, useId } from 'react';
 import { cn } from '@/shared/utils/cn';
+import {
+  inputBaseStyles,
+  inputErrorStyles,
+  buildAriaDescribedBy,
+} from './shared';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -13,8 +18,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, hint, className, id: providedId, ...props }, ref) => {
     const generatedId = useId();
     const id = providedId || generatedId;
-    const errorId = `${id}-error`;
-    const hintId = `${id}-hint`;
+    const errorId = error ? `${id}-error` : undefined;
+    const hintId = hint ? `${id}-hint` : undefined;
 
     return (
       <div className="space-y-1.5">
@@ -29,23 +34,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           id={id}
-          className={cn(
-            'w-full rounded-lg px-4 py-2.5',
-            'bg-white/5 backdrop-blur-sm',
-            'border border-white/10',
-            'text-white placeholder:text-gray-500',
-            'transition-colors duration-200',
-            'focus:ring-primary-500/50 focus:border-primary-500 focus:ring-2 focus:outline-none',
-            error &&
-              'border-red-500 focus:border-red-500 focus:ring-red-500/50',
-            'disabled:cursor-not-allowed disabled:opacity-50',
-            className
-          )}
-          aria-invalid={error ? 'true' : 'false'}
-          aria-describedby={
-            [error && errorId, hint && hintId].filter(Boolean).join(' ') ||
-            undefined
-          }
+          className={cn(inputBaseStyles, error && inputErrorStyles, className)}
+          aria-invalid={!!error}
+          aria-describedby={buildAriaDescribedBy(errorId, hintId)}
           {...props}
         />
         {hint && !error && (
