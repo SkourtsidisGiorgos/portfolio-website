@@ -78,6 +78,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `ContactService` - Handles contact form submissions
   - `IEmailService` - Email service interface
 - Added barrel exports for domain modules
+- Implemented static data repositories (infrastructure layer):
+  - `StaticExperienceRepository` - Loads experience data from JSON
+  - `StaticProjectRepository` - Loads project data from JSON
+  - `StaticSkillRepository` - Loads skill data from JSON
+- Added static JSON data files:
+  - `experiences.json` - Work experience (SWIFT, MindWave, Intracom)
+  - `projects.json` - Portfolio projects (6 projects)
+  - `skills.json` - Technical skills (21 skills across 6 categories)
+  - `personal.json` - Personal information
+- Added infrastructure barrel exports
+- Added integration tests for repositories (17 tests)
+- Updated vitest config to include integration tests
 
 ---
 

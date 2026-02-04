@@ -1,0 +1,26 @@
+{
+  "name": "Giorgos Skourtsidis",
+  "title": "Big Data & Software Engineer",
+  "email": "gskourtsidis@gmail.com",
+  "location": "Athens, Greece",
+  "availability": "Remote",
+  "yearsOfExperience": 4,
+  "education": {
+    "degree": "MSc in Electrical & Computer Engineering",
+    "institution": "National Technical University of Athens (NTUA)",
+    "focus": "Data Science & Machine Learning",
+    "status": "In Progress"
+  },
+  "social": {
+    "github": "https://github.com/SkourtsidisGiorgos",
+    "linkedin": "https://linkedin.com/in/gskourtsidis",
+    "email": "mailto:gskourtsidis@gmail.com"
+  },
+  "summary": "Big Data & Software Engineer with 4+ years of experience in telecommunications and fintech. Specialized in ETL pipelines, distributed systems, and data engineering. Passionate about building scalable data solutions and contributing to open-source projects.",
+  "highlights": [
+    "4+ years of experience in data engineering",
+    "Expert in Python, Spark, and Kubernetes",
+    "Open-source contributor",
+    "MSc candidate at NTUA"
+  ]
+}

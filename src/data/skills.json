@@ -1,0 +1,170 @@
+[
+  {
+    "id": "skill-python",
+    "name": "Python",
+    "category": "languages",
+    "proficiency": "expert",
+    "icon": "python",
+    "yearsOfExperience": 5
+  },
+  {
+    "id": "skill-java",
+    "name": "Java",
+    "category": "languages",
+    "proficiency": "advanced",
+    "icon": "java",
+    "yearsOfExperience": 4
+  },
+  {
+    "id": "skill-typescript",
+    "name": "TypeScript",
+    "category": "languages",
+    "proficiency": "intermediate",
+    "icon": "typescript",
+    "yearsOfExperience": 2
+  },
+  {
+    "id": "skill-bash",
+    "name": "Bash",
+    "category": "languages",
+    "proficiency": "advanced",
+    "icon": "bash",
+    "yearsOfExperience": 4
+  },
+  {
+    "id": "skill-spark",
+    "name": "Apache Spark",
+    "category": "bigdata",
+    "proficiency": "expert",
+    "icon": "spark",
+    "yearsOfExperience": 4
+  },
+  {
+    "id": "skill-kafka",
+    "name": "Apache Kafka",
+    "category": "bigdata",
+    "proficiency": "advanced",
+    "icon": "kafka",
+    "yearsOfExperience": 3
+  },
+  {
+    "id": "skill-nifi",
+    "name": "Apache NiFi",
+    "category": "bigdata",
+    "proficiency": "advanced",
+    "icon": "nifi",
+    "yearsOfExperience": 2
+  },
+  {
+    "id": "skill-airflow",
+    "name": "Apache Airflow",
+    "category": "bigdata",
+    "proficiency": "advanced",
+    "icon": "airflow",
+    "yearsOfExperience": 3
+  },
+  {
+    "id": "skill-kubernetes",
+    "name": "Kubernetes",
+    "category": "devops",
+    "proficiency": "advanced",
+    "icon": "kubernetes",
+    "yearsOfExperience": 3
+  },
+  {
+    "id": "skill-docker",
+    "name": "Docker",
+    "category": "devops",
+    "proficiency": "expert",
+    "icon": "docker",
+    "yearsOfExperience": 4
+  },
+  {
+    "id": "skill-cicd",
+    "name": "CI/CD",
+    "category": "devops",
+    "proficiency": "advanced",
+    "icon": "cicd",
+    "yearsOfExperience": 3
+  },
+  {
+    "id": "skill-tensorflow",
+    "name": "TensorFlow",
+    "category": "aiml",
+    "proficiency": "intermediate",
+    "icon": "tensorflow",
+    "yearsOfExperience": 2
+  },
+  {
+    "id": "skill-sklearn",
+    "name": "Scikit-learn",
+    "category": "aiml",
+    "proficiency": "advanced",
+    "icon": "sklearn",
+    "yearsOfExperience": 3
+  },
+  {
+    "id": "skill-spark-mllib",
+    "name": "Spark MLlib",
+    "category": "aiml",
+    "proficiency": "intermediate",
+    "icon": "spark",
+    "yearsOfExperience": 2
+  },
+  {
+    "id": "skill-postgresql",
+    "name": "PostgreSQL",
+    "category": "databases",
+    "proficiency": "advanced",
+    "icon": "postgresql",
+    "yearsOfExperience": 4
+  },
+  {
+    "id": "skill-mongodb",
+    "name": "MongoDB",
+    "category": "databases",
+    "proficiency": "intermediate",
+    "icon": "mongodb",
+    "yearsOfExperience": 2
+  },
+  {
+    "id": "skill-redis",
+    "name": "Redis",
+    "category": "databases",
+    "proficiency": "advanced",
+    "icon": "redis",
+    "yearsOfExperience": 3
+  },
+  {
+    "id": "skill-influxdb",
+    "name": "InfluxDB",
+    "category": "databases",
+    "proficiency": "advanced",
+    "icon": "influxdb",
+    "yearsOfExperience": 3
+  },
+  {
+    "id": "skill-springboot",
+    "name": "Spring Boot",
+    "category": "backend",
+    "proficiency": "advanced",
+    "icon": "spring",
+    "yearsOfExperience": 3
+  },
+  {
+    "id": "skill-flask",
+    "name": "Flask",
+    "category": "backend",
+    "proficiency": "intermediate",
+    "icon": "flask",
+    "yearsOfExperience": 2
+  },
+  {
+    "id": "skill-fastapi",
+    "name": "FastAPI",
+    "category": "backend",
+    "proficiency": "intermediate",
+    "icon": "fastapi",
+    "yearsOfExperience": 1
+  }
+]

@@ -1,0 +1,78 @@
+[
+  {
+    "id": "exp-swift",
+    "company": "SWIFT",
+    "role": "Big Data Engineer",
+    "startDate": "2023-11-01",
+    "endDate": null,
+    "location": "Belgium",
+    "remote": true,
+    "description": [
+      "Designing and implementing ETL pipelines for financial messaging data processing",
+      "Working with Apache NiFi for data flow orchestration and management",
+      "Deploying and managing data applications on Kubernetes clusters",
+      "Developing data processing solutions using Apache Spark",
+      "Collaborating with cross-functional teams on data architecture decisions"
+    ],
+    "technologies": [
+      "Python",
+      "Apache Spark",
+      "Apache NiFi",
+      "Kubernetes",
+      "Docker",
+      "PostgreSQL",
+      "Kafka"
+    ]
+  },
+  {
+    "id": "exp-mindwave",
+    "company": "MindWave",
+    "role": "Software Engineer",
+    "startDate": "2024-02-01",
+    "endDate": "2024-05-31",
+    "location": "Athens, Greece",
+    "remote": true,
+    "description": [
+      "Contributed to JobRunr open-source project implementing carbon-aware job scheduling",
+      "Developed features for sustainable computing and green software engineering",
+      "Integrated carbon intensity APIs for intelligent workload scheduling",
+      "Collaborated with the open-source community on feature development"
+    ],
+    "technologies": [
+      "Java",
+      "Spring Boot",
+      "JobRunr",
+      "Carbon Aware SDK",
+      "Docker",
+      "PostgreSQL"
+    ]
+  },
+  {
+    "id": "exp-intracom",
+    "company": "Intracom Telecom",
+    "role": "Software Engineer",
+    "startDate": "2021-05-01",
+    "endDate": "2023-10-31",
+    "location": "Athens, Greece",
+    "remote": false,
+    "description": [
+      "Developed Belgrade Smart City air quality forecasting system using ML models",
+      "Built Water Management platform with real-time monitoring and alerting",
+      "Created self-healing ETL library for robust data pipeline operations",
+      "Implemented IIoT distributed data processing solutions",
+      "Designed and deployed microservices architecture for telecom applications"
+    ],
+    "technologies": [
+      "Python",
+      "Java",
+      "Spring Boot",
+      "Apache Kafka",
+      "InfluxDB",
+      "TensorFlow",
+      "Kubernetes",
+      "Docker",
+      "PostgreSQL",
+      "Redis"
+    ]
+  }
+]

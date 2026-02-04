@@ -1,0 +1,95 @@
+[
+  {
+    "id": "proj-commandeft",
+    "title": "Commandeft",
+    "description": "A powerful CLI wrapper for Large Language Model interactions. Provides seamless integration with various LLM providers, conversation history management, and customizable prompts for enhanced developer productivity.",
+    "technologies": ["Python", "Click", "OpenAI API", "Anthropic API", "Rich"],
+    "type": "oss",
+    "githubUrl": "https://github.com/SkourtsidisGiorgos/commandeft",
+    "liveUrl": null,
+    "image": null,
+    "featured": true
+  },
+  {
+    "id": "proj-jobrunr-carbon",
+    "title": "JobRunr Carbon-Aware Scheduling",
+    "description": "Open-source contribution to JobRunr implementing carbon-aware job scheduling. Enables applications to schedule background jobs during periods of low carbon intensity, promoting sustainable computing practices.",
+    "technologies": ["Java", "Spring Boot", "Carbon Aware SDK", "JobRunr"],
+    "type": "oss",
+    "githubUrl": "https://github.com/jobrunr/jobrunr",
+    "liveUrl": null,
+    "image": null,
+    "featured": true
+  },
+  {
+    "id": "proj-belgrade-smart-city",
+    "title": "Belgrade Smart City - Air Quality Forecasting",
+    "description": "Machine learning-based air quality prediction system for Belgrade city. Uses historical data and meteorological features to forecast pollution levels, enabling proactive public health measures.",
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "Scikit-learn",
+      "Pandas",
+      "InfluxDB",
+      "Grafana"
+    ],
+    "type": "professional",
+    "githubUrl": null,
+    "liveUrl": null,
+    "image": null,
+    "featured": true
+  },
+  {
+    "id": "proj-iiot-thesis",
+    "title": "IIoT Distributed Data Processing",
+    "description": "Master's thesis project implementing distributed data processing for Industrial IoT. Features edge computing, real-time analytics, and scalable architecture for handling high-velocity sensor data streams.",
+    "technologies": [
+      "Python",
+      "Apache Kafka",
+      "Apache Spark",
+      "Docker",
+      "Kubernetes",
+      "InfluxDB"
+    ],
+    "type": "personal",
+    "githubUrl": null,
+    "liveUrl": null,
+    "image": null,
+    "featured": false
+  },
+  {
+    "id": "proj-etl-library",
+    "title": "Self-Healing ETL Library",
+    "description": "Internal library for building robust ETL pipelines with automatic error recovery, retry mechanisms, and comprehensive monitoring. Reduces pipeline failures and maintenance overhead significantly.",
+    "technologies": [
+      "Python",
+      "Apache Airflow",
+      "PostgreSQL",
+      "Redis",
+      "Prometheus"
+    ],
+    "type": "professional",
+    "githubUrl": null,
+    "liveUrl": null,
+    "image": null,
+    "featured": false
+  },
+  {
+    "id": "proj-water-management",
+    "title": "Water Management Platform",
+    "description": "Real-time water infrastructure monitoring system with anomaly detection and alerting. Processes sensor data from distributed water network to detect leaks and optimize resource usage.",
+    "technologies": [
+      "Java",
+      "Spring Boot",
+      "Apache Kafka",
+      "InfluxDB",
+      "Grafana",
+      "Docker"
+    ],
+    "type": "professional",
+    "githubUrl": null,
+    "liveUrl": null,
+    "image": null,
+    "featured": false
+  }
+]
