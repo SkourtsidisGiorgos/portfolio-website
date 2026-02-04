@@ -7,3 +7,4 @@ export {
   type SectionTitleProps,
 } from './Section';
 export { Container, type ContainerProps } from './Container';
+export { LazySection, type LazySectionProps } from './LazySection';

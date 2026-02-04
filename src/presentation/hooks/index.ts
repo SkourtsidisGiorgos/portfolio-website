@@ -17,3 +17,8 @@ export {
   useProjectRepository,
   useSkillRepository,
 } from './useRepositories';
+export {
+  useLazySection,
+  type UseLazySectionOptions,
+  type UseLazySectionReturn,
+} from './useLazySection';
