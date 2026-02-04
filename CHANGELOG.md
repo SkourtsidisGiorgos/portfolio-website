@@ -90,6 +90,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added infrastructure barrel exports
 - Added integration tests for repositories (17 tests)
 - Updated vitest config to include integration tests
+- Implemented application layer:
+  - DTOs: ExperienceDTO, ProjectDTO, SkillDTO, ContactFormDTO
+  - Mappers: ExperienceMapper, ProjectMapper, SkillMapper
+  - Use Cases: GetPortfolioData, GetExperienceTimeline, SendContactMessage
+- Added unit tests for application layer (37 tests)
 
 ---
 
