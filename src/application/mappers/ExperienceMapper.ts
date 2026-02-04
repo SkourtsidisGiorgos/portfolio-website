@@ -1,5 +1,4 @@
 import type { Experience } from '@/domain/portfolio/entities/Experience';
-import { formatDateRange } from '@/shared/utils/formatters';
 import type { ExperienceDTO } from '../dto/ExperienceDTO';
 
 /**
@@ -21,7 +20,7 @@ export class ExperienceMapper {
       technologies: [...entity.technologies.items],
       startDate: startDate.toISOString(),
       endDate: endDate ? endDate.toISOString() : null,
-      formattedDateRange: formatDateRange(startDate, endDate),
+      formattedDateRange: entity.dateRange.format(),
       duration: entity.dateRange.formatDuration(),
       location: entity.location,
       locationDisplay: entity.getLocationDisplay(),

@@ -7,3 +7,4 @@ export {
   SendContactMessage,
   ContactValidationError,
 } from './SendContactMessage';
+export { UseCaseFactory } from './factory';
