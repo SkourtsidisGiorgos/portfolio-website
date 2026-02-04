@@ -9,6 +9,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- 3D scene shared utilities (DRY refactoring):
+  - `src/presentation/three/hooks/useCursorPointer.ts` - Shared cursor pointer handling hook
+  - `src/presentation/three/components/SceneEnvironment.tsx` - Shared lighting, stars, and environment setup
+
+- Performance optimization infrastructure (Prompt 21):
+  - Device detection utilities:
+    - `src/shared/utils/deviceDetection.ts` - GPU tier, device type, low power mode detection
+    - Detects WebGL version, reduced motion preference, device memory
+  - Centralized performance configuration:
+    - `src/shared/config/performance.config.ts` - Quality level definitions, LOD distances, animation configs
+    - Web Vitals thresholds, bundle size budgets
+  - Lazy loading infrastructure:
+    - `src/presentation/hooks/useLazySection.ts` - Intersection Observer based lazy loading hook
+    - `src/presentation/components/layout/LazySection/` - Lazy loading wrapper component
+  - 3D optimization utilities:
+    - `src/presentation/three/utils/performanceUtils.ts` - Instanced mesh creation, geometry merging, LOD helpers
+    - `src/presentation/three/utils/resourceManager.ts` - Proper disposal utilities, object pooling
+    - `src/presentation/three/components/LODWrapper.tsx` - Quality-aware Level of Detail wrapper
+  - WebGL fallback components:
+    - `src/presentation/three/components/WebGLFallback.tsx` - Graceful fallback for non-WebGL browsers
+    - `src/presentation/three/components/ContextLostFallback.tsx` - WebGL context loss recovery
+  - Bundle optimization:
+    - Enhanced `next.config.ts` with chunk splitting (three-vendor, framework, animation-vendor)
+    - Image optimization (AVIF/WebP, caching headers)
+    - `src/shared/utils/dynamicImport.tsx` - Standardized dynamic import helpers
+    - `src/shared/utils/imageOptimization.ts` - Blur placeholders, responsive srcSet generation
+  - Performance monitoring:
+    - `src/app/analytics/webVitals.ts` - Web Vitals tracking (CLS, FCP, LCP, TTFB, INP)
+    - `src/presentation/three/components/PerformanceMonitor.tsx` - Dev-only FPS counter
+  - Tests:
+    - `src/shared/utils/__tests__/deviceDetection.test.ts` - 23 tests
+    - `src/presentation/three/hooks/__tests__/usePerformanceMode.test.ts` - 10 tests
+    - `src/presentation/hooks/__tests__/useLazySection.test.ts` - 9 tests
+  - Dependencies:
+    - Added `web-vitals@^5.1.0` for Core Web Vitals tracking
+
+### Changed
+
+- Refactored 3D components to eliminate duplication:
+  - ETLNode3D, ProjectCard3D, SkillNode3D, CompanyNode now use `useCursorPointer` hook
+  - HeroScene, ExperienceTimeline, SkillsGlobe, ProjectScene now use `SceneEnvironment` component
+
+- Enhanced `usePerformanceMode` hook:
+  - Uses centralized device detection utilities (DRY)
+  - Supports user quality preference via localStorage
+  - Added `useExtendedPerformanceMode` variant with additional config
+  - Listens for reduced motion preference changes
+
 - Completely redesigned main page with eye-catching visuals:
   - New `globals.css` with comprehensive design system:
     - CSS custom properties for colors, gradients, and effects
