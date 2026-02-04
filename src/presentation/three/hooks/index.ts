@@ -18,11 +18,14 @@ export {
 } from './useAnimationFrame';
 export {
   usePerformanceMode,
+  useExtendedPerformanceMode,
   getQualityValue,
   type UsePerformanceModeOptions,
+  type ExtendedPerformanceConfig,
 } from './usePerformanceMode';
 export {
   useWebGLSupport,
   type UseWebGLSupportOptions,
   type UseWebGLSupportReturn,
 } from './useWebGLSupport';
+export { useCursorPointer } from './useCursorPointer';
