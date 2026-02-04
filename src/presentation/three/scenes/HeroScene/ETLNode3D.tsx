@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useCursorPointer } from '../../hooks/useCursorPointer';
 import type { ETLNode } from './domain/ETLNode';
 
 export interface ETLNode3DProps {
@@ -36,6 +37,7 @@ export function ETLNode3D({
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   const glowRef = useRef<THREE.Mesh>(null);
+  const { setPointer, setAuto } = useCursorPointer();
 
   // Animation
   useFrame(state => {
@@ -62,17 +64,13 @@ export function ETLNode3D({
   });
 
   const handlePointerOver = () => {
-    if (onHover) {
-      onHover(node);
-    }
-    document.body.style.cursor = 'pointer';
+    onHover?.(node);
+    setPointer();
   };
 
   const handlePointerOut = () => {
-    if (onHover) {
-      onHover(null);
-    }
-    document.body.style.cursor = 'auto';
+    onHover?.(null);
+    setAuto();
   };
 
   const handleClick = () => {
@@ -132,7 +130,6 @@ export function ETLNode3D({
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
-          font="/fonts/Inter-Medium.woff"
         >
           {node.label}
         </Text>

@@ -1,12 +1,13 @@
 'use client';
 
 import { useRef, useMemo } from 'react';
-import { OrbitControls, Stars, Environment } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import type { Project } from '@/domain/portfolio/entities/Project';
 import { ProjectCard3DConfig } from './domain/ProjectCard3DConfig';
 import { ShowcaseLayout } from './domain/ShowcaseLayout';
 import { ProjectCard3D } from './ProjectCard3D';
+import { SceneEnvironment } from '../../components/SceneEnvironment';
 import {
   PostProcessing,
   PostProcessingPresets,
@@ -129,30 +130,14 @@ export function ProjectScene({
 
   return (
     <>
-      {/* Ambient lighting */}
-      <ambientLight intensity={0.5} />
-
-      {/* Main directional light */}
-      <directionalLight position={[10, 10, 5]} intensity={0.8} />
-
-      {/* Accent point lights */}
-      <pointLight position={[-5, 5, 5]} intensity={0.5} color="#00bcd4" />
-      <pointLight position={[5, -5, 5]} intensity={0.5} color="#7c3aed" />
-      <pointLight position={[0, -3, -5]} intensity={0.3} color="#10b981" />
-
-      {/* Background stars */}
-      <Stars
-        radius={80}
-        depth={40}
-        count={2000}
-        factor={4}
-        saturation={0}
-        fade
-        speed={0.2}
+      {/* Shared scene environment */}
+      <SceneEnvironment
+        ambientIntensity={0.5}
+        directionalIntensity={0.8}
+        pointLightIntensity={1.25}
+        starCount={2000}
+        starSpeed={0.2}
       />
-
-      {/* Environment for subtle reflections */}
-      <Environment preset="night" />
 
       {/* Main content group */}
       <group ref={groupRef}>

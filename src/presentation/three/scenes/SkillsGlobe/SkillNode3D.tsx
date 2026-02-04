@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useCursorPointer } from '../../hooks/useCursorPointer';
 import type { SkillNode } from './domain/SkillNode';
 
 export interface SkillNode3DProps {
@@ -40,6 +41,7 @@ export function SkillNode3D({
   const meshRef = useRef<THREE.Mesh>(null);
   const glowRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
+  const { setPointer, setAuto } = useCursorPointer();
 
   // Animation
   useFrame(state => {
@@ -66,13 +68,13 @@ export function SkillNode3D({
     if (filtered) return;
     setHovered(true);
     onHover?.(node);
-    document.body.style.cursor = 'pointer';
+    setPointer();
   };
 
   const handlePointerOut = () => {
     setHovered(false);
     onHover?.(null);
-    document.body.style.cursor = 'auto';
+    setAuto();
   };
 
   const handleClick = () => {

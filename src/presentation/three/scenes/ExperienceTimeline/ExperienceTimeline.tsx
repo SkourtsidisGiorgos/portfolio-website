@@ -1,18 +1,14 @@
 'use client';
 
 import { useRef, useMemo } from 'react';
-import {
-  OrbitControls,
-  Stars,
-  Environment,
-  PerspectiveCamera,
-} from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import type { ExperienceDTO } from '@/application/dto/ExperienceDTO';
 import { CompanyNode } from './CompanyNode';
 import { TimelineConfig } from './domain/TimelineConfig';
 import { TimelineNode } from './domain/TimelineNode';
 import { TimelineConnection } from './TimelineConnection';
+import { SceneEnvironment } from '../../components/SceneEnvironment';
 import {
   PostProcessing,
   PostProcessingPresets,
@@ -127,30 +123,13 @@ export function ExperienceTimeline({
       {/* Camera positioned to view horizontal timeline */}
       <PerspectiveCamera makeDefault position={[0, 2, 8]} fov={50} />
 
-      {/* Ambient lighting */}
-      <ambientLight intensity={0.4} />
-
-      {/* Main directional light */}
-      <directionalLight position={[5, 10, 5]} intensity={0.8} />
-
-      {/* Accent point lights */}
-      <pointLight position={[-5, 3, 3]} intensity={0.5} color="#00bcd4" />
-      <pointLight position={[5, 3, 3]} intensity={0.4} color="#7c3aed" />
-      <pointLight position={[0, -3, 5]} intensity={0.3} color="#10b981" />
-
-      {/* Background stars */}
-      <Stars
-        radius={100}
-        depth={50}
-        count={2000}
-        factor={4}
-        saturation={0}
-        fade
-        speed={0.2}
+      {/* Shared scene environment */}
+      <SceneEnvironment
+        ambientIntensity={0.4}
+        directionalIntensity={0.8}
+        starCount={2000}
+        starSpeed={0.2}
       />
-
-      {/* Environment for reflections */}
-      <Environment preset="night" />
 
       {/* Main timeline group */}
       <group ref={groupRef}>

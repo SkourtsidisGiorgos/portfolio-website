@@ -5,6 +5,7 @@ import { Html, RoundedBox, Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Project } from '@/domain/portfolio/entities/Project';
+import { useCursorPointer } from '../../hooks/useCursorPointer';
 import type { ProjectCard3DConfig } from './domain/ProjectCard3DConfig';
 
 export interface ProjectCard3DProps {
@@ -43,6 +44,7 @@ export function ProjectCard3D({
   const cardRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const [flipped, setFlipped] = useState(false);
+  const { setPointer, setAuto } = useCursorPointer();
 
   const { project, position, rotation, scale, floatingAnimation } = config;
   const color = config.getColor();
@@ -98,13 +100,13 @@ export function ProjectCard3D({
   const handlePointerOver = () => {
     setHovered(true);
     onHover?.(project);
-    document.body.style.cursor = 'pointer';
+    setPointer();
   };
 
   const handlePointerOut = () => {
     setHovered(false);
     onHover?.(null);
-    document.body.style.cursor = 'auto';
+    setAuto();
   };
 
   const handleClick = () => {
@@ -173,7 +175,6 @@ export function ProjectCard3D({
             color="white"
             anchorX="center"
             anchorY="middle"
-            font="/fonts/inter-medium.woff"
           >
             {project.type.toUpperCase()}
           </Text>
@@ -186,7 +187,6 @@ export function ProjectCard3D({
             color="white"
             anchorX="center"
             anchorY="middle"
-            font="/fonts/inter-bold.woff"
           >
             {project.title}
           </Text>
@@ -201,7 +201,6 @@ export function ProjectCard3D({
             anchorY="middle"
             lineHeight={1.3}
             textAlign="center"
-            font="/fonts/inter-regular.woff"
           >
             {project.description.length > 80
               ? `${project.description.slice(0, 80)}...`
@@ -226,7 +225,6 @@ export function ProjectCard3D({
                   color={color.toHex()}
                   anchorX="center"
                   anchorY="middle"
-                  font="/fonts/inter-medium.woff"
                 >
                   {tech}
                 </Text>
@@ -246,7 +244,6 @@ export function ProjectCard3D({
             color="white"
             anchorX="center"
             anchorY="middle"
-            font="/fonts/inter-bold.woff"
           >
             {project.title}
           </Text>
@@ -260,7 +257,6 @@ export function ProjectCard3D({
             anchorY="middle"
             lineHeight={1.4}
             textAlign="center"
-            font="/fonts/inter-regular.woff"
           >
             {project.description}
           </Text>
@@ -272,7 +268,6 @@ export function ProjectCard3D({
             color={color.toHex()}
             anchorX="center"
             anchorY="middle"
-            font="/fonts/inter-medium.woff"
           >
             Click to view details
           </Text>
@@ -287,6 +282,7 @@ export function ProjectCard3D({
               CARD_DEPTH / 2 + 0.02,
             ]}
             center
+            zIndexRange={[0, 10]}
             style={{ pointerEvents: 'none' }}
           >
             <div className="rounded-full bg-amber-500/90 px-2 py-0.5 text-xs font-bold text-white shadow-lg">

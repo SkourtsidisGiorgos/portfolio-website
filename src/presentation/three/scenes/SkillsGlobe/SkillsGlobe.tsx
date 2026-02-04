@@ -1,13 +1,14 @@
 'use client';
 
 import { useRef, useMemo } from 'react';
-import { OrbitControls, Stars, Environment } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import type { Skill, SkillCategory } from '@/domain/portfolio/entities/Skill';
 import { GlobeConfig } from './domain/GlobeConfig';
 import { SkillNode } from './domain/SkillNode';
 import { GlobeSurface } from './GlobeSurface';
 import { SkillNode3D } from './SkillNode3D';
+import { SceneEnvironment } from '../../components/SceneEnvironment';
 import {
   PostProcessing,
   PostProcessingPresets,
@@ -101,30 +102,13 @@ export function SkillsGlobe({
 
   return (
     <>
-      {/* Ambient lighting */}
-      <ambientLight intensity={0.4} />
-
-      {/* Main directional light */}
-      <directionalLight position={[10, 10, 5]} intensity={0.6} />
-
-      {/* Accent point lights matching category colors */}
-      <pointLight position={[-5, 5, 5]} intensity={0.4} color="#00bcd4" />
-      <pointLight position={[5, -5, 5]} intensity={0.4} color="#7c3aed" />
-      <pointLight position={[0, -5, -5]} intensity={0.3} color="#10b981" />
-
-      {/* Background stars */}
-      <Stars
-        radius={100}
-        depth={50}
-        count={3000}
-        factor={4}
-        saturation={0}
-        fade
-        speed={0.3}
+      {/* Shared scene environment */}
+      <SceneEnvironment
+        ambientIntensity={0.4}
+        directionalIntensity={0.6}
+        starCount={3000}
+        starSpeed={0.3}
       />
-
-      {/* Environment for subtle reflections */}
-      <Environment preset="night" />
 
       {/* Main globe group */}
       <group ref={groupRef}>

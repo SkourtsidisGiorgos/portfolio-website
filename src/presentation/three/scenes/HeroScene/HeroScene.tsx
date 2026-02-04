@@ -1,11 +1,12 @@
 'use client';
 
 import { useRef } from 'react';
-import { OrbitControls, Stars, Environment } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { DataParticleSystem } from './DataParticleSystem';
 import { ETLPipelineVisualization } from './ETLPipelineVisualization';
 import { useHeroScene } from './useHeroScene';
+import { SceneEnvironment } from '../../components/SceneEnvironment';
 import { PostProcessing } from '../../effects/PostProcessing';
 import { useMousePosition } from '../../hooks/useMousePosition';
 import type { ETLNode } from './domain/ETLNode';
@@ -75,9 +76,9 @@ export function HeroScene({
   useFrame(({ camera: frameCamera }) => {
     if (!enableParallax || paused) return;
 
-    // Smooth camera movement based on mouse
-    const targetX = mousePosition.x * parallaxIntensity * 2;
-    const targetY = mousePosition.y * parallaxIntensity * 2;
+    // Smooth camera movement based on normalized mouse position (-1 to 1)
+    const targetX = mousePosition.normalizedX * parallaxIntensity * 2;
+    const targetY = mousePosition.normalizedY * parallaxIntensity * 2;
 
     frameCamera.position.x += (targetX - frameCamera.position.x) * 0.05;
     frameCamera.position.y += (targetY - frameCamera.position.y) * 0.05;
@@ -107,29 +108,14 @@ export function HeroScene({
 
   return (
     <>
-      {/* Ambient lighting */}
-      <ambientLight intensity={0.3} />
-
-      {/* Main directional light */}
-      <directionalLight position={[10, 10, 5]} intensity={0.8} castShadow />
-
-      {/* Accent point lights */}
-      <pointLight position={[-5, 5, 5]} intensity={0.5} color="#00bcd4" />
-      <pointLight position={[5, -5, 5]} intensity={0.5} color="#7c3aed" />
-
-      {/* Background stars */}
-      <Stars
-        radius={100}
-        depth={50}
-        count={5000}
-        factor={4}
-        saturation={0}
-        fade
-        speed={0.5}
+      {/* Shared scene environment */}
+      <SceneEnvironment
+        ambientIntensity={0.3}
+        directionalIntensity={0.8}
+        pointLightIntensity={1.25}
+        starCount={5000}
+        starSpeed={0.5}
       />
-
-      {/* Environment map for reflections */}
-      <Environment preset="night" />
 
       {/* Main scene group */}
       <group ref={groupRef}>

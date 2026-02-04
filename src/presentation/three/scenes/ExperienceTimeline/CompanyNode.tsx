@@ -5,6 +5,7 @@ import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { COMPANY_COLORS } from './domain/TimelineNode';
+import { useCursorPointer } from '../../hooks/useCursorPointer';
 import type { TimelineNode } from './domain/TimelineNode';
 
 export interface CompanyNodeProps {
@@ -42,6 +43,7 @@ export function CompanyNode({
   const glowRef = useRef<THREE.Mesh>(null);
   const ringRef = useRef<THREE.Mesh>(null);
   const [internalHovered, setInternalHovered] = useState(false);
+  const { setPointer, setAuto } = useCursorPointer();
 
   const hovered = externalHovered || internalHovered;
 
@@ -86,13 +88,13 @@ export function CompanyNode({
   const handlePointerOver = () => {
     setInternalHovered(true);
     onHover?.(node);
-    document.body.style.cursor = 'pointer';
+    setPointer();
   };
 
   const handlePointerOut = () => {
     setInternalHovered(false);
     onHover?.(null);
-    document.body.style.cursor = 'auto';
+    setAuto();
   };
 
   const handleClick = () => {
