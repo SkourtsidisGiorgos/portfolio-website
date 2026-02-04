@@ -1,0 +1,19 @@
+# Default owner for all files
+* @SkourtsidisGiorgos
+
+# Documentation
+*.md @SkourtsidisGiorgos
+/docs/ @SkourtsidisGiorgos
+
+# CI/CD
+/.github/ @SkourtsidisGiorgos
+
+# Source code
+/src/ @SkourtsidisGiorgos
+
+# Tests
+/tests/ @SkourtsidisGiorgos
+
+# Configuration
+*.config.* @SkourtsidisGiorgos
+*.json @SkourtsidisGiorgos

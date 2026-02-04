@@ -36,6 +36,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Prettier configuration with Tailwind CSS plugin
 - Added lint-staged configuration for staged file checks
 - Added commitlint with conventional commits enforcement
+- Added GitHub Actions workflows:
+  - `ci.yml`: Lint, unit tests, E2E tests, build on push/PR
+  - `security.yml`: Dependency audit, secret scanning, CodeQL analysis
+  - `deploy.yml`: Vercel deployment on main push
+- Added GitHub repository templates:
+  - Bug report issue template
+  - Feature request issue template
+  - Task issue template
+  - Pull request template
+- Added CODEOWNERS file
 
 ---
 
