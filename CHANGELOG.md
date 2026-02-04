@@ -60,6 +60,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Common TypeScript types (Result, AsyncState, etc.)
   - `cn()` utility for class name merging (clsx + tailwind-merge)
   - Formatters (formatDate, formatDateRange, truncate, slugify, etc.)
+- Implemented DDD domain layer entities and value objects:
+  - `DateRange` - Date range with duration calculation
+  - `TechStack` - Collection of technologies
+  - `ContactInfo` - Contact information with validation
+  - `Experience` - Work experience entity
+  - `Project` - Project entity with type support (OSS, professional)
+  - `Skill` - Technical skill with proficiency levels
+  - `Email` - Validated email address value object
+  - `ContactMessage` - Contact form message entity
 
 ---
 
