@@ -1,3 +1,6 @@
+// WebGL utilities
+export { detectWebGLSupport } from './webgl';
+
 // Geometry helpers
 export {
   degToRad,

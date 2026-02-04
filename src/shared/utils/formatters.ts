@@ -1,3 +1,5 @@
+import { DateRange } from '@/domain/portfolio/value-objects/DateRange';
+
 /**
  * Format a date to a readable string
  */
@@ -14,48 +16,30 @@ export function formatDate(
 
 /**
  * Format a date range (e.g., "Jan 2023 - Present")
+ *
+ * @deprecated Prefer using DateRange.format() directly when working with domain entities.
+ * This function delegates to DateRange for consistency.
  */
 export function formatDateRange(
   start: Date | string,
   end: Date | string | null
 ): string {
-  const startFormatted = formatDate(start, { year: 'numeric', month: 'short' });
-  const endFormatted = end
-    ? formatDate(end, { year: 'numeric', month: 'short' })
-    : 'Present';
-  return `${startFormatted} - ${endFormatted}`;
+  const dateRange = DateRange.create(start, end);
+  return dateRange.format();
 }
 
 /**
  * Calculate duration between two dates in years and months
+ *
+ * @deprecated Prefer using DateRange.formatDuration() directly when working with domain entities.
+ * This function delegates to DateRange for consistency.
  */
 export function calculateDuration(
   start: Date | string,
   end: Date | string | null
 ): string {
-  const startDate = typeof start === 'string' ? new Date(start) : start;
-  const endDate = end
-    ? typeof end === 'string'
-      ? new Date(end)
-      : end
-    : new Date();
-
-  const months =
-    (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-    (endDate.getMonth() - startDate.getMonth());
-
-  const years = Math.floor(months / 12);
-  const remainingMonths = months % 12;
-
-  if (years === 0) {
-    return `${remainingMonths} month${remainingMonths !== 1 ? 's' : ''}`;
-  }
-
-  if (remainingMonths === 0) {
-    return `${years} year${years !== 1 ? 's' : ''}`;
-  }
-
-  return `${years} year${years !== 1 ? 's' : ''}, ${remainingMonths} month${remainingMonths !== 1 ? 's' : ''}`;
+  const dateRange = DateRange.create(start, end);
+  return dateRange.formatDuration();
 }
 
 /**

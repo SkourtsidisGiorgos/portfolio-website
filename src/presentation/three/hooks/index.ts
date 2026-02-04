@@ -21,3 +21,8 @@ export {
   getQualityValue,
   type UsePerformanceModeOptions,
 } from './usePerformanceMode';
+export {
+  useWebGLSupport,
+  type UseWebGLSupportOptions,
+  type UseWebGLSupportReturn,
+} from './useWebGLSupport';
