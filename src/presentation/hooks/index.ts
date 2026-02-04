@@ -12,3 +12,8 @@ export {
   type UseProjectShowcaseOptions,
   type UseProjectShowcaseReturn,
 } from './useProjectShowcase';
+export {
+  useExperienceRepository,
+  useProjectRepository,
+  useSkillRepository,
+} from './useRepositories';

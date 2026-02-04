@@ -1,12 +1,22 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useExperienceTimeline } from '../useExperienceTimeline';
 
 // Mock usePerformanceMode hook
 vi.mock('@/presentation/three/hooks/usePerformanceMode', () => ({
-  usePerformanceMode: () => ({
-    quality: 'high' as const,
+  usePerformanceMode: vi.fn((options?: { forceQuality?: string }) => ({
+    quality: options?.forceQuality ?? ('high' as const),
     isMobile: false,
+  })),
+}));
+
+// Mock useWebGLSupport hook
+vi.mock('@/presentation/three/hooks/useWebGLSupport', () => ({
+  useWebGLSupport: () => ({
+    isWebGLSupported: true,
+    is3DEnabled: true,
+    isMobile: false,
+    quality: 'high' as const,
   }),
 }));
 
@@ -16,15 +26,24 @@ describe('useExperienceTimeline', () => {
   });
 
   describe('data loading', () => {
-    it('should load experiences from data file', () => {
+    it('should load experiences from repository', async () => {
       const { result } = renderHook(() => useExperienceTimeline());
+
+      // Wait for async data loading
+      await waitFor(() => {
+        expect(result.current.experiences.length).toBeGreaterThan(0);
+      });
 
       expect(result.current.experiences).toBeDefined();
-      expect(result.current.experiences.length).toBeGreaterThan(0);
     });
 
-    it('should have all required DTO fields', () => {
+    it('should have all required DTO fields', async () => {
       const { result } = renderHook(() => useExperienceTimeline());
+
+      // Wait for async data loading
+      await waitFor(() => {
+        expect(result.current.experiences.length).toBeGreaterThan(0);
+      });
 
       const exp = result.current.experiences[0];
       expect(exp).toHaveProperty('id');
@@ -39,14 +58,24 @@ describe('useExperienceTimeline', () => {
   });
 
   describe('computed values', () => {
-    it('should calculate total years of experience', () => {
+    it('should calculate total years of experience', async () => {
       const { result } = renderHook(() => useExperienceTimeline());
+
+      // Wait for async data loading
+      await waitFor(() => {
+        expect(result.current.experiences.length).toBeGreaterThan(0);
+      });
 
       expect(result.current.totalYears).toBeGreaterThan(0);
     });
 
-    it('should extract unique technologies', () => {
+    it('should extract unique technologies', async () => {
       const { result } = renderHook(() => useExperienceTimeline());
+
+      // Wait for async data loading
+      await waitFor(() => {
+        expect(result.current.experiences.length).toBeGreaterThan(0);
+      });
 
       expect(result.current.technologies).toBeDefined();
       expect(result.current.technologies.length).toBeGreaterThan(0);
@@ -63,8 +92,13 @@ describe('useExperienceTimeline', () => {
       expect(result.current.selectedExperience).toBeNull();
     });
 
-    it('should update selected experience when set', () => {
+    it('should update selected experience when set', async () => {
       const { result } = renderHook(() => useExperienceTimeline());
+
+      // Wait for async data loading
+      await waitFor(() => {
+        expect(result.current.experiences.length).toBeGreaterThan(0);
+      });
 
       act(() => {
         result.current.setSelectedExperience(result.current.experiences[0]);
@@ -75,8 +109,13 @@ describe('useExperienceTimeline', () => {
       );
     });
 
-    it('should clear selected experience when set to null', () => {
+    it('should clear selected experience when set to null', async () => {
       const { result } = renderHook(() => useExperienceTimeline());
+
+      // Wait for async data loading
+      await waitFor(() => {
+        expect(result.current.experiences.length).toBeGreaterThan(0);
+      });
 
       act(() => {
         result.current.setSelectedExperience(result.current.experiences[0]);
@@ -97,8 +136,13 @@ describe('useExperienceTimeline', () => {
       expect(result.current.hoveredExperience).toBeNull();
     });
 
-    it('should update hovered experience when set', () => {
+    it('should update hovered experience when set', async () => {
       const { result } = renderHook(() => useExperienceTimeline());
+
+      // Wait for async data loading
+      await waitFor(() => {
+        expect(result.current.experiences.length).toBeGreaterThan(0);
+      });
 
       act(() => {
         result.current.setHoveredExperience(result.current.experiences[0]);

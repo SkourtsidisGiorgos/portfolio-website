@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { ExperienceDTO } from '@/application/dto/ExperienceDTO';
 import { ExperienceMapper } from '@/application/mappers/ExperienceMapper';
-import experiencesData from '@/data/experiences.json';
-import { Experience } from '@/domain/portfolio/entities/Experience';
 import { usePerformanceMode } from '@/presentation/three/hooks/usePerformanceMode';
+import { useWebGLSupport } from '@/presentation/three/hooks/useWebGLSupport';
 import { TimelineConfig } from '@/presentation/three/scenes/ExperienceTimeline/domain/TimelineConfig';
+import { useExperienceRepository } from './useRepositories';
 
 /**
  * Options for useExperienceTimeline hook
@@ -78,29 +78,29 @@ export function useExperienceTimeline(
 ): UseExperienceTimelineReturn {
   const { qualityOverride } = options;
 
-  // Get performance-based configuration
-  const { quality: detectedQuality, isMobile } = usePerformanceMode();
-  const quality = qualityOverride ?? detectedQuality;
+  // Get performance-based configuration with WebGL support detection
+  const { quality } = usePerformanceMode({ forceQuality: qualityOverride });
+  const { is3DEnabled } = useWebGLSupport();
 
-  // Load and transform experiences from static data
-  const experiences = useMemo(() => {
-    const entities = experiencesData.map(data =>
-      Experience.create({
-        id: data.id,
-        company: data.company,
-        role: data.role,
-        startDate: data.startDate,
-        endDate: data.endDate,
-        location: data.location,
-        remote: data.remote,
-        description: data.description,
-        technologies: data.technologies,
-      })
-    );
+  // Get repository through DI container
+  const experienceRepository = useExperienceRepository();
 
-    // Convert to DTOs
-    return ExperienceMapper.toDTOList(entities);
-  }, []);
+  // Load experiences from repository
+  const [experiences, setExperiences] = useState<ExperienceDTO[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    experienceRepository.findAll().then(entities => {
+      if (mounted) {
+        setExperiences(ExperienceMapper.toDTOList(entities));
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [experienceRepository]);
 
   // Computed values
   const totalYears = useMemo(
@@ -124,20 +124,6 @@ export function useExperienceTimeline(
     return TimelineConfig.forQuality(quality);
   }, [quality]);
 
-  // Simple WebGL support detection
-  const isWebGLSupported = useMemo(() => {
-    if (typeof window === 'undefined') return true;
-    try {
-      const canvas = document.createElement('canvas');
-      return !!(
-        window.WebGLRenderingContext &&
-        (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-      );
-    } catch {
-      return false;
-    }
-  }, []);
-
   return {
     experiences,
     totalYears,
@@ -148,7 +134,7 @@ export function useExperienceTimeline(
     setHoveredExperience,
     timelineConfig,
     quality,
-    isWebGLSupported: isWebGLSupported && !isMobile,
+    isWebGLSupported: is3DEnabled,
   };
 }
 

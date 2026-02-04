@@ -1,10 +1,14 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
-import projectsData from '@/data/projects.json';
-import { Project, type ProjectType } from '@/domain/portfolio/entities/Project';
+import { useState, useMemo, useCallback, useEffect } from 'react';
+import type {
+  Project,
+  type ProjectType,
+} from '@/domain/portfolio/entities/Project';
 import type { FilterOption } from '@/presentation/components/sections/Projects/ProjectFilter';
 import { usePerformanceMode } from '@/presentation/three/hooks/usePerformanceMode';
+import { useWebGLSupport } from '@/presentation/three/hooks/useWebGLSupport';
+import { useProjectRepository } from './useRepositories';
 
 /**
  * Options for useProjectShowcase hook
@@ -73,26 +77,29 @@ export function useProjectShowcase(
 ): UseProjectShowcaseReturn {
   const { qualityOverride } = options;
 
-  // Get performance-based configuration
-  const { quality: detectedQuality, isMobile } = usePerformanceMode();
-  const quality = qualityOverride ?? detectedQuality;
+  // Get performance-based configuration with WebGL support detection
+  const { quality } = usePerformanceMode({ forceQuality: qualityOverride });
+  const { is3DEnabled } = useWebGLSupport();
 
-  // Load and transform projects from static data
-  const projects = useMemo(() => {
-    return projectsData.map(data =>
-      Project.create({
-        id: data.id,
-        title: data.title,
-        description: data.description,
-        technologies: data.technologies,
-        type: data.type as ProjectType,
-        githubUrl: data.githubUrl,
-        liveUrl: data.liveUrl,
-        image: data.image,
-        featured: data.featured,
-      })
-    );
-  }, []);
+  // Get repository through DI container
+  const projectRepository = useProjectRepository();
+
+  // Load projects from repository
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    projectRepository.findAll().then(entities => {
+      if (mounted) {
+        setProjects(entities);
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [projectRepository]);
 
   // Get featured projects (sorted: featured first)
   const featuredProjects = useMemo(() => {
@@ -159,20 +166,6 @@ export function useProjectShowcase(
     [selectedProject]
   );
 
-  // Simple WebGL support detection
-  const isWebGLSupported = useMemo(() => {
-    if (typeof window === 'undefined') return true;
-    try {
-      const canvas = document.createElement('canvas');
-      return !!(
-        window.WebGLRenderingContext &&
-        (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-      );
-    } catch {
-      return false;
-    }
-  }, []);
-
   return {
     projects,
     featuredProjects,
@@ -185,7 +178,7 @@ export function useProjectShowcase(
     setHoveredProject,
     filteredProjects,
     quality,
-    isWebGLSupported: isWebGLSupported && !isMobile,
+    isWebGLSupported: is3DEnabled,
   };
 }
 

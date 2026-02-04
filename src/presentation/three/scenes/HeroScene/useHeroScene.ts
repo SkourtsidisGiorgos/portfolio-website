@@ -39,8 +39,7 @@ export function useHeroScene(
   const { qualityOverride, customConfig } = options;
 
   // Get performance-based quality level
-  const { quality: detectedQuality } = usePerformanceMode();
-  const quality = qualityOverride ?? detectedQuality;
+  const { quality } = usePerformanceMode({ forceQuality: qualityOverride });
 
   // Generate config based on quality or use custom
   const config = useMemo(() => {

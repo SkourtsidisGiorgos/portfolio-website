@@ -1,10 +1,14 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
-import skillsData from '@/data/skills.json';
-import { Skill, type SkillCategory } from '@/domain/portfolio/entities/Skill';
+import { useState, useMemo, useCallback, useEffect } from 'react';
+import type {
+  Skill,
+  type SkillCategory,
+} from '@/domain/portfolio/entities/Skill';
 import { usePerformanceMode } from '@/presentation/three/hooks/usePerformanceMode';
+import { useWebGLSupport } from '@/presentation/three/hooks/useWebGLSupport';
 import { GlobeConfig } from '@/presentation/three/scenes/SkillsGlobe/domain/GlobeConfig';
+import { useSkillRepository } from './useRepositories';
 
 /**
  * Category info with label and count
@@ -90,27 +94,29 @@ export function useSkillsGlobe(
 ): UseSkillsGlobeReturn {
   const { qualityOverride } = options;
 
-  // Get performance-based configuration
-  const { quality: detectedQuality, isMobile } = usePerformanceMode();
-  const quality = qualityOverride ?? detectedQuality;
+  // Get performance-based configuration with WebGL support detection
+  const { quality } = usePerformanceMode({ forceQuality: qualityOverride });
+  const { is3DEnabled } = useWebGLSupport();
 
-  // Load and transform skills from static data
-  const skills = useMemo(() => {
-    return skillsData.map(data =>
-      Skill.create({
-        id: data.id,
-        name: data.name,
-        category: data.category as SkillCategory,
-        proficiency: data.proficiency as
-          | 'beginner'
-          | 'intermediate'
-          | 'advanced'
-          | 'expert',
-        icon: data.icon,
-        yearsOfExperience: data.yearsOfExperience,
-      })
-    );
-  }, []);
+  // Get repository through DI container
+  const skillRepository = useSkillRepository();
+
+  // Load skills from repository
+  const [skills, setSkills] = useState<Skill[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    skillRepository.findAll().then(entities => {
+      if (mounted) {
+        setSkills(entities);
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [skillRepository]);
 
   // Compute categories with counts
   const categories = useMemo(() => {
@@ -170,20 +176,6 @@ export function useSkillsGlobe(
     return GlobeConfig.forQuality(quality);
   }, [quality]);
 
-  // Simple WebGL support detection
-  const isWebGLSupported = useMemo(() => {
-    if (typeof window === 'undefined') return true;
-    try {
-      const canvas = document.createElement('canvas');
-      return !!(
-        window.WebGLRenderingContext &&
-        (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-      );
-    } catch {
-      return false;
-    }
-  }, []);
-
   return {
     skills,
     categories,
@@ -196,7 +188,7 @@ export function useSkillsGlobe(
     filteredSkills,
     globeConfig,
     quality,
-    isWebGLSupported: isWebGLSupported && !isMobile,
+    isWebGLSupported: is3DEnabled,
   };
 }
 
