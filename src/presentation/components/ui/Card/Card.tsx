@@ -1,10 +1,16 @@
 'use client';
 
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
-import { motion, type HTMLMotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/shared/utils/cn';
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+// Omit props that conflict with Framer Motion
+type SafeHTMLProps = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart' | 'style'
+>;
+
+export interface CardProps extends SafeHTMLProps {
   variant?: 'glass' | 'solid' | 'outline';
   hover?: boolean;
   children: ReactNode;
@@ -18,33 +24,35 @@ const variantStyles = {
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ variant = 'glass', hover = true, className, children, ...props }, ref) => {
-    const Component = hover ? motion.div : 'div';
+    const baseClassName = cn(
+      'overflow-hidden rounded-xl',
+      variantStyles[variant],
+      'shadow-lg shadow-black/20',
+      hover && 'transition-shadow duration-200',
+      className
+    );
 
-    const hoverProps = hover
-      ? {
-          whileHover: {
+    if (hover) {
+      return (
+        <motion.div
+          ref={ref}
+          className={baseClassName}
+          whileHover={{
             y: -4,
             boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3)',
-          },
-          transition: { duration: 0.2 },
-        }
-      : {};
+          }}
+          transition={{ duration: 0.2 }}
+          {...props}
+        >
+          {children}
+        </motion.div>
+      );
+    }
 
     return (
-      <Component
-        ref={ref}
-        className={cn(
-          'overflow-hidden rounded-xl',
-          variantStyles[variant],
-          'shadow-lg shadow-black/20',
-          hover && 'transition-shadow duration-200',
-          className
-        )}
-        {...hoverProps}
-        {...(props as HTMLMotionProps<'div'>)}
-      >
+      <div ref={ref} className={baseClassName} {...props}>
         {children}
-      </Component>
+      </div>
     );
   }
 );

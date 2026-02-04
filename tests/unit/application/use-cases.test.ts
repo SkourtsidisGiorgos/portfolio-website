@@ -1,17 +1,17 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { GetPortfolioData } from '@/application/use-cases/GetPortfolioData';
 import { GetExperienceTimeline } from '@/application/use-cases/GetExperienceTimeline';
+import { GetPortfolioData } from '@/application/use-cases/GetPortfolioData';
 import {
   SendContactMessage,
   ContactValidationError,
 } from '@/application/use-cases/SendContactMessage';
+import type { ContactService } from '@/domain/contact/services/ContactService';
 import { Experience } from '@/domain/portfolio/entities/Experience';
 import { Project } from '@/domain/portfolio/entities/Project';
 import { Skill } from '@/domain/portfolio/entities/Skill';
 import type { IExperienceRepository } from '@/domain/portfolio/repositories/IExperienceRepository';
 import type { IProjectRepository } from '@/domain/portfolio/repositories/IProjectRepository';
 import type { ISkillRepository } from '@/domain/portfolio/repositories/ISkillRepository';
-import type { ContactService } from '@/domain/portfolio/services/ContactService';
 
 describe('GetPortfolioData', () => {
   let useCase: GetPortfolioData;
@@ -315,7 +315,8 @@ describe('SendContactMessage', () => {
       const result = await useCase.execute(validInput);
 
       expect(result.success).toBe(false);
-      expect(result.error).toBe('An unexpected error occurred');
+      // String errors are now passed through via getErrorMessage utility
+      expect(result.error).toBe('Unknown error');
     });
   });
 });

@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { cn } from '@/shared/utils/cn';
 import { SITE_CONFIG } from '@/shared/config/site';
+import { cn } from '@/shared/utils/cn';
 import { Container } from '../Container';
 
 export interface FooterProps {
@@ -34,7 +34,7 @@ const socialLinks = [
   },
   {
     name: 'Email',
-    url: `mailto:${SITE_CONFIG.socialLinks.email}`,
+    url: SITE_CONFIG.socialLinks.email,
     icon: (
       <svg
         className="h-5 w-5"

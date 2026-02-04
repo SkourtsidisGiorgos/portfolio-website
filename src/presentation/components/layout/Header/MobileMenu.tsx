@@ -1,8 +1,8 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { NAV_ITEMS, type NavItem } from '@/shared/config/navigation';
 import { cn } from '@/shared/utils/cn';
-import { NAV_ITEMS } from '@/shared/config/navigation';
 
 export interface MobileMenuProps {
   isOpen: boolean;
@@ -11,7 +11,7 @@ export interface MobileMenuProps {
   onNavigate: (id: string) => void;
 }
 
-const menuVariants = {
+const menuVariants: Variants = {
   closed: {
     opacity: 0,
     height: 0,
@@ -30,7 +30,7 @@ const menuVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   closed: { opacity: 0, x: -20 },
   open: (i: number) => ({
     opacity: 1,
@@ -67,7 +67,7 @@ export function MobileMenu({
           className="overflow-hidden md:hidden"
         >
           <nav className="space-y-1 border-t border-white/10 px-4 py-4">
-            {NAV_ITEMS.map((item, i) => (
+            {NAV_ITEMS.map((item: NavItem, i: number) => (
               <motion.button
                 key={item.id}
                 custom={i}

@@ -1,8 +1,8 @@
-import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
-import { SITE_CONFIG } from '@/shared/config/site';
-import { Header } from '@/presentation/components/layout/Header';
 import { Footer } from '@/presentation/components/layout/Footer';
+import { Header } from '@/presentation/components/layout/Header';
+import { SITE_CONFIG } from '@/shared/config/site';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 const inter = Inter({

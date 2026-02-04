@@ -38,3 +38,6 @@ export {
 
 // Loader
 export { Loader, type LoaderProps, type LoaderSize } from './Loader';
+
+// ErrorBoundary
+export { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary';

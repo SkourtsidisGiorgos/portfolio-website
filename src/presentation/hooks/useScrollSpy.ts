@@ -60,7 +60,7 @@ export function useScrollSpy({
  * Hook to smoothly scroll to a section by ID.
  */
 export function useScrollTo() {
-  const scrollTo = useCallback((id: string, offset = 80) => {
+  return useCallback((id: string, offset = 80) => {
     const element = document.getElementById(id);
     if (element) {
       const top = element.offsetTop - offset;
@@ -70,6 +70,4 @@ export function useScrollTo() {
       });
     }
   }, []);
-
-  return scrollTo;
 }

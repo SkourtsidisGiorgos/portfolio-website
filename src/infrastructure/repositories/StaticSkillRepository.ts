@@ -1,10 +1,10 @@
-import {
-  Skill,
+import skillsData from '@/data/skills.json';
+import type {
   SkillCategory,
   SkillProficiency,
 } from '@/domain/portfolio/entities/Skill';
-import { ISkillRepository } from '@/domain/portfolio/repositories/ISkillRepository';
-import skillsData from '@/data/skills.json';
+import { Skill } from '@/domain/portfolio/entities/Skill';
+import type { ISkillRepository } from '@/domain/portfolio/repositories/ISkillRepository';
 
 interface SkillData {
   id: string;

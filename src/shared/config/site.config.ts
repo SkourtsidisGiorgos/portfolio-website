@@ -29,3 +29,14 @@ export const siteConfig = {
 } as const;
 
 export type SiteConfig = typeof siteConfig;
+
+// Alias for backward compatibility with imports expecting SITE_CONFIG
+export const SITE_CONFIG = {
+  siteTitle: siteConfig.title,
+  siteDescription: siteConfig.description,
+  siteUrl: siteConfig.url,
+  author: siteConfig.author,
+  social: siteConfig.social,
+  socialLinks: siteConfig.social, // Alias for Footer component
+  keywords: siteConfig.keywords,
+} as const;

@@ -1,6 +1,9 @@
 import { ContactMessage } from '@/domain/contact/entities/ContactMessage';
+import type { ContactService } from '@/domain/contact/services/ContactService';
 import { Email } from '@/domain/contact/value-objects/Email';
-import type { ContactService } from '@/domain/portfolio/services/ContactService';
+import { ValidationError, getErrorMessage } from '@/shared/errors';
+import { generateMessageId } from '@/shared/utils/id';
+import { validateFields } from '@/shared/utils/validation';
 import type {
   ContactFormDTO,
   ContactFormResultDTO,
@@ -8,25 +11,24 @@ import type {
 
 /**
  * Validation error for contact form.
+ * Extends the shared ValidationError for consistent error handling.
  */
-export class ContactValidationError extends Error {
-  constructor(
-    message: string,
-    public field: string
-  ) {
-    super(message);
+export class ContactValidationError extends ValidationError {
+  constructor(message: string, field: string) {
+    super(message, field);
     this.name = 'ContactValidationError';
+    // Fix prototype chain for proper instanceof checks
+    Object.setPrototypeOf(this, ContactValidationError.prototype);
   }
 }
 
-/**
- * Generate a unique message ID.
- */
-function generateMessageId(): string {
-  const timestamp = Date.now().toString(36);
-  const random = Math.random().toString(36).substring(2, 8);
-  return `msg-${timestamp}-${random}`;
-}
+/** Validation rules for contact form */
+const CONTACT_FORM_VALIDATION = {
+  name: { minLength: 2 },
+  email: { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+  subject: { minLength: 3 },
+  message: { minLength: 10 },
+} as const;
 
 /**
  * Use case for sending a contact message.
@@ -71,60 +73,47 @@ export class SendContactMessage {
         };
       }
     } catch (error) {
-      if (error instanceof Error) {
-        return {
-          success: false,
-          messageId: null,
-          error: error.message,
-        };
-      }
       return {
         success: false,
         messageId: null,
-        error: 'An unexpected error occurred',
+        error: getErrorMessage(error),
       };
     }
   }
 
   /**
-   * Validate contact form input.
+   * Validate contact form input using declarative rules.
    */
   private validate(input: ContactFormDTO): void {
-    if (!input.name || input.name.trim().length === 0) {
-      throw new ContactValidationError('Name is required', 'name');
-    }
-    if (input.name.trim().length < 2) {
-      throw new ContactValidationError(
-        'Name must be at least 2 characters',
-        'name'
-      );
-    }
-
-    if (!input.email || input.email.trim().length === 0) {
-      throw new ContactValidationError('Email is required', 'email');
-    }
-    if (!Email.isValid(input.email)) {
-      throw new ContactValidationError('Invalid email address', 'email');
-    }
-
-    if (!input.subject || input.subject.trim().length === 0) {
-      throw new ContactValidationError('Subject is required', 'subject');
-    }
-    if (input.subject.trim().length < 3) {
-      throw new ContactValidationError(
-        'Subject must be at least 3 characters',
-        'subject'
-      );
-    }
-
-    if (!input.message || input.message.trim().length === 0) {
-      throw new ContactValidationError('Message is required', 'message');
-    }
-    if (input.message.trim().length < 10) {
-      throw new ContactValidationError(
-        'Message must be at least 10 characters',
-        'message'
-      );
-    }
+    validateFields(
+      [
+        {
+          field: 'name',
+          value: input.name,
+          required: true,
+          minLength: CONTACT_FORM_VALIDATION.name.minLength,
+        },
+        {
+          field: 'email',
+          value: input.email,
+          required: true,
+          customValidator: v => Email.isValid(v as string),
+          customMessage: 'Invalid email address',
+        },
+        {
+          field: 'subject',
+          value: input.subject,
+          required: true,
+          minLength: CONTACT_FORM_VALIDATION.subject.minLength,
+        },
+        {
+          field: 'message',
+          value: input.message,
+          required: true,
+          minLength: CONTACT_FORM_VALIDATION.message.minLength,
+        },
+      ],
+      { ErrorClass: ContactValidationError }
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Project, ProjectType } from '@/domain/portfolio/entities/Project';
+import type { Project, ProjectType } from '@/domain/portfolio/entities/Project';
 import type { ProjectDTO } from '../dto/ProjectDTO';
 
 const TYPE_LABELS: Record<ProjectType, string> = {
@@ -19,7 +19,7 @@ export class ProjectMapper {
       id: entity.id,
       title: entity.title,
       description: entity.description,
-      technologies: entity.technologies.items,
+      technologies: [...entity.technologies.items],
       type: entity.type,
       typeLabel: TYPE_LABELS[entity.type],
       githubUrl: entity.githubUrl,

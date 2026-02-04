@@ -115,6 +115,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - useMediaQuery, useBreakpoint, useIsMobile: responsive breakpoints
 - Updated layout.tsx with Inter and JetBrains Mono fonts, SEO metadata
 - Added layout component tests (31 tests)
+- Installed React Three Fiber foundation:
+  - three (3D rendering library)
+  - @react-three/fiber (React renderer for Three.js)
+  - @react-three/drei (useful helpers and abstractions)
+  - @react-three/postprocessing (post-processing effects)
+- Implemented 3D primitives:
+  - `DataParticle` - Single glowing particle with customizable color, size, and pulse
+  - `GlowingSphere` - Sphere with bloom effect and animated pulse
+  - `FloatingText` - 3D text with hover effects using drei Text
+  - `ConnectionLine` - Animated line between points with data flow effect
+  - `DataFlow` - Particle that travels along a connection line
+  - `GridFloor` - Infinite grid with fade and cyberpunk aesthetic (custom shader)
+  - `SimpleGrid` - Alternative simple grid helper
+- Implemented PostProcessing effects:
+  - Bloom effect for glow
+  - Vignette for cinematic look
+  - Chromatic aberration (subtle) for cyberpunk feel
+  - Preset configurations: hero, subtle, minimal
+- Implemented 3D hooks:
+  - `useMousePosition` - Track mouse for parallax with smoothing
+  - `useScrollProgress` - Track scroll progress for animations
+  - `useSectionScrollProgress` - Track scroll within specific sections
+- Implemented geometry helper utilities:
+  - Math helpers: degToRad, radToDeg, lerp, clamp, mapRange, smoothstep
+  - Distance calculations: distance2D, distance3D
+  - Point generators: pointsOnSphere, pointsOnCircle, spiralPath
+  - Random distributions: randomPointsInBox, randomPointsInSphere
+  - Path helpers: createSplinePath, lookAtRotation
+  - Easing functions: linear, quad, cubic, elastic, bounce
+  - Animation helpers: oscillate, colorGradient
+- Added barrel exports for all 3D modules
+- Added 3D domain layer following DDD principles:
+  - Value objects: `Position3D`, `Color3D`, `AnimationConfig` (immutable, validated)
+  - Interface contracts: `IPrimitive3D`, `IEffectComposer` (SOLID - Interface Segregation)
+  - `PrimitiveFactory` for consistent primitive creation (Factory Pattern, DRY)
+- Added animation helpers (DRY - extracted from components):
+  - `pulseValue`, `oscillateScale`, `fadeOpacity`, `floatOffset`
+  - `rotationAngle`, `glowIntensity`, `pathProgress`, `bounceValue`
+  - `shouldSkipFrame` for performance throttling
+- Added new 3D hooks:
+  - `useAnimationFrame` - Wraps useFrame with auto-pause and visibility detection
+  - `usePerformanceMode` - Detects device capabilities for graceful degradation
+- Added `GlowLayer` component (Single Responsibility - extracted from GlowingSphere)
+- Added effect presets module (`hero`, `subtle`, `minimal`, `performance`, `disabled`)
+- Added comprehensive unit tests for 3D domain layer (117 tests):
+  - Value object tests (Position3D, Color3D, AnimationConfig)
+  - Animation helper tests
+  - Factory tests
 
 ---
 

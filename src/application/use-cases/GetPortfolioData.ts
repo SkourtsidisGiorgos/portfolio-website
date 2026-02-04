@@ -1,12 +1,12 @@
 import type { IExperienceRepository } from '@/domain/portfolio/repositories/IExperienceRepository';
 import type { IProjectRepository } from '@/domain/portfolio/repositories/IProjectRepository';
 import type { ISkillRepository } from '@/domain/portfolio/repositories/ISkillRepository';
-import type { ExperienceDTO } from '../dto/ExperienceDTO';
-import type { ProjectDTO } from '../dto/ProjectDTO';
-import type { SkillDTO } from '../dto/SkillDTO';
 import { ExperienceMapper } from '../mappers/ExperienceMapper';
 import { ProjectMapper } from '../mappers/ProjectMapper';
 import { SkillMapper } from '../mappers/SkillMapper';
+import type { ExperienceDTO } from '../dto/ExperienceDTO';
+import type { ProjectDTO } from '../dto/ProjectDTO';
+import type { SkillDTO } from '../dto/SkillDTO';
 
 /**
  * Portfolio data aggregated for the UI.

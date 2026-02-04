@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ContactService } from '@/domain/contact/services/ContactService';
-import { IEmailService } from '@/domain/contact/services/IEmailService';
 import { ContactMessage } from '@/domain/contact/entities/ContactMessage';
+import { ContactService } from '@/domain/contact/services/ContactService';
+import type { IEmailService } from '@/domain/contact/services/IEmailService';
 
 describe('ContactService', () => {
   let mockEmailService: IEmailService;

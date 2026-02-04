@@ -1,6 +1,6 @@
 import type { IExperienceRepository } from '@/domain/portfolio/repositories/IExperienceRepository';
-import type { ExperienceDTO } from '../dto/ExperienceDTO';
 import { ExperienceMapper } from '../mappers/ExperienceMapper';
+import type { ExperienceDTO } from '../dto/ExperienceDTO';
 
 /**
  * Timeline data structure with grouped experiences.

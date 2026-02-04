@@ -1,6 +1,6 @@
-import { Experience } from '@/domain/portfolio/entities/Experience';
-import { IExperienceRepository } from '@/domain/portfolio/repositories/IExperienceRepository';
 import experiencesData from '@/data/experiences.json';
+import { Experience } from '@/domain/portfolio/entities/Experience';
+import type { IExperienceRepository } from '@/domain/portfolio/repositories/IExperienceRepository';
 
 interface ExperienceData {
   id: string;

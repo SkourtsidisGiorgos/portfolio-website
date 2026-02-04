@@ -1,6 +1,7 @@
-import { Project, ProjectType } from '@/domain/portfolio/entities/Project';
-import { IProjectRepository } from '@/domain/portfolio/repositories/IProjectRepository';
 import projectsData from '@/data/projects.json';
+import type { ProjectType } from '@/domain/portfolio/entities/Project';
+import { Project } from '@/domain/portfolio/entities/Project';
+import type { IProjectRepository } from '@/domain/portfolio/repositories/IProjectRepository';
 
 interface ProjectData {
   id: string;

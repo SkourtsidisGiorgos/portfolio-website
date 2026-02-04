@@ -1,6 +1,12 @@
 'use client';
 
-import { forwardRef, type HTMLAttributes, type ElementType } from 'react';
+import {
+  forwardRef,
+  createElement,
+  type HTMLAttributes,
+  type ElementType,
+  type ReactNode,
+} from 'react';
 import { cn } from '@/shared/utils/cn';
 
 export type TypographyVariant =
@@ -15,11 +21,15 @@ export type TypographyVariant =
   | 'body-sm'
   | 'caption';
 
-export interface TypographyProps extends HTMLAttributes<HTMLElement> {
+export interface TypographyProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  'children'
+> {
   variant?: TypographyVariant;
   as?: ElementType;
   gradient?: boolean;
   muted?: boolean;
+  children?: ReactNode;
 }
 
 const variantStyles: Record<TypographyVariant, string> = {
@@ -63,21 +73,21 @@ export const Typography = forwardRef<HTMLElement, TypographyProps>(
   ) => {
     const Component = as || defaultElements[variant];
 
-    return (
-      <Component
-        ref={ref}
-        className={cn(
+    return createElement(
+      Component,
+      {
+        ref,
+        className: cn(
           variantStyles[variant],
           gradient &&
             'from-primary-400 via-accent-400 to-primary-400 bg-gradient-to-r bg-clip-text text-transparent',
           muted && 'text-gray-400',
           !gradient && !muted && 'text-white',
           className
-        )}
-        {...props}
-      >
-        {children}
-      </Component>
+        ),
+        ...props,
+      },
+      children
     );
   }
 );

@@ -1,7 +1,7 @@
 'use client';
 
 import { type ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { cn } from '@/shared/utils/cn';
 import { Typography } from '../../ui/Typography';
 
@@ -12,7 +12,7 @@ export interface SectionTitleProps {
   className?: string;
 }
 
-const titleVariants = {
+const titleVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -24,7 +24,7 @@ const titleVariants = {
   },
 };
 
-const subtitleVariants = {
+const subtitleVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,

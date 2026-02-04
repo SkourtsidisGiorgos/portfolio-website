@@ -1,12 +1,19 @@
+import { getErrorMessage } from '@/shared/errors';
+import type { Result } from '@/shared/types/common';
+import { generateMessageId } from '@/shared/utils/id';
 import { ContactMessage } from '../entities/ContactMessage';
-import { IEmailService } from './IEmailService';
-import { Result } from '@/shared/types/common';
+import type { IEmailService } from './IEmailService';
 
 export interface ContactFormInput {
   name: string;
   email: string;
   subject: string;
   message: string;
+}
+
+export interface ContactFormResult {
+  success: boolean;
+  error?: string;
 }
 
 /**
@@ -23,7 +30,7 @@ export class ContactService {
   async sendMessage(input: ContactFormInput): Promise<Result<ContactMessage>> {
     try {
       // Generate a unique ID for the message
-      const id = this.generateMessageId();
+      const id = generateMessageId();
 
       // Create the domain entity (this validates the input)
       const message = ContactMessage.create({
@@ -70,9 +77,19 @@ export class ContactService {
     }
   }
 
-  private generateMessageId(): string {
-    const timestamp = Date.now().toString(36);
-    const random = Math.random().toString(36).substring(2, 8);
-    return `msg-${timestamp}-${random}`;
+  /**
+   * Submit a pre-validated contact form message.
+   * Used by the application layer use case.
+   */
+  async submitContactForm(message: ContactMessage): Promise<ContactFormResult> {
+    try {
+      await this.emailService.sendContactMessage(message);
+      return { success: true };
+    } catch (error) {
+      return {
+        success: false,
+        error: getErrorMessage(error),
+      };
+    }
   }
 }

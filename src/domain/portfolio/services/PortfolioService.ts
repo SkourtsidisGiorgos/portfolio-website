@@ -1,9 +1,9 @@
-import { Experience } from '../entities/Experience';
-import { Project } from '../entities/Project';
-import { Skill, SkillCategory } from '../entities/Skill';
-import { IExperienceRepository } from '../repositories/IExperienceRepository';
-import { IProjectRepository } from '../repositories/IProjectRepository';
-import { ISkillRepository } from '../repositories/ISkillRepository';
+import type { Experience } from '../entities/Experience';
+import type { Project } from '../entities/Project';
+import type { Skill, SkillCategory } from '../entities/Skill';
+import type { IExperienceRepository } from '../repositories/IExperienceRepository';
+import type { IProjectRepository } from '../repositories/IProjectRepository';
+import type { ISkillRepository } from '../repositories/ISkillRepository';
 
 export interface PortfolioData {
   experiences: Experience[];

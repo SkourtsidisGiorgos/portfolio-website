@@ -1,4 +1,4 @@
-import {
+import type {
   Skill,
   SkillCategory,
   SkillProficiency,
@@ -12,6 +12,8 @@ const CATEGORY_LABELS: Record<SkillCategory, string> = {
   aiml: 'AI & Machine Learning',
   databases: 'Databases',
   backend: 'Backend & APIs',
+  frontend: 'Frontend Development',
+  other: 'Other Skills',
 };
 
 const PROFICIENCY_LABELS: Record<SkillProficiency, string> = {

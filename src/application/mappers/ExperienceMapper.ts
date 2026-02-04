@@ -1,6 +1,6 @@
-import { Experience } from '@/domain/portfolio/entities/Experience';
-import type { ExperienceDTO } from '../dto/ExperienceDTO';
+import type { Experience } from '@/domain/portfolio/entities/Experience';
 import { formatDateRange } from '@/shared/utils/formatters';
+import type { ExperienceDTO } from '../dto/ExperienceDTO';
 
 /**
  * Maps Experience domain entities to ExperienceDTO.
@@ -18,7 +18,7 @@ export class ExperienceMapper {
       company: entity.company,
       role: entity.role,
       description: [...entity.description],
-      technologies: entity.technologies.items,
+      technologies: [...entity.technologies.items],
       startDate: startDate.toISOString(),
       endDate: endDate ? endDate.toISOString() : null,
       formattedDateRange: formatDateRange(startDate, endDate),

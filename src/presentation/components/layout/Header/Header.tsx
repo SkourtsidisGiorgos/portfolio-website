@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/shared/utils/cn';
 import { useScrollSpy, useScrollTo } from '@/presentation/hooks/useScrollSpy';
 import { NAV_ITEMS } from '@/shared/config/navigation';
+import { cn } from '@/shared/utils/cn';
 import { Container } from '../Container';
-import { Navigation } from './Navigation';
 import { MobileMenu } from './MobileMenu';
+import { Navigation } from './Navigation';
 
 export interface HeaderProps {
   className?: string;

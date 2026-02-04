@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useScrollTo } from '@/presentation/hooks/useScrollSpy';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useMediaQuery, useIsMobile } from '@/presentation/hooks/useMediaQuery';
+import { useScrollTo } from '@/presentation/hooks/useScrollSpy';
 
 describe('useScrollTo', () => {
   beforeEach(() => {
@@ -71,14 +71,13 @@ describe('useScrollTo', () => {
 });
 
 describe('useMediaQuery', () => {
-  let mockMatchMedia: ReturnType<typeof vi.fn>;
   let currentMatches: boolean;
   let changeListeners: Array<() => void>;
 
   beforeEach(() => {
     currentMatches = false;
     changeListeners = [];
-    mockMatchMedia = vi.fn().mockImplementation((query: string) => ({
+    const mockMatchMedia = vi.fn().mockImplementation((query: string) => ({
       get matches() {
         return currentMatches;
       },
@@ -91,7 +90,7 @@ describe('useMediaQuery', () => {
         if (index > -1) changeListeners.splice(index, 1);
       },
     }));
-    window.matchMedia = mockMatchMedia;
+    window.matchMedia = mockMatchMedia as typeof window.matchMedia;
   });
 
   afterEach(() => {
@@ -127,15 +126,13 @@ describe('useMediaQuery', () => {
 });
 
 describe('useIsMobile', () => {
-  let mockMatchMedia: ReturnType<typeof vi.fn>;
-
   beforeEach(() => {
-    mockMatchMedia = vi.fn().mockImplementation(() => ({
+    const mockMatchMedia = vi.fn().mockImplementation(() => ({
       matches: false,
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
     }));
-    window.matchMedia = mockMatchMedia;
+    window.matchMedia = mockMatchMedia as typeof window.matchMedia;
   });
 
   afterEach(() => {
@@ -144,22 +141,18 @@ describe('useIsMobile', () => {
 
   it('should return true on mobile (below md breakpoint)', () => {
     // When min-width: 768px does NOT match, we're on mobile
-    mockMatchMedia.mockImplementation(() => ({
-      matches: false,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-    }));
-
+    // The beforeEach sets matches: false, so this should return true (is mobile)
     const { result } = renderHook(() => useIsMobile());
     expect(result.current).toBe(true);
   });
 
   it('should return false on desktop (at or above md breakpoint)', () => {
-    mockMatchMedia.mockImplementation(() => ({
+    // Override for this test to simulate desktop
+    window.matchMedia = vi.fn().mockImplementation(() => ({
       matches: true, // min-width: 768px matches
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
-    }));
+    })) as typeof window.matchMedia;
 
     const { result } = renderHook(() => useIsMobile());
     expect(result.current).toBe(false);

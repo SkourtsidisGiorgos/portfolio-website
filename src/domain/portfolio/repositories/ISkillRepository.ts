@@ -1,4 +1,4 @@
-import { Skill, SkillCategory } from '../entities/Skill';
+import type { Skill, SkillCategory } from '../entities/Skill';
 
 /**
  * Repository interface for Skill entities.

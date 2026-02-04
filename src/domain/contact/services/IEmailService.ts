@@ -1,4 +1,4 @@
-import { ContactMessage } from '../entities/ContactMessage';
+import type { ContactMessage } from '../entities/ContactMessage';
 
 /**
  * Service interface for sending emails.

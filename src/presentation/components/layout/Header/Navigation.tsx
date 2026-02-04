@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { cn } from '@/shared/utils/cn';
 import { NAV_ITEMS } from '@/shared/config/navigation';
+import { cn } from '@/shared/utils/cn';
 
 export interface NavigationProps {
   activeId: string | null;

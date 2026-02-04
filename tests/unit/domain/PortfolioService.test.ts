@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { PortfolioService } from '@/domain/portfolio/services/PortfolioService';
-import { IExperienceRepository } from '@/domain/portfolio/repositories/IExperienceRepository';
-import { IProjectRepository } from '@/domain/portfolio/repositories/IProjectRepository';
-import { ISkillRepository } from '@/domain/portfolio/repositories/ISkillRepository';
 import { Experience } from '@/domain/portfolio/entities/Experience';
 import { Project } from '@/domain/portfolio/entities/Project';
 import { Skill } from '@/domain/portfolio/entities/Skill';
+import type { IExperienceRepository } from '@/domain/portfolio/repositories/IExperienceRepository';
+import type { IProjectRepository } from '@/domain/portfolio/repositories/IProjectRepository';
+import type { ISkillRepository } from '@/domain/portfolio/repositories/ISkillRepository';
+import { PortfolioService } from '@/domain/portfolio/services/PortfolioService';
 
 describe('PortfolioService', () => {
   let mockExperienceRepo: IExperienceRepository;

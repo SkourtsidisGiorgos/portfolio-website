@@ -1,13 +1,19 @@
 'use client';
 
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
-import { motion, type HTMLMotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/shared/utils/cn';
 
 export type BadgeVariant = 'default' | 'primary' | 'secondary' | 'outline';
 export type BadgeSize = 'sm' | 'md' | 'lg';
 
-export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+// Omit props that conflict with Framer Motion
+type SafeSpanProps = Omit<
+  HTMLAttributes<HTMLSpanElement>,
+  'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart' | 'style'
+>;
+
+export interface BadgeProps extends SafeSpanProps {
   variant?: BadgeVariant;
   size?: BadgeSize;
   animated?: boolean;
@@ -41,32 +47,40 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     },
     ref
   ) => {
-    const Component = animated ? motion.span : 'span';
+    const baseClassName = cn(
+      'inline-flex items-center gap-1.5',
+      'rounded-full font-medium',
+      'transition-colors duration-200',
+      variantStyles[variant],
+      sizeStyles[size],
+      className
+    );
 
-    const animationProps = animated
-      ? {
-          whileHover: { scale: 1.05 },
-          whileTap: { scale: 0.95 },
-        }
-      : {};
-
-    return (
-      <Component
-        ref={ref}
-        className={cn(
-          'inline-flex items-center gap-1.5',
-          'rounded-full font-medium',
-          'transition-colors duration-200',
-          variantStyles[variant],
-          sizeStyles[size],
-          className
-        )}
-        {...animationProps}
-        {...(props as HTMLMotionProps<'span'>)}
-      >
+    const content = (
+      <>
         {icon && <span className="flex-shrink-0">{icon}</span>}
         {children}
-      </Component>
+      </>
+    );
+
+    if (animated) {
+      return (
+        <motion.span
+          ref={ref}
+          className={baseClassName}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          {...props}
+        >
+          {content}
+        </motion.span>
+      );
+    }
+
+    return (
+      <span ref={ref} className={baseClassName} {...props}>
+        {content}
+      </span>
     );
   }
 );

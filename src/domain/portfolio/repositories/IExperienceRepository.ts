@@ -1,4 +1,4 @@
-import { Experience } from '../entities/Experience';
+import type { Experience } from '../entities/Experience';
 
 /**
  * Repository interface for Experience entities.

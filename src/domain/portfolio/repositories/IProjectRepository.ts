@@ -1,4 +1,4 @@
-import { Project, ProjectType } from '../entities/Project';
+import type { Project, ProjectType } from '../entities/Project';
 
 /**
  * Repository interface for Project entities.
