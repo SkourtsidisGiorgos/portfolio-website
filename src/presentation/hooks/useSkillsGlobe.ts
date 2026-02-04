@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import type {
-  Skill,
+import {
+  type Skill,
   type SkillCategory,
 } from '@/domain/portfolio/entities/Skill';
 import { usePerformanceMode } from '@/presentation/three/hooks/usePerformanceMode';

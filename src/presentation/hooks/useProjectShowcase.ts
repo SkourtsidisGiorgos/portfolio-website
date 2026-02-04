@@ -1,10 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import type {
-  Project,
-  type ProjectType,
-} from '@/domain/portfolio/entities/Project';
+import type { Project, ProjectType } from '@/domain/portfolio/entities/Project';
 import type { FilterOption } from '@/presentation/components/sections/Projects/ProjectFilter';
 import { usePerformanceMode } from '@/presentation/three/hooks/usePerformanceMode';
 import { useWebGLSupport } from '@/presentation/three/hooks/useWebGLSupport';
