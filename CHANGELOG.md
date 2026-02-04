@@ -95,6 +95,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Mappers: ExperienceMapper, ProjectMapper, SkillMapper
   - Use Cases: GetPortfolioData, GetExperienceTimeline, SendContactMessage
 - Added unit tests for application layer (37 tests)
+- Added Framer Motion for animations
+- Implemented atomic UI components:
+  - Button: variants (primary, secondary, ghost, outline), sizes, loading state
+  - Typography: h1-h6, body variants, gradient and muted styles
+  - Card: glass morphism, solid, outline variants with hover effects
+  - Input/Textarea: with label, error state, hint text
+  - Badge: for skills/technologies display
+  - Loader: animated loading spinner
+- Added comprehensive tests for UI components (112 tests)
 
 ---
 
