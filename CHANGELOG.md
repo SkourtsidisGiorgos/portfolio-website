@@ -9,6 +9,108 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Completely redesigned main page with eye-catching visuals:
+  - New `globals.css` with comprehensive design system:
+    - CSS custom properties for colors, gradients, and effects
+    - Custom scrollbar with gradient styling
+    - Glassmorphism utility classes
+    - Animated gradient text effect
+    - Section divider with glow effects
+    - Grid pattern background
+    - Noise texture overlay
+    - Loading skeleton shimmer animation
+    - Reduced motion support for accessibility
+  - New `page.tsx` with enhanced composition:
+    - Scroll progress indicator at top
+    - Floating ambient glow orbs with animations
+    - Section dividers with gradient lines
+    - Lazy loading for all sections (performance)
+    - Reveal animations on scroll
+    - Alternating section backgrounds
+  - New `loading.tsx` - Animated loading skeleton
+  - New `error.tsx` - Error boundary with recovery options
+  - New `not-found.tsx` - Custom 404 page with glitch effect
+  - New `sitemap.ts` - Dynamic sitemap generation
+  - New `robots.ts` - Robots.txt configuration
+  - Enhanced `layout.tsx`:
+    - JSON-LD structured data (Person + WebSite schemas)
+    - Expanded SEO metadata
+    - Skip to content accessibility link
+
+### Changed
+
+- Refactored codebase to eliminate code duplication and enforce DDD layering:
+  - Extracted WebGL detection utility:
+    - `src/presentation/three/utils/webgl.ts` - `detectWebGLSupport()` function
+    - `src/presentation/three/hooks/useWebGLSupport.ts` - Hook combining WebGL + mobile detection
+    - Removed duplicate WebGL detection from useExperienceTimeline, useSkillsGlobe, useProjectShowcase
+  - Simplified quality override pattern:
+    - Hooks now use `forceQuality` option in `usePerformanceMode` consistently
+    - Eliminated redundant quality resolution logic across 4 hooks
+  - Consolidated date formatting:
+    - `formatDateRange()` and `calculateDuration()` now delegate to `DateRange` value object
+    - ExperienceMapper uses `entity.dateRange.format()` directly
+    - Added deprecation notices to redundant formatter functions
+  - Created generic base repository (DRY):
+    - `src/domain/portfolio/repositories/IBaseRepository.ts` - Base interface with findAll/findById
+    - `src/infrastructure/repositories/BaseStaticRepository.ts` - Abstract base with common patterns
+    - IExperienceRepository, IProjectRepository, ISkillRepository now extend IBaseRepository
+    - StaticExperienceRepository, StaticProjectRepository, StaticSkillRepository extend BaseStaticRepository
+    - Reduced repository boilerplate by ~35%
+  - Created dependency injection container (DIP):
+    - `src/infrastructure/container.ts` - RepositoryContainer singleton with override support for testing
+    - `src/presentation/hooks/useRepositories.ts` - Hooks for accessing repositories from UI layer
+  - Rewired presentation hooks to use repositories:
+    - useExperienceTimeline, useSkillsGlobe, useProjectShowcase now load data via DI container
+    - Removed direct JSON imports from presentation hooks (proper DDD layering)
+    - Data loading is now async with proper cleanup
+  - Created use case factory:
+    - `src/application/use-cases/factory.ts` - UseCaseFactory for instantiating use cases with dependencies
+    - Enables GetExperienceTimeline and GetPortfolioData to be used with proper DI
+  - Updated tests:
+    - useExperienceTimeline tests now handle async data loading with waitFor
+    - Added mock for useWebGLSupport hook
+    - Fixed quality override mock to respect forceQuality option
+
+### Added
+
+- Implemented Contact Section with Working Form (Prompt 19):
+  - Infrastructure layer:
+    - `ResendEmailService` - Resend SDK implementation of IEmailService
+    - HTML email template with styled contact form notification
+    - XSS protection via HTML escaping
+    - Error handling with InfrastructureError
+  - API route:
+    - `POST /api/contact` - Contact form submission endpoint
+    - Zod schema validation (name, email, subject, message)
+    - IP-based rate limiting (5 requests per hour)
+    - Falls back to ConsoleEmailService if env vars missing
+  - Presentation components:
+    - `ContactFormSchema` - Zod validation schema for client-side
+    - `ContactForm` - Form with react-hook-form and validation
+    - Loading, success, and error states with animations
+    - Server error handling and field-level error display
+    - `ContactInfo` - Email, location, and availability display
+    - `SocialLinks` - GitHub, LinkedIn, Email with hover animations
+    - `Contact` - Main section composition with responsive layout
+  - Environment configuration:
+    - `.env.example` - Template for RESEND_API_KEY and CONTACT_EMAIL
+    - `src/shared/config/env.ts` - Zod-based environment validation
+  - Tests (36 tests):
+    - ResendEmailService tests (6 tests)
+    - SendContactMessage use case tests (12 tests)
+    - Contact component tests (8 tests)
+    - ContactForm tests (13 tests)
+  - Accessibility features:
+    - Form with proper labels and aria-required attributes
+    - Error messages with role="alert"
+    - Keyboard accessible social links
+    - Focus management on form errors
+  - Dependencies added:
+    - react-hook-form (form state management)
+    - @hookform/resolvers (Zod integration)
+    - zod (schema validation)
+    - resend (email service SDK)
 - Implemented Experience Section with 3D Timeline Visualization (Prompt 17):
   - Domain value objects:
     - `TimelineConfig` - Immutable value object for timeline configuration
