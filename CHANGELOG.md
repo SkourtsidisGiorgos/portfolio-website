@@ -9,6 +9,113 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Implemented Experience Section with 3D Timeline Visualization (Prompt 17):
+  - Domain value objects:
+    - `TimelineConfig` - Immutable value object for timeline configuration
+    - Properties: nodeScale, connectionOpacity, spacing, enableEffects, enableParticles, autoRotate
+    - Factory methods: default(), minimal(), forQuality(level), custom()
+    - Quality presets for high/medium/low performance devices
+    - `TimelineNode` - Maps ExperienceDTO to 3D position on horizontal timeline
+    - Position calculation with centered layout and wave effect
+    - Size scaling based on job duration (0.4-0.6 range)
+    - Color coding: cyan for current position, gray for past positions
+    - `COMPANY_COLORS` - Color mapping for timeline nodes
+  - 3D scene components:
+    - `CompanyNode` - Interactive company sphere with glow, hover, and selection states
+    - HTML tooltip overlay showing company, role, and date range
+    - Current position indicator ring animation
+    - `TimelineConnection` - Animated connection line between nodes
+    - Curved Bezier path with optional data flow particles
+    - Active state highlighting for selected connections
+    - `ExperienceTimeline` - Main scene composition
+    - Horizontal timeline layout with PerspectiveCamera
+    - Stars background, environment lighting, PostProcessing
+    - OrbitControls with limited rotation for timeline view
+  - UI components:
+    - `ExperienceCard` - Detail card showing selected experience
+    - Company, role, date range, duration, location display
+    - Description bullets and technology badges
+    - Slide-in animation with AnimatePresence
+    - `TimelineNav` - Navigation dots for quick jumping between experiences
+    - Keyboard accessible with arrow keys
+    - Tooltip on hover showing company name
+    - `ExperienceList` - Mobile-friendly vertical timeline fallback
+    - Connected timeline dots with CSS border line
+    - Staggered reveal animation
+    - `ExperienceCanvas` - R3F Canvas wrapper with WebGL detection and fallbacks
+    - `Experience` - Main section composition with responsive layout
+  - Data layer:
+    - `useExperienceTimeline` hook - Manages experiences state and selection
+    - Calculates total years of experience and unique technologies
+    - Integrates with usePerformanceMode for quality-based config
+    - WebGL support detection for fallback rendering
+  - Responsive design:
+    - Desktop: 3D timeline with detail panel
+    - Mobile/tablet: Falls back to vertical timeline list
+    - TimelineNav for quick navigation
+  - Accessibility features:
+    - ARIA landmarks and proper heading hierarchy
+    - Keyboard navigable navigation dots
+    - `aria-hidden` on decorative 3D elements
+  - Tests (98 tests total for Experience section):
+    - TimelineConfig value object tests (14 tests)
+    - TimelineNode value object tests (14 tests)
+    - useExperienceTimeline hook tests (13 tests)
+    - ExperienceCard tests (13 tests)
+    - TimelineNav tests (12 tests)
+    - ExperienceList tests (10 tests)
+    - Experience component tests (8 tests)
+  - Barrel exports for ExperienceTimeline and Experience section components
+- Implemented Projects Section with 3D Showcase (Prompt 18):
+  - Domain value objects:
+    - `ProjectCard3DConfig` - Immutable value object for 3D card configuration
+    - Factory methods: fromProject(project, index), featured(project), custom()
+    - Floating animation parameters (amplitude, frequency, phase)
+    - Color mapping by project type (OSS, professional, personal)
+    - `ShowcaseLayout` - Strategy pattern for layout algorithms
+    - Layout types: grid, spiral, featured, custom
+    - Factory methods: grid(count, columns), spiral(count, radius), featured(count)
+    - Position calculation and scale management
+  - 3D scene components:
+    - `ProjectCard3D` - Floating 3D card with hover and flip animations
+    - Front/back faces with project details
+    - Featured badge using drei Html component
+    - `ProjectScene` - Main scene composition with layout strategies
+    - Auto-rotation, orbit controls, and PostProcessing integration
+  - UI components:
+    - `ProjectCard` - 2D project card using existing Card, Badge components
+    - Technology badges with overflow count
+    - GitHub and Demo link buttons
+    - `ProjectModal` - Accessible modal with focus trap
+    - Escape to close, backdrop click, focus trap implementation
+    - ARIA attributes for screen readers
+    - `ProjectFilter` - Filter by project type (all, OSS, professional, personal)
+    - Radiogroup pattern for accessibility
+    - `ProjectGrid` - Responsive grid layout with configurable columns
+    - `ProjectsCanvas` - R3F Canvas wrapper with WebGL fallbacks
+    - `Projects` - Main section composition with responsive layout
+  - Data layer:
+    - `useProjectShowcase` hook - Manages projects state and filtering
+    - Integrates with usePerformanceMode for quality-based config
+    - WebGL support detection for fallback rendering
+  - Responsive design:
+    - Desktop: 3D floating cards showcase
+    - Mobile/tablet: Falls back to 2D grid layout
+    - Filter controls work on all screen sizes
+  - Accessibility features:
+    - Focus trap in modal with tab cycling
+    - Escape key to close modal
+    - ARIA radiogroup for filter buttons
+    - Proper heading hierarchy
+    - `aria-hidden` on decorative 3D elements
+  - Tests (95 new tests):
+    - ProjectCard3DConfig value object tests (23 tests)
+    - ShowcaseLayout value object tests (25 tests)
+    - ProjectCard component tests (13 tests)
+    - ProjectFilter tests (8 tests)
+    - ProjectModal tests (16 tests)
+    - Projects component tests (10 tests)
+  - Barrel exports for ProjectShowcase and Projects section components
 - Initialized Next.js 15+ project with TypeScript and Tailwind CSS 4
 - Created DDD folder structure:
   - `src/domain/` - Domain layer (entities, value-objects, repositories, services)
@@ -230,6 +337,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - MetricCard tests (7 tests)
     - About component tests (11 tests)
   - Barrel exports for About section components and domain
+- Implemented Skills Section with 3D Technology Globe (Prompt 16):
+  - Domain value objects:
+    - `SkillNode` - Maps domain Skill entity to 3D position on sphere
+    - Fibonacci lattice algorithm for even distribution of points
+    - Spherical to Cartesian coordinate conversion
+    - Size scaling based on proficiency (expert: 0.3, advanced: 0.25, intermediate: 0.2, beginner: 0.15)
+    - `GlobeConfig` - Configuration for globe rendering (radius, rotation, effects)
+    - Quality presets: default, minimal, forQuality(high/medium/low)
+    - `CATEGORY_COLORS` - Color mapping for skill categories
+  - 3D scene components:
+    - `GlobeSurface` - Wireframe icosahedron representing the globe structure
+    - `SkillNode3D` - Interactive skill sphere with glow, hover, and selection states
+    - HTML tooltip overlay for skill names
+    - `SkillsGlobe` - Main scene composition with auto-rotation and orbit controls
+    - PostProcessing with 'subtle' preset for visual polish
+  - UI components:
+    - `SkillCategoryFilter` - Horizontal scrollable category filter with counts
+    - Radiogroup pattern for accessibility
+    - `SkillDetail` - Slide-in panel showing skill details (proficiency bar, experience)
+    - AnimatePresence for smooth transitions
+    - `SkillsList` - Mobile-friendly fallback grid with category grouping
+    - `SkillsCanvas` - R3F Canvas wrapper with WebGL detection and fallbacks
+    - `Skills` - Main section composition with responsive layout
+  - Data layer:
+    - `useSkillsGlobe` hook - Manages skills state, categories, and selection
+    - Integrates with usePerformanceMode for quality-based config
+    - WebGL support detection for fallback rendering
+  - Responsive design:
+    - Desktop: 3D globe with detail panel
+    - Mobile/tablet: Falls back to grouped skills list
+    - Category filter adapts to screen width
+  - Accessibility features:
+    - ARIA radiogroup for category filter
+    - Keyboard navigable skill selection
+    - Proper heading hierarchy
+    - `aria-hidden` on decorative 3D elements
+  - Tests (70 tests):
+    - SkillNode value object tests (25 tests)
+    - GlobeConfig value object tests (15 tests)
+    - SkillCategoryFilter tests (8 tests)
+    - SkillDetail tests (13 tests)
+    - Skills component tests (9 tests)
+  - Barrel exports for SkillsGlobe and Skills section components
 
 ---
 

@@ -7,3 +7,8 @@ export {
   useIsDesktop,
 } from './useMediaQuery';
 export { useAboutData, type UseAboutDataReturn } from './useAboutData';
+export {
+  useProjectShowcase,
+  type UseProjectShowcaseOptions,
+  type UseProjectShowcaseReturn,
+} from './useProjectShowcase';

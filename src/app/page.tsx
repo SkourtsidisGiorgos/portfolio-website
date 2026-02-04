@@ -1,5 +1,6 @@
 import { Section } from '@/presentation/components/layout/Section';
 import { SectionTitle } from '@/presentation/components/layout/Section/SectionTitle';
+import { Experience } from '@/presentation/components/sections/Experience';
 import { Hero } from '@/presentation/components/sections/Hero';
 
 export default function Home() {
@@ -29,15 +30,8 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="experience">
-        <SectionTitle
-          title="Work Experience"
-          subtitle="A timeline of my professional journey and key contributions at various organizations."
-        />
-        <div className="flex min-h-[400px] items-center justify-center rounded-2xl border-2 border-dashed border-white/10 bg-white/5 p-12 text-center text-gray-500">
-          <p>This section is under development. Stay tuned!</p>
-        </div>
-      </Section>
+      {/* Experience Section */}
+      <Experience />
 
       <Section id="projects" className="bg-gray-900/50">
         <SectionTitle
