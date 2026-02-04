@@ -104,6 +104,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Badge: for skills/technologies display
   - Loader: animated loading spinner
 - Added comprehensive tests for UI components (112 tests)
+- Implemented layout components:
+  - Header: fixed navigation with scroll spy and mobile menu
+  - Footer: social links and copyright
+  - Section: consistent section wrapper with animated titles
+  - Container: responsive max-width wrapper
+- Added presentation hooks:
+  - useScrollSpy: track active section on scroll
+  - useScrollTo: smooth scroll navigation
+  - useMediaQuery, useBreakpoint, useIsMobile: responsive breakpoints
+- Updated layout.tsx with Inter and JetBrains Mono fonts, SEO metadata
+- Added layout component tests (31 tests)
 
 ---
 
