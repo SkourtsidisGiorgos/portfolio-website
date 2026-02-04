@@ -1,20 +1,11 @@
+import type { IBaseRepository } from './IBaseRepository';
 import type { Skill, SkillCategory } from '../entities/Skill';
 
 /**
  * Repository interface for Skill entities.
- * Implementations should provide data access for skills.
+ * Extends IBaseRepository with skill-specific queries.
  */
-export interface ISkillRepository {
-  /**
-   * Find all skills.
-   */
-  findAll(): Promise<Skill[]>;
-
-  /**
-   * Find a skill by its ID.
-   */
-  findById(id: string): Promise<Skill | null>;
-
+export interface ISkillRepository extends IBaseRepository<Skill> {
   /**
    * Find skills by category.
    */

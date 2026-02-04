@@ -1,20 +1,11 @@
+import type { IBaseRepository } from './IBaseRepository';
 import type { Project, ProjectType } from '../entities/Project';
 
 /**
  * Repository interface for Project entities.
- * Implementations should provide data access for projects.
+ * Extends IBaseRepository with project-specific queries.
  */
-export interface IProjectRepository {
-  /**
-   * Find all projects.
-   */
-  findAll(): Promise<Project[]>;
-
-  /**
-   * Find a project by its ID.
-   */
-  findById(id: string): Promise<Project | null>;
-
+export interface IProjectRepository extends IBaseRepository<Project> {
   /**
    * Find featured projects.
    */

@@ -5,6 +5,7 @@ import type {
 } from '@/domain/portfolio/entities/Skill';
 import { Skill } from '@/domain/portfolio/entities/Skill';
 import type { ISkillRepository } from '@/domain/portfolio/repositories/ISkillRepository';
+import { BaseStaticRepository } from './BaseStaticRepository';
 
 interface SkillData {
   id: string;
@@ -19,44 +20,35 @@ interface SkillData {
  * Static implementation of ISkillRepository.
  * Loads skill data from JSON file.
  */
-export class StaticSkillRepository implements ISkillRepository {
-  private skills: Skill[];
-
+export class StaticSkillRepository
+  extends BaseStaticRepository<Skill, SkillData>
+  implements ISkillRepository
+{
   constructor() {
-    this.skills = this.loadSkills();
+    super(skillsData as SkillData[]);
   }
 
-  private loadSkills(): Skill[] {
-    return (skillsData as SkillData[]).map(data =>
-      Skill.create({
-        id: data.id,
-        name: data.name,
-        category: data.category,
-        proficiency: data.proficiency,
-        icon: data.icon,
-        yearsOfExperience: data.yearsOfExperience,
-      })
-    );
-  }
-
-  async findAll(): Promise<Skill[]> {
-    return [...this.skills];
-  }
-
-  async findById(id: string): Promise<Skill | null> {
-    return this.skills.find(skill => skill.id === id) ?? null;
+  protected mapToEntity(data: SkillData): Skill {
+    return Skill.create({
+      id: data.id,
+      name: data.name,
+      category: data.category,
+      proficiency: data.proficiency,
+      icon: data.icon,
+      yearsOfExperience: data.yearsOfExperience,
+    });
   }
 
   async findByCategory(category: SkillCategory): Promise<Skill[]> {
-    return this.skills.filter(skill => skill.category === category);
+    return this.filterBy(skill => skill.category === category);
   }
 
   async findAdvanced(): Promise<Skill[]> {
-    return this.skills.filter(skill => skill.isAdvanced());
+    return this.filterBy(skill => skill.isAdvanced());
   }
 
   async getCategories(): Promise<SkillCategory[]> {
-    const categories = new Set(this.skills.map(skill => skill.category));
+    const categories = new Set(this.entities.map(skill => skill.category));
     return Array.from(categories);
   }
 }

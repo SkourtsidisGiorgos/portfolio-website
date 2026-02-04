@@ -1,6 +1,7 @@
 import experiencesData from '@/data/experiences.json';
 import { Experience } from '@/domain/portfolio/entities/Experience';
 import type { IExperienceRepository } from '@/domain/portfolio/repositories/IExperienceRepository';
+import { BaseStaticRepository } from './BaseStaticRepository';
 
 interface ExperienceData {
   id: string;
@@ -18,44 +19,40 @@ interface ExperienceData {
  * Static implementation of IExperienceRepository.
  * Loads experience data from JSON file.
  */
-export class StaticExperienceRepository implements IExperienceRepository {
-  private experiences: Experience[];
-
+export class StaticExperienceRepository
+  extends BaseStaticRepository<Experience, ExperienceData>
+  implements IExperienceRepository
+{
   constructor() {
-    this.experiences = this.loadExperiences();
+    super(experiencesData as ExperienceData[]);
   }
 
-  private loadExperiences(): Experience[] {
-    return (experiencesData as ExperienceData[]).map(data =>
-      Experience.create({
-        id: data.id,
-        company: data.company,
-        role: data.role,
-        startDate: data.startDate,
-        endDate: data.endDate,
-        location: data.location,
-        remote: data.remote,
-        description: data.description,
-        technologies: data.technologies,
-      })
-    );
+  protected mapToEntity(data: ExperienceData): Experience {
+    return Experience.create({
+      id: data.id,
+      company: data.company,
+      role: data.role,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      location: data.location,
+      remote: data.remote,
+      description: data.description,
+      technologies: data.technologies,
+    });
   }
 
-  async findAll(): Promise<Experience[]> {
-    return [...this.experiences].sort(
+  override async findAll(): Promise<Experience[]> {
+    const all = await super.findAll();
+    return all.sort(
       (a, b) => b.dateRange.start.getTime() - a.dateRange.start.getTime()
     );
   }
 
-  async findById(id: string): Promise<Experience | null> {
-    return this.experiences.find(exp => exp.id === id) ?? null;
-  }
-
   async findCurrent(): Promise<Experience | null> {
-    return this.experiences.find(exp => exp.isCurrent()) ?? null;
+    return this.findBy(exp => exp.isCurrent());
   }
 
   async findByTechnology(technology: string): Promise<Experience[]> {
-    return this.experiences.filter(exp => exp.usesTechnology(technology));
+    return this.filterBy(exp => exp.usesTechnology(technology));
   }
 }
