@@ -1,0 +1,55 @@
+{
+  "profile": {
+    "name": "Giorgos Skourtsidis",
+    "title": "Big Data & Software Engineer",
+    "location": "Athens, Greece",
+    "availability": "Remote",
+    "summary": "Big Data & Software Engineer with 4+ years of experience in telecommunications and fintech. Specialized in ETL pipelines, distributed systems, and data engineering. Passionate about building scalable data solutions and contributing to open-source projects.",
+    "imageUrl": "/images/profile.jpg",
+    "social": {
+      "github": "https://github.com/SkourtsidisGiorgos",
+      "linkedin": "https://linkedin.com/in/gskourtsidis",
+      "email": "mailto:gskourtsidis@gmail.com"
+    }
+  },
+  "metrics": [
+    {
+      "value": "4+",
+      "label": "Years Experience",
+      "icon": "clock",
+      "description": "In telecommunications & fintech"
+    },
+    {
+      "value": "15+",
+      "label": "Projects Delivered",
+      "icon": "folder",
+      "description": "ETL pipelines & data systems"
+    },
+    {
+      "value": "25+",
+      "label": "Technologies",
+      "icon": "code",
+      "description": "Python, Spark, K8s & more"
+    },
+    {
+      "value": "Active",
+      "label": "Open Source",
+      "icon": "github",
+      "description": "Contributor & maintainer"
+    }
+  ],
+  "highlights": [
+    {
+      "id": "education",
+      "title": "Current Focus",
+      "content": "MSc in Big Data & Machine Learning at NTUA",
+      "icon": "graduation"
+    },
+    {
+      "id": "location",
+      "title": "Location",
+      "content": "Athens, Greece (Remote Available)",
+      "icon": "location"
+    }
+  ]
+}

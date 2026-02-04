@@ -201,6 +201,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - HeroContent tests (9 tests)
     - ScrollIndicator tests (7 tests)
   - Barrel exports for HeroScene and Hero components
+- Implemented About Section with Bento Grid Layout (Prompt 15):
+  - Domain value objects:
+    - `AboutMetric` - Immutable value object for metric cards (value, label, icon)
+    - Factory methods: yearsExperience(), projectCount(), techCount(), contributions()
+    - `AboutConfig` - Configuration with profile info, metrics, and highlights
+    - Factory methods: default(), minimal(), fromData()
+  - Bento grid layout components:
+    - `BentoGrid` - Responsive CSS grid (1/2/3 columns based on viewport)
+    - `BentoCell` - Glassmorphism cell wrapper with Framer Motion hover
+  - Card components:
+    - `MetricCard` - Animated counter display for AboutMetric value objects
+    - `AboutCard` - Generic card with variants (metric, profile, highlight, custom)
+    - `HighlightCard` - Card for key highlights (education, location)
+    - `ProfileImage` - 3D hover effect image with next/image optimization
+  - Data layer:
+    - `useAboutData` hook - Transforms JSON data to domain value objects
+    - `about.json` - Static data for metrics, profile, and highlights
+  - Main About component:
+    - Scroll-triggered entrance animations (Intersection Observer)
+    - Profile card with social links (GitHub, LinkedIn, Email)
+    - Background decorative gradients
+    - Proper ARIA landmarks for accessibility
+  - Tests (59 tests):
+    - AboutMetric value object tests (15 tests)
+    - AboutConfig value object tests (14 tests)
+    - BentoGrid/BentoCell tests (12 tests)
+    - MetricCard tests (7 tests)
+    - About component tests (11 tests)
+  - Barrel exports for About section components and domain
 
 ---
 

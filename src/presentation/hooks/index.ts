@@ -6,3 +6,4 @@ export {
   useIsTablet,
   useIsDesktop,
 } from './useMediaQuery';
+export { useAboutData, type UseAboutDataReturn } from './useAboutData';
