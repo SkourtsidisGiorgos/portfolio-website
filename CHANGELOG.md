@@ -46,6 +46,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Task issue template
   - Pull request template
 - Added CODEOWNERS file
+- Configured testing infrastructure:
+  - Vitest for unit testing with jsdom environment
+  - Playwright for E2E testing (Chromium, Firefox, WebKit, Mobile)
+  - Testing Library for React component testing
+  - Code coverage with v8 provider (80% threshold)
+- Added test scripts: test, test:unit, test:unit:watch, test:coverage, test:e2e
 
 ---
 
