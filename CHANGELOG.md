@@ -7,7 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+(No unreleased changes)
+
+## [1.0.0] - 2026-02-05
+
 ### Added
+
+- **Final Testing & Documentation** (v1.0.0 release):
+  - Unit test coverage gaps filled:
+    - `tests/unit/application/factory.test.ts` - UseCaseFactory tests (7 tests)
+    - `tests/unit/infrastructure/container.test.ts` - RepositoryContainer tests (15 tests)
+  - 3D Canvas component tests with R3F mocking:
+    - `tests/mocks/react-three-fiber.tsx` - Canvas mock for testing
+    - `tests/mocks/react-three-drei.tsx` - Drei component mocks
+    - `HeroCanvas.test.tsx` - Hero canvas tests (11 tests)
+    - `SkillsCanvas.test.tsx` - Skills canvas tests (11 tests)
+    - `ExperienceCanvas.test.tsx` - Experience canvas tests (11 tests)
+    - `ProjectsCanvas.test.tsx` - Projects canvas tests (11 tests)
+  - E2E tests with Page Object Models:
+    - `tests/e2e/pages/HomePage.ts` - Home page POM
+    - `tests/e2e/pages/ContactSection.ts` - Contact section POM
+    - `tests/e2e/navigation.spec.ts` - Navigation tests (20 tests)
+    - `tests/e2e/contact-form.spec.ts` - Contact form tests (17 tests)
+  - Documentation updates:
+    - Complete README.md rewrite with project overview, tech stack, quick start guide
+    - CHANGELOG.md v1.0.0 release notes
 
 - 3D scene shared utilities (DRY refactoring):
   - `src/presentation/three/hooks/useCursorPointer.ts` - Shared cursor pointer handling hook

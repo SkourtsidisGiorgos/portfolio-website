@@ -1,6 +1,6 @@
 # Portfolio Website Implementation Prompts
 
-This folder contains 24 sequential prompts for building the portfolio website for Giorgos Skourtsidis.
+This folder contains 24 sequential prompts for building the portfolio website for Giorgos Skourtsidis, plus 5 maintenance prompts for code quality improvements.
 
 ## Prompt Order
 
@@ -30,6 +30,18 @@ This folder contains 24 sequential prompts for building the portfolio website fo
 | 22  | [accessibility-seo.md](./22-accessibility-seo.md)                     | Accessibility and SEO                           |
 | 23  | [final-testing-documentation.md](./23-final-testing-documentation.md) | Final testing and documentation                 |
 | 24  | [deployment.md](./24-deployment.md)                                   | Production deployment                           |
+
+## Maintenance Prompts
+
+These prompts are for improving code quality and maintainability. They can be executed in any order after the main implementation.
+
+| #   | File                                                                  | Description                                      |
+| --- | --------------------------------------------------------------------- | ------------------------------------------------ |
+| 25  | [webgl-canvas-hook.md](./25-webgl-canvas-hook.md)                     | Extract WebGL Canvas boilerplate into hook (DRY) |
+| 26  | [reduce-component-complexity.md](./26-reduce-component-complexity.md) | Reduce cyclomatic complexity to ≤10              |
+| 27  | [entity-factory-refactoring.md](./27-entity-factory-refactoring.md)   | Refactor entity create() with validation helpers |
+| 28  | [test-organization.md](./28-test-organization.md)                     | Improve test structure and reduce duplication    |
+| 29  | [utility-test-coverage.md](./29-utility-test-coverage.md)             | Add unit tests for 80% coverage target           |
 
 ## Usage
 
