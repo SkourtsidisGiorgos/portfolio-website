@@ -1,9 +1,9 @@
 'use client';
 
 import { useRef } from 'react';
-import { Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { SafeText } from '../../components/SafeText';
 import { useCursorPointer } from '../../hooks/useCursorPointer';
 import type { ETLNode } from './domain/ETLNode';
 
@@ -124,15 +124,19 @@ export function ETLNode3D({
 
       {/* Label */}
       {showLabel && (
-        <Text
+        <SafeText
           position={labelOffset}
           fontSize={0.25}
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
+          outlineWidth={0.02}
+          outlineColor="#000000"
+          fillOpacity={1}
+          strokeOpacity={1}
         >
           {node.label}
-        </Text>
+        </SafeText>
       )}
     </group>
   );

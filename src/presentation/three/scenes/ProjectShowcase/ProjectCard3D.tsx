@@ -1,10 +1,11 @@
 'use client';
 
 import { useRef, useState, useMemo } from 'react';
-import { Html, RoundedBox, Text } from '@react-three/drei';
+import { Html, RoundedBox } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Project } from '@/domain/portfolio/entities/Project';
+import { SafeText } from '../../components/SafeText';
 import { useCursorPointer } from '../../hooks/useCursorPointer';
 import type { ProjectCard3DConfig } from './domain/ProjectCard3DConfig';
 
@@ -169,43 +170,49 @@ export function ProjectCard3D({
               opacity={0.9}
             />
           </mesh>
-          <Text
+          <SafeText
             position={[-scaledWidth / 2 + 0.3, scaledHeight / 2 - 0.15, 0.01]}
             fontSize={0.08}
             color="white"
             anchorX="center"
             anchorY="middle"
+            outlineWidth={0.005}
+            outlineColor="#000000"
           >
             {project.type.toUpperCase()}
-          </Text>
+          </SafeText>
 
           {/* Project title */}
-          <Text
+          <SafeText
             position={[0, 0.15, 0]}
             fontSize={0.14}
             maxWidth={scaledWidth - 0.4}
             color="white"
             anchorX="center"
             anchorY="middle"
+            outlineWidth={0.008}
+            outlineColor="#000000"
           >
             {project.title}
-          </Text>
+          </SafeText>
 
           {/* Short description */}
-          <Text
+          <SafeText
             position={[0, -0.2, 0]}
             fontSize={0.08}
             maxWidth={scaledWidth - 0.4}
-            color="#a0a0a0"
+            color="#c0c0c0"
             anchorX="center"
             anchorY="middle"
             lineHeight={1.3}
             textAlign="center"
+            outlineWidth={0.004}
+            outlineColor="#000000"
           >
             {project.description.length > 80
               ? `${project.description.slice(0, 80)}...`
               : project.description}
-          </Text>
+          </SafeText>
 
           {/* Tech badges */}
           <group position={[0, -scaledHeight / 2 + 0.2, 0]}>
@@ -219,15 +226,17 @@ export function ProjectCard3D({
                     opacity={0.8}
                   />
                 </mesh>
-                <Text
+                <SafeText
                   position={[0, 0, 0.01]}
                   fontSize={0.06}
                   color={color.toHex()}
                   anchorX="center"
                   anchorY="middle"
+                  outlineWidth={0.003}
+                  outlineColor="#000000"
                 >
                   {tech}
-                </Text>
+                </SafeText>
               </group>
             ))}
           </group>
@@ -238,17 +247,19 @@ export function ProjectCard3D({
           position={[0, 0, -CARD_DEPTH / 2 - 0.01]}
           rotation={[0, Math.PI, 0]}
         >
-          <Text
+          <SafeText
             position={[0, scaledHeight / 2 - 0.2, 0]}
             fontSize={0.12}
             color="white"
             anchorX="center"
             anchorY="middle"
+            outlineWidth={0.006}
+            outlineColor="#000000"
           >
             {project.title}
-          </Text>
+          </SafeText>
 
-          <Text
+          <SafeText
             position={[0, 0, 0]}
             fontSize={0.07}
             maxWidth={scaledWidth - 0.3}
@@ -257,20 +268,24 @@ export function ProjectCard3D({
             anchorY="middle"
             lineHeight={1.4}
             textAlign="center"
+            outlineWidth={0.003}
+            outlineColor="#000000"
           >
             {project.description}
-          </Text>
+          </SafeText>
 
           {/* Links hint */}
-          <Text
+          <SafeText
             position={[0, -scaledHeight / 2 + 0.2, 0]}
             fontSize={0.07}
             color={color.toHex()}
             anchorX="center"
             anchorY="middle"
+            outlineWidth={0.003}
+            outlineColor="#000000"
           >
             Click to view details
-          </Text>
+          </SafeText>
         </group>
 
         {/* Featured badge */}

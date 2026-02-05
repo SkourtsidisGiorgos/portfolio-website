@@ -1,9 +1,9 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { SafeText } from '../components/SafeText';
 
 export interface FloatingTextProps {
   children: string;
@@ -17,6 +17,8 @@ export interface FloatingTextProps {
   floatAmplitude?: number;
   onClick?: () => void;
   font?: string;
+  outlineWidth?: number;
+  outlineColor?: string;
 }
 
 export function FloatingText({
@@ -31,6 +33,8 @@ export function FloatingText({
   floatAmplitude = 0.1,
   onClick,
   font,
+  outlineWidth = 0.02,
+  outlineColor = '#000000',
 }: FloatingTextProps) {
   const groupRef = useRef<THREE.Group>(null);
   const textRef = useRef<THREE.Mesh>(null);
@@ -62,34 +66,34 @@ export function FloatingText({
       onPointerOut={() => setIsHovered(false)}
       onClick={onClick}
     >
-      <Text
+      <SafeText
         ref={textRef}
         fontSize={fontSize}
         color={isHovered ? hoverColor : color}
         anchorX={anchorX}
         anchorY={anchorY}
         font={font}
+        outlineWidth={outlineWidth}
+        outlineColor={outlineColor}
+        fillOpacity={isHovered ? 1 : 0.9}
       >
         {children}
-        <meshBasicMaterial
-          color={isHovered ? hoverColor : color}
-          transparent
-          opacity={isHovered ? 1 : 0.9}
-        />
-      </Text>
+      </SafeText>
 
       {/* Glow effect on hover */}
       {isHovered && (
-        <Text
+        <SafeText
           fontSize={fontSize * 1.02}
           color={hoverColor}
           anchorX={anchorX}
           anchorY={anchorY}
           font={font}
+          outlineWidth={outlineWidth * 1.5}
+          outlineColor={outlineColor}
+          fillOpacity={0.3}
         >
           {children}
-          <meshBasicMaterial color={hoverColor} transparent opacity={0.3} />
-        </Text>
+        </SafeText>
       )}
     </group>
   );
