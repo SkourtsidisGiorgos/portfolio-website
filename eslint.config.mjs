@@ -150,6 +150,26 @@ const eslintConfig = defineConfig([
     },
   },
 
+  // Test file overrides - allow more flexibility for test patterns
+  {
+    files: [
+      '**/*.test.ts',
+      '**/*.test.tsx',
+      '**/*.spec.ts',
+      '**/*.spec.tsx',
+      'tests/**/*.ts',
+      'tests/**/*.tsx',
+    ],
+    rules: {
+      // Allow more nesting for describe > describe > it > callback patterns
+      'max-nested-callbacks': ['warn', 5],
+      // Test data often has repeated strings
+      'sonarjs/no-duplicate-string': 'off',
+      // Test files may have slightly more complex assertions
+      complexity: ['warn', 15],
+    },
+  },
+
   // Override default ignores
   globalIgnores([
     '.next/**',
