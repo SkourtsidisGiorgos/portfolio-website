@@ -1,6 +1,10 @@
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
-import { afterEach } from 'vitest';
+import { afterEach, vi } from 'vitest';
+import framerMotionMock from './mocks/framer-motion';
+
+// Mock framer-motion globally for all tests
+vi.mock('framer-motion', () => framerMotionMock);
 
 // Cleanup after each test
 afterEach(() => {
