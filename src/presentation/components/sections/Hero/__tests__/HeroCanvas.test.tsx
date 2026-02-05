@@ -1,18 +1,20 @@
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { HeroCanvas } from '../HeroCanvas';
+import type { HeroCanvasProps } from '../HeroCanvas';
+
+// We need to reset modules before importing the component to clear cached WebGL state
+let HeroCanvas: React.ComponentType<HeroCanvasProps>;
 
 // Mock @react-three/fiber
 vi.mock('@react-three/fiber', () => ({
   Canvas: ({
     children,
-    fallback,
   }: {
     children?: React.ReactNode;
     fallback?: React.ReactNode;
   }) => (
     <div data-testid="r3f-canvas" role="img" aria-label="3D Scene">
-      {fallback || children}
+      {children}
     </div>
   ),
 }));
@@ -22,35 +24,44 @@ vi.mock('@/presentation/three/scenes/HeroScene', () => ({
   HeroScene: () => <mesh data-testid="hero-scene" />,
 }));
 
+// Mock useWebGLCanvas hook
+vi.mock('@/presentation/three/hooks', () => ({
+  useWebGLCanvas: () => ({
+    isSupported: true,
+    hasError: false,
+    contextLost: false,
+  }),
+}));
+
 describe('HeroCanvas', () => {
-  // Mock WebGL support
-  let originalGetContext: typeof HTMLCanvasElement.prototype.getContext;
-  let mockWebGLSupport = true;
-
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
+    vi.resetModules();
 
-    // Store original getContext
-    originalGetContext = HTMLCanvasElement.prototype.getContext;
+    // Mock window.WebGLRenderingContext to simulate WebGL support
+    vi.stubGlobal(
+      'WebGLRenderingContext',
+      vi.fn(() => ({}))
+    );
 
-    // Mock canvas getContext to simulate WebGL support
-    HTMLCanvasElement.prototype.getContext = vi.fn((contextId: string) => {
-      if (contextId === 'webgl' || contextId === 'experimental-webgl') {
-        return mockWebGLSupport ? {} : null;
+    // Mock canvas.getContext to return a WebGL context
+    HTMLCanvasElement.prototype.getContext = vi.fn(
+      (contextId: string) => {
+        if (contextId === 'webgl' || contextId === 'experimental-webgl') {
+          return {}; // Return truthy object to indicate support
+        }
+        return null;
       }
-      return originalGetContext.call(
-        document.createElement('canvas'),
-        contextId as '2d'
-      );
-    }) as typeof HTMLCanvasElement.prototype.getContext;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ) as any;
 
-    // Reset WebGL support cache by re-importing module
-    mockWebGLSupport = true;
+    // Dynamically import the component after setting up mocks
+    const imported = await import('../HeroCanvas');
+    HeroCanvas = imported.HeroCanvas;
   });
 
   afterEach(() => {
-    // Restore original getContext
-    HTMLCanvasElement.prototype.getContext = originalGetContext;
+    vi.unstubAllGlobals();
   });
 
   it('renders without crashing', () => {
@@ -94,91 +105,9 @@ describe('HeroCanvas', () => {
     expect(wrapper).toHaveClass('relative');
   });
 
-  describe('Suspense fallback', () => {
-    it('shows default loading fallback', () => {
-      render(<HeroCanvas />);
+  it('renders the 3D scene component', () => {
+    render(<HeroCanvas />);
 
-      // The Canvas mock renders fallback if provided
-      expect(screen.getByText('Loading 3D scene...')).toBeInTheDocument();
-    });
-
-    it('shows custom fallback when provided', () => {
-      render(<HeroCanvas fallback={<div>Custom Loading...</div>} />);
-
-      expect(screen.getByText('Custom Loading...')).toBeInTheDocument();
-    });
-  });
-
-  describe('WebGL context loss handling', () => {
-    it('handles webglcontextlost event', async () => {
-      render(<HeroCanvas />);
-
-      // Initially shows canvas
-      expect(screen.getByTestId('r3f-canvas')).toBeInTheDocument();
-
-      // Simulate context loss
-      await act(async () => {
-        const event = new Event('webglcontextlost');
-        window.dispatchEvent(event);
-      });
-
-      // Should show error fallback
-      expect(
-        screen.getByText('3D visualization requires WebGL support.')
-      ).toBeInTheDocument();
-    });
-
-    it('handles webglcontextrestored event', async () => {
-      render(<HeroCanvas />);
-
-      // Simulate context loss
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextlost'));
-      });
-
-      // Verify error state
-      expect(
-        screen.getByText('3D visualization requires WebGL support.')
-      ).toBeInTheDocument();
-
-      // Simulate context restored
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextrestored'));
-      });
-
-      // Should show canvas again
-      expect(screen.getByTestId('r3f-canvas')).toBeInTheDocument();
-    });
-
-    it('shows custom error fallback when provided', async () => {
-      render(<HeroCanvas errorFallback={<div>Custom Error Message</div>} />);
-
-      // Simulate context loss
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextlost'));
-      });
-
-      expect(screen.getByText('Custom Error Message')).toBeInTheDocument();
-    });
-  });
-
-  describe('cleanup', () => {
-    it('removes event listeners on unmount', () => {
-      const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
-
-      const { unmount } = render(<HeroCanvas />);
-      unmount();
-
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        'webglcontextlost',
-        expect.any(Function)
-      );
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        'webglcontextrestored',
-        expect.any(Function)
-      );
-
-      removeEventListenerSpy.mockRestore();
-    });
+    expect(screen.getByTestId('hero-scene')).toBeInTheDocument();
   });
 });

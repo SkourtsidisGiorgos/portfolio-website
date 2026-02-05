@@ -13,6 +13,15 @@ export {
 } from './WebGLFallback';
 
 export {
+  LoadingFallback,
+  ErrorFallback,
+  ErrorIcons,
+  type LoadingFallbackProps,
+  type ErrorFallbackProps,
+  type ErrorIconType,
+} from './CanvasFallback';
+
+export {
   PerformanceMonitor,
   PagePerformanceMonitor,
   type PerformanceMonitorProps,

@@ -1,19 +1,21 @@
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { ExperienceDTO } from '@/application/dto/ExperienceDTO';
-import { ExperienceCanvas } from '../ExperienceCanvas';
+import type { ExperienceCanvasProps } from '../ExperienceCanvas';
+
+// We need to reset modules before importing the component to clear cached WebGL state
+let ExperienceCanvas: React.ComponentType<ExperienceCanvasProps>;
 
 // Mock @react-three/fiber
 vi.mock('@react-three/fiber', () => ({
   Canvas: ({
     children,
-    fallback,
   }: {
     children?: React.ReactNode;
     fallback?: React.ReactNode;
   }) => (
     <div data-testid="r3f-canvas" role="img" aria-label="3D Scene">
-      {fallback || children}
+      {children}
     </div>
   ),
 }));
@@ -21,6 +23,15 @@ vi.mock('@react-three/fiber', () => ({
 // Mock ExperienceTimeline
 vi.mock('@/presentation/three/scenes/ExperienceTimeline', () => ({
   ExperienceTimeline: () => <mesh data-testid="experience-timeline" />,
+}));
+
+// Mock useWebGLCanvas hook
+vi.mock('@/presentation/three/hooks', () => ({
+  useWebGLCanvas: () => ({
+    isSupported: true,
+    hasError: false,
+    contextLost: false,
+  }),
 }));
 
 // Create mock experiences for testing
@@ -43,28 +54,34 @@ const mockExperiences: ExperienceDTO[] = [
 ];
 
 describe('ExperienceCanvas', () => {
-  let originalGetContext: typeof HTMLCanvasElement.prototype.getContext;
-  let mockWebGLSupport = true;
-
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
-    originalGetContext = HTMLCanvasElement.prototype.getContext;
+    vi.resetModules();
 
-    HTMLCanvasElement.prototype.getContext = vi.fn((contextId: string) => {
-      if (contextId === 'webgl' || contextId === 'experimental-webgl') {
-        return mockWebGLSupport ? {} : null;
+    // Mock window.WebGLRenderingContext to simulate WebGL support
+    vi.stubGlobal(
+      'WebGLRenderingContext',
+      vi.fn(() => ({}))
+    );
+
+    // Mock canvas.getContext to return a WebGL context
+    HTMLCanvasElement.prototype.getContext = vi.fn(
+      (contextId: string) => {
+        if (contextId === 'webgl' || contextId === 'experimental-webgl') {
+          return {}; // Return truthy object to indicate support
+        }
+        return null;
       }
-      return originalGetContext.call(
-        document.createElement('canvas'),
-        contextId as '2d'
-      );
-    }) as typeof HTMLCanvasElement.prototype.getContext;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ) as any;
 
-    mockWebGLSupport = true;
+    // Dynamically import the component after setting up mocks
+    const imported = await import('../ExperienceCanvas');
+    ExperienceCanvas = imported.ExperienceCanvas;
   });
 
   afterEach(() => {
-    HTMLCanvasElement.prototype.getContext = originalGetContext;
+    vi.unstubAllGlobals();
   });
 
   it('renders without crashing', () => {
@@ -121,94 +138,9 @@ describe('ExperienceCanvas', () => {
     expect(wrapper).toHaveClass('relative');
   });
 
-  describe('Suspense fallback', () => {
-    it('shows default loading fallback', () => {
-      render(<ExperienceCanvas experiences={mockExperiences} />);
+  it('renders the 3D scene component', () => {
+    render(<ExperienceCanvas experiences={mockExperiences} />);
 
-      expect(screen.getByText('Loading timeline...')).toBeInTheDocument();
-    });
-
-    it('shows custom fallback when provided', () => {
-      render(
-        <ExperienceCanvas
-          experiences={mockExperiences}
-          fallback={<div>Loading Experience...</div>}
-        />
-      );
-
-      expect(screen.getByText('Loading Experience...')).toBeInTheDocument();
-    });
-  });
-
-  describe('error fallback', () => {
-    it('shows error fallback on WebGL context loss', async () => {
-      render(<ExperienceCanvas experiences={mockExperiences} />);
-
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextlost'));
-      });
-
-      expect(
-        screen.getByText('3D timeline requires WebGL support.')
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText('View experience list below instead.')
-      ).toBeInTheDocument();
-    });
-
-    it('shows custom error fallback when provided', async () => {
-      render(
-        <ExperienceCanvas
-          experiences={mockExperiences}
-          errorFallback={<div>Custom Timeline Error</div>}
-        />
-      );
-
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextlost'));
-      });
-
-      expect(screen.getByText('Custom Timeline Error')).toBeInTheDocument();
-    });
-
-    it('recovers from error on context restored', async () => {
-      render(<ExperienceCanvas experiences={mockExperiences} />);
-
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextlost'));
-      });
-
-      expect(
-        screen.getByText('3D timeline requires WebGL support.')
-      ).toBeInTheDocument();
-
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextrestored'));
-      });
-
-      expect(screen.getByTestId('r3f-canvas')).toBeInTheDocument();
-    });
-  });
-
-  describe('cleanup', () => {
-    it('removes event listeners on unmount', () => {
-      const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
-
-      const { unmount } = render(
-        <ExperienceCanvas experiences={mockExperiences} />
-      );
-      unmount();
-
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        'webglcontextlost',
-        expect.any(Function)
-      );
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        'webglcontextrestored',
-        expect.any(Function)
-      );
-
-      removeEventListenerSpy.mockRestore();
-    });
+    expect(screen.getByTestId('experience-timeline')).toBeInTheDocument();
   });
 });

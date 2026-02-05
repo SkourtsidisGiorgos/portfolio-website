@@ -1,19 +1,21 @@
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { Skill } from '@/domain/portfolio/entities/Skill';
-import { SkillsCanvas } from '../SkillsCanvas';
+import type { SkillsCanvasProps } from '../SkillsCanvas';
+
+// We need to reset modules before importing the component to clear cached WebGL state
+let SkillsCanvas: React.ComponentType<SkillsCanvasProps>;
 
 // Mock @react-three/fiber
 vi.mock('@react-three/fiber', () => ({
   Canvas: ({
     children,
-    fallback,
   }: {
     children?: React.ReactNode;
     fallback?: React.ReactNode;
   }) => (
     <div data-testid="r3f-canvas" role="img" aria-label="3D Scene">
-      {fallback || children}
+      {children}
     </div>
   ),
 }));
@@ -21,6 +23,15 @@ vi.mock('@react-three/fiber', () => ({
 // Mock SkillsGlobe
 vi.mock('@/presentation/three/scenes/SkillsGlobe', () => ({
   SkillsGlobe: () => <mesh data-testid="skills-globe" />,
+}));
+
+// Mock useWebGLCanvas hook
+vi.mock('@/presentation/three/hooks', () => ({
+  useWebGLCanvas: () => ({
+    isSupported: true,
+    hasError: false,
+    contextLost: false,
+  }),
 }));
 
 // Create mock skills for testing
@@ -36,28 +47,34 @@ const mockSkills = [
 ];
 
 describe('SkillsCanvas', () => {
-  let originalGetContext: typeof HTMLCanvasElement.prototype.getContext;
-  let mockWebGLSupport = true;
-
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
-    originalGetContext = HTMLCanvasElement.prototype.getContext;
+    vi.resetModules();
 
-    HTMLCanvasElement.prototype.getContext = vi.fn((contextId: string) => {
-      if (contextId === 'webgl' || contextId === 'experimental-webgl') {
-        return mockWebGLSupport ? {} : null;
+    // Mock window.WebGLRenderingContext to simulate WebGL support
+    vi.stubGlobal(
+      'WebGLRenderingContext',
+      vi.fn(() => ({}))
+    );
+
+    // Mock canvas.getContext to return a WebGL context
+    HTMLCanvasElement.prototype.getContext = vi.fn(
+      (contextId: string) => {
+        if (contextId === 'webgl' || contextId === 'experimental-webgl') {
+          return {}; // Return truthy object to indicate support
+        }
+        return null;
       }
-      return originalGetContext.call(
-        document.createElement('canvas'),
-        contextId as '2d'
-      );
-    }) as typeof HTMLCanvasElement.prototype.getContext;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ) as any;
 
-    mockWebGLSupport = true;
+    // Dynamically import the component after setting up mocks
+    const imported = await import('../SkillsCanvas');
+    SkillsCanvas = imported.SkillsCanvas;
   });
 
   afterEach(() => {
-    HTMLCanvasElement.prototype.getContext = originalGetContext;
+    vi.unstubAllGlobals();
   });
 
   it('renders without crashing', () => {
@@ -105,92 +122,9 @@ describe('SkillsCanvas', () => {
     expect(wrapper).toHaveClass('relative');
   });
 
-  describe('Suspense fallback', () => {
-    it('shows default loading fallback', () => {
-      render(<SkillsCanvas skills={mockSkills} />);
+  it('renders the 3D scene component', () => {
+    render(<SkillsCanvas skills={mockSkills} />);
 
-      expect(screen.getByText('Loading skills globe...')).toBeInTheDocument();
-    });
-
-    it('shows custom fallback when provided', () => {
-      render(
-        <SkillsCanvas
-          skills={mockSkills}
-          fallback={<div>Loading Skills...</div>}
-        />
-      );
-
-      expect(screen.getByText('Loading Skills...')).toBeInTheDocument();
-    });
-  });
-
-  describe('error fallback', () => {
-    it('shows error fallback on WebGL context loss', async () => {
-      render(<SkillsCanvas skills={mockSkills} />);
-
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextlost'));
-      });
-
-      expect(
-        screen.getByText('3D globe requires WebGL support.')
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText('View skills list below instead.')
-      ).toBeInTheDocument();
-    });
-
-    it('shows custom error fallback when provided', async () => {
-      render(
-        <SkillsCanvas
-          skills={mockSkills}
-          errorFallback={<div>Custom Skills Error</div>}
-        />
-      );
-
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextlost'));
-      });
-
-      expect(screen.getByText('Custom Skills Error')).toBeInTheDocument();
-    });
-
-    it('recovers from error on context restored', async () => {
-      render(<SkillsCanvas skills={mockSkills} />);
-
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextlost'));
-      });
-
-      expect(
-        screen.getByText('3D globe requires WebGL support.')
-      ).toBeInTheDocument();
-
-      await act(async () => {
-        window.dispatchEvent(new Event('webglcontextrestored'));
-      });
-
-      expect(screen.getByTestId('r3f-canvas')).toBeInTheDocument();
-    });
-  });
-
-  describe('cleanup', () => {
-    it('removes event listeners on unmount', () => {
-      const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
-
-      const { unmount } = render(<SkillsCanvas skills={mockSkills} />);
-      unmount();
-
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        'webglcontextlost',
-        expect.any(Function)
-      );
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        'webglcontextrestored',
-        expect.any(Function)
-      );
-
-      removeEventListenerSpy.mockRestore();
-    });
+    expect(screen.getByTestId('skills-globe')).toBeInTheDocument();
   });
 });

@@ -18,14 +18,18 @@ export {
 } from './useAnimationFrame';
 export {
   usePerformanceMode,
-  useExtendedPerformanceMode,
   getQualityValue,
   type UsePerformanceModeOptions,
-  type ExtendedPerformanceConfig,
 } from './usePerformanceMode';
 export {
   useWebGLSupport,
   type UseWebGLSupportOptions,
   type UseWebGLSupportReturn,
 } from './useWebGLSupport';
+export {
+  useWebGLCanvas,
+  clearWebGLSupportCache,
+  type WebGLSupportState,
+  type UseWebGLCanvasOptions,
+} from './useWebGLCanvas';
 export { useCursorPointer } from './useCursorPointer';
