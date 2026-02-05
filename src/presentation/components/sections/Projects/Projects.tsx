@@ -160,5 +160,3 @@ export function Projects({ id = 'projects', className }: ProjectsProps) {
     </Section>
   );
 }
-
-export default Projects;

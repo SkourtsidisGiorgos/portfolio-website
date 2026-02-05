@@ -112,5 +112,3 @@ export function ProjectsCanvas({
     </div>
   );
 }
-
-export default ProjectsCanvas;

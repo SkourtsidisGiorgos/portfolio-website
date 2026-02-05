@@ -195,5 +195,3 @@ export function ExperienceCard({
     </AnimatePresence>
   );
 }
-
-export default ExperienceCard;

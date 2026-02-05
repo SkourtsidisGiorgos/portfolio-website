@@ -10,9 +10,6 @@ export { BentoCell } from './BentoCell';
 export type { BentoCellProps, BentoCellSize } from './BentoCell';
 
 // Card components
-export { AboutCard } from './AboutCard';
-export type { AboutCardProps, AboutCardVariant } from './AboutCard';
-
 export { MetricCard } from './MetricCard';
 export type { MetricCardProps } from './MetricCard';
 

@@ -121,5 +121,3 @@ export function HeroCanvas({
     </div>
   );
 }
-
-export default HeroCanvas;

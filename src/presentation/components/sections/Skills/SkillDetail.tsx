@@ -186,5 +186,3 @@ export function SkillDetail({ skill, onClose, className }: SkillDetailProps) {
     </AnimatePresence>
   );
 }
-
-export default SkillDetail;

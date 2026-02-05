@@ -122,5 +122,3 @@ export function TimelineNav({
     </nav>
   );
 }
-
-export default TimelineNav;

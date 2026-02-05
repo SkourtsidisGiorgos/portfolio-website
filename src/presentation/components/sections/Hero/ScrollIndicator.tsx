@@ -65,5 +65,3 @@ export function ScrollIndicator({
     </motion.div>
   );
 }
-
-export default ScrollIndicator;

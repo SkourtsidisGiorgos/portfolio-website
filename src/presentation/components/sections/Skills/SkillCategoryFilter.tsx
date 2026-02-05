@@ -124,5 +124,3 @@ export function SkillCategoryFilter({
     </div>
   );
 }
-
-export default SkillCategoryFilter;

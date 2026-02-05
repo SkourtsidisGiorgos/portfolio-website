@@ -230,5 +230,3 @@ export function SkillsList({
     </div>
   );
 }
-
-export default SkillsList;

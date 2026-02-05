@@ -135,5 +135,3 @@ export function HeroContent({
     </motion.div>
   );
 }
-
-export default HeroContent;

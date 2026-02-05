@@ -300,5 +300,3 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     </AnimatePresence>
   );
 }
-
-export default ProjectModal;

@@ -109,5 +109,3 @@ export function SkillsCanvas({
     </div>
   );
 }
-
-export default SkillsCanvas;

@@ -62,5 +62,3 @@ export function ProjectGrid({
     </div>
   );
 }
-
-export default ProjectGrid;

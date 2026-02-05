@@ -153,5 +153,3 @@ export function Skills({ id = 'skills', className }: SkillsProps) {
     </Section>
   );
 }
-
-export default Skills;
