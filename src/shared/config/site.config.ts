@@ -6,14 +6,14 @@ export const siteConfig = {
   url: 'https://giorgos-skourtsidis.dev',
   author: {
     name: 'Giorgos Skourtsidis',
-    email: 'gskourtsidis@gmail.com',
+    email: 'gskourts@gmail.com',
     role: 'Big Data & Software Engineer',
     location: 'Athens, Greece',
   },
   social: {
     github: 'https://github.com/SkourtsidisGiorgos',
     linkedin: 'https://linkedin.com/in/gskourtsidis',
-    email: 'mailto:gskourtsidis@gmail.com',
+    email: 'mailto:gskourts@gmail.com',
   },
   keywords: [
     'Big Data Engineer',

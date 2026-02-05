@@ -101,7 +101,7 @@ export class AboutConfig {
       social: {
         github: 'https://github.com/SkourtsidisGiorgos',
         linkedin: 'https://linkedin.com/in/gskourtsidis',
-        email: 'mailto:gskourtsidis@gmail.com',
+        email: 'mailto:gskourts@gmail.com',
       },
     };
 
