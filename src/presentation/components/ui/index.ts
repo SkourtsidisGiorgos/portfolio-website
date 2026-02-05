@@ -41,3 +41,8 @@ export { Loader, type LoaderProps, type LoaderSize } from './Loader';
 
 // ErrorBoundary
 export { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary';
+
+// Accessibility components
+export { VisuallyHidden, type VisuallyHiddenProps } from './VisuallyHidden';
+export { FocusTrap, type FocusTrapProps } from './FocusTrap';
+export { LiveRegion, type LiveRegionProps } from './LiveRegion';
