@@ -141,5 +141,3 @@ export function ETLNode3D({
     </group>
   );
 }
-
-export default ETLNode3D;

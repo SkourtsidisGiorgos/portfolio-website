@@ -145,5 +145,3 @@ export function useAnimationFrame(
     reset,
   };
 }
-
-export default useAnimationFrame;

@@ -206,5 +206,3 @@ export function getQualityValue<T>(
       return low;
   }
 }
-
-export default usePerformanceMode;

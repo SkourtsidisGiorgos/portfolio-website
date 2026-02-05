@@ -112,5 +112,3 @@ export function TimelineConnection({
     </group>
   );
 }
-
-export default TimelineConnection;

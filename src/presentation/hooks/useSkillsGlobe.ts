@@ -191,5 +191,3 @@ export function useSkillsGlobe(
     isWebGLSupported: is3DEnabled,
   };
 }
-
-export default useSkillsGlobe;

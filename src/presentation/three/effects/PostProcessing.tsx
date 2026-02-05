@@ -149,5 +149,3 @@ export const PostProcessingPresets = {
 } as const;
 
 export type PostProcessingPreset = keyof typeof PostProcessingPresets;
-
-export default PostProcessing;

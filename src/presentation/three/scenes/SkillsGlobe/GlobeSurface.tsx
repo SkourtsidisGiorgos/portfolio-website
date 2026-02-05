@@ -52,5 +52,3 @@ export function GlobeSurface({
     </mesh>
   );
 }
-
-export default GlobeSurface;

@@ -146,5 +146,3 @@ export const SafeText = memo(
     );
   })
 );
-
-export default SafeText;

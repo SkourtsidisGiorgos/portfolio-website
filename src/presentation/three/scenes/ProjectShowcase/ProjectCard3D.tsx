@@ -309,5 +309,3 @@ export function ProjectCard3D({
     </group>
   );
 }
-
-export default ProjectCard3D;

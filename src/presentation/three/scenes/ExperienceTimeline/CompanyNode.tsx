@@ -175,5 +175,3 @@ export function CompanyNode({
     </group>
   );
 }
-
-export default CompanyNode;

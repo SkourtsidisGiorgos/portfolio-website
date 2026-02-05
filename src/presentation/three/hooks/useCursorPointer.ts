@@ -17,5 +17,3 @@ export function useCursorPointer() {
 
   return { setPointer, setAuto };
 }
-
-export default useCursorPointer;

@@ -15,7 +15,6 @@ export {
 // Value Objects
 export { DateRange } from './value-objects/DateRange';
 export { TechStack } from './value-objects/TechStack';
-export { ContactInfo } from './value-objects/ContactInfo';
 
 // Repositories
 export type { IExperienceRepository } from './repositories/IExperienceRepository';

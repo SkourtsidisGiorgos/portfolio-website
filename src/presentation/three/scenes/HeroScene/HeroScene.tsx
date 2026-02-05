@@ -158,5 +158,3 @@ export function HeroScene({
     </>
   );
 }
-
-export default HeroScene;

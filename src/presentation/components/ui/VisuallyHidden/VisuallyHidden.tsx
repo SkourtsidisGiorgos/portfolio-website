@@ -67,5 +67,3 @@ export function VisuallyHidden({
     </Component>
   );
 }
-
-export default VisuallyHidden;

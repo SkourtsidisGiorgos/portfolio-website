@@ -123,5 +123,3 @@ export function useLazySection(
     triggerLoad,
   };
 }
-
-export default useLazySection;

@@ -72,5 +72,3 @@ export function useHeroScene(
     particleCount: config.particleCount,
   };
 }
-
-export default useHeroScene;

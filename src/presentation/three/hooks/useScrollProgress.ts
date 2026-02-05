@@ -230,5 +230,3 @@ export function useSectionScrollProgress(
 
   return sectionProgress;
 }
-
-export default useScrollProgress;

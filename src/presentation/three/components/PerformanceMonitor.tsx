@@ -264,5 +264,3 @@ export function PagePerformanceMonitor({
     </div>
   );
 }
-
-export default PerformanceMonitor;

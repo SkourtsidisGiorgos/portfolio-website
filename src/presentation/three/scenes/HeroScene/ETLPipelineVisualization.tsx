@@ -104,5 +104,3 @@ export function ETLPipelineVisualization({
     </group>
   );
 }
-
-export default ETLPipelineVisualization;

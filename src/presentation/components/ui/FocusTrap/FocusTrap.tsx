@@ -96,5 +96,3 @@ export function FocusTrap({
     </div>
   );
 }
-
-export default FocusTrap;

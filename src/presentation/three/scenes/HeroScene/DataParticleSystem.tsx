@@ -163,5 +163,3 @@ export function DataParticleSystem({
     />
   );
 }
-
-export default DataParticleSystem;

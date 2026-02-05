@@ -213,5 +213,3 @@ export function useWebGLCanvas(
 export function clearWebGLSupportCache(): void {
   webGLSupportCache = null;
 }
-
-export default useWebGLCanvas;

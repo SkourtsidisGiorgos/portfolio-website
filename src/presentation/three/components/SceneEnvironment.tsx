@@ -90,5 +90,3 @@ export function SceneEnvironment({
     </>
   );
 }
-
-export default SceneEnvironment;

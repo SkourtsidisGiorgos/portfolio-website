@@ -178,5 +178,3 @@ export function useProjectShowcase(
     isWebGLSupported: is3DEnabled,
   };
 }
-
-export default useProjectShowcase;

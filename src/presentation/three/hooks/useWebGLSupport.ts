@@ -62,5 +62,3 @@ export function useWebGLSupport(
     quality,
   };
 }
-
-export default useWebGLSupport;

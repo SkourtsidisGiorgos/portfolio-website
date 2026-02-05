@@ -137,5 +137,3 @@ export function useExperienceTimeline(
     isWebGLSupported: is3DEnabled,
   };
 }
-
-export default useExperienceTimeline;

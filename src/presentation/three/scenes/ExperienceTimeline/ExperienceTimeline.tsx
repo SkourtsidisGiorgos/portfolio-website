@@ -204,5 +204,3 @@ export function ExperienceTimeline({
     </>
   );
 }
-
-export default ExperienceTimeline;

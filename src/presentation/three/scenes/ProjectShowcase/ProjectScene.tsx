@@ -176,5 +176,3 @@ export function ProjectScene({
     </>
   );
 }
-
-export default ProjectScene;

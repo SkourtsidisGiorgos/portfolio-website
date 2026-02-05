@@ -177,5 +177,3 @@ export function SimpleLOD({
     </group>
   );
 }
-
-export default LODWrapper;

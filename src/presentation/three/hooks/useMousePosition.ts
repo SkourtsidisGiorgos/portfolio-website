@@ -133,5 +133,3 @@ export function useMousePosition({
 
   return disabled ? initialPosition : position;
 }
-
-export default useMousePosition;

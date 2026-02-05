@@ -43,45 +43,11 @@ export {
 } from './domain';
 
 // =============================================================================
-// Primitives
-// =============================================================================
-export {
-  DataParticle,
-  GlowingSphere,
-  GlowLayer,
-  GlowLayerPresets,
-  FloatingText,
-  ConnectionLine,
-  DataFlow,
-  GridFloor,
-  SimpleGrid,
-  type DataParticleProps,
-  type GlowingSphereProps,
-  type GlowLayerProps,
-  type GlowLayerPreset,
-  type FloatingTextProps,
-  type ConnectionLineProps,
-  type DataFlowProps,
-  type GridFloorProps,
-  type SimpleGridProps,
-} from './primitives';
-
-// =============================================================================
 // Effects
 // =============================================================================
 export {
   PostProcessing,
   PostProcessingPresets,
-  heroPreset,
-  subtlePreset,
-  minimalPreset,
-  performancePreset,
-  disabledPreset,
-  effectPresets,
-  getEffectPreset,
-  getEffectPresetNames,
-  createCustomPreset,
-  getPresetForQuality,
   type PostProcessingProps,
   type PostProcessingPreset,
 } from './effects';
@@ -111,27 +77,8 @@ export {
 // Utils
 // =============================================================================
 export {
-  // Geometry helpers
-  degToRad,
-  radToDeg,
-  lerp,
-  clamp,
-  mapRange,
-  smoothstep,
-  distance3D,
-  distance2D,
-  pointsOnSphere,
-  pointsOnCircle,
-  spiralPath,
-  randomPointsInBox,
-  randomPointsInSphere,
-  createSplinePath,
-  lookAtRotation,
-  easing,
-  applyEasing,
-  oscillate,
-  colorGradient,
-  type EasingFunction,
+  // WebGL detection
+  detectWebGLSupport,
   // Animation helpers (DRY)
   pulseValue,
   oscillateScale,

@@ -139,5 +139,3 @@ export function SkillNode3D({
     </group>
   );
 }
-
-export default SkillNode3D;

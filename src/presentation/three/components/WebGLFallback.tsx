@@ -242,5 +242,3 @@ export function ContextLostFallback({
     </div>
   );
 }
-
-export default WebGLFallback;

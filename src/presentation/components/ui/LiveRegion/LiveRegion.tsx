@@ -106,5 +106,3 @@ export function LiveRegion({
     </div>
   );
 }
-
-export default LiveRegion;
