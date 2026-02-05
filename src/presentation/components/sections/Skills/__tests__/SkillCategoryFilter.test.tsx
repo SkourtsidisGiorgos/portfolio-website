@@ -3,30 +3,6 @@ import { describe, it, expect, vi } from 'vitest';
 import type { CategoryInfo } from '@/presentation/hooks/useSkillsGlobe';
 import { SkillCategoryFilter } from '../SkillCategoryFilter';
 
-// Mock framer-motion with all needed components
-vi.mock('framer-motion', () => ({
-  motion: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    div: ({ children, className, ...props }: any) => (
-      <div className={className} {...props}>
-        {children}
-      </div>
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    button: ({ children, className, ...props }: any) => (
-      <button className={className} {...props}>
-        {children}
-      </button>
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    span: ({ children, className, ...props }: any) => (
-      <span className={className} {...props}>
-        {children}
-      </span>
-    ),
-  },
-}));
-
 const mockCategories: CategoryInfo[] = [
   { id: 'languages', label: 'Languages', count: 4 },
   { id: 'bigdata', label: 'Big Data', count: 4 },

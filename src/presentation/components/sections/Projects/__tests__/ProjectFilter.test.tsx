@@ -2,24 +2,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { ProjectFilter, type FilterOption } from '../ProjectFilter';
 
-// Mock framer-motion
-vi.mock('framer-motion', () => ({
-  motion: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    div: ({ children, className, layoutId, ...props }: any) => (
-      <div className={className} data-layout-id={layoutId} {...props}>
-        {children}
-      </div>
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    button: ({ children, className, ...props }: any) => (
-      <button className={className} {...props}>
-        {children}
-      </button>
-    ),
-  },
-}));
-
 describe('ProjectFilter', () => {
   const defaultOptions: FilterOption[] = [
     { id: 'all', label: 'All Projects', count: 10 },

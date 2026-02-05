@@ -3,31 +3,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { Project } from '@/domain/portfolio/entities/Project';
 import { ProjectCard } from '../ProjectCard';
 
-// Mock framer-motion
-vi.mock('framer-motion', () => ({
-  motion: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    div: ({ children, className, ...props }: any) => (
-      <div className={className} {...props}>
-        {children}
-      </div>
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    button: ({ children, className, ...props }: any) => (
-      <button className={className} {...props}>
-        {children}
-      </button>
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    span: ({ children, className, ...props }: any) => (
-      <span className={className} {...props}>
-        {children}
-      </span>
-    ),
-  },
-  useReducedMotion: vi.fn(() => false),
-}));
-
 describe('ProjectCard', () => {
   const createTestProject = (
     overrides?: Partial<Parameters<typeof Project.create>[0]>

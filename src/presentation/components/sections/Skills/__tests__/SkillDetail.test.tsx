@@ -3,27 +3,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { Skill } from '@/domain/portfolio/entities/Skill';
 import { SkillDetail } from '../SkillDetail';
 
-// Mock framer-motion with all needed components
-vi.mock('framer-motion', () => ({
-  motion: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    div: ({ children, className, ...props }: any) => (
-      <div className={className} {...props}>
-        {children}
-      </div>
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    span: ({ children, className, ...props }: any) => (
-      <span className={className} {...props}>
-        {children}
-      </span>
-    ),
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => (
-    <>{children}</>
-  ),
-}));
-
 describe('SkillDetail', () => {
   const createSkill = (
     overrides?: Partial<Parameters<typeof Skill.create>[0]>

@@ -3,31 +3,6 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { Project } from '@/domain/portfolio/entities/Project';
 import { ProjectModal } from '../ProjectModal';
 
-// Mock framer-motion with proper handling of AnimatePresence children
-vi.mock('framer-motion', () => ({
-  motion: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    div: ({ children, className, role, ...props }: any) => (
-      <div className={className} role={role} {...props}>
-        {children}
-      </div>
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    button: ({ children, className, ...props }: any) => (
-      <button className={className} {...props}>
-        {children}
-      </button>
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    span: ({ children, className, ...props }: any) => (
-      <span className={className} {...props}>
-        {children}
-      </span>
-    ),
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-}));
-
 describe('ProjectModal', () => {
   const createTestProject = (
     overrides?: Partial<Parameters<typeof Project.create>[0]>
