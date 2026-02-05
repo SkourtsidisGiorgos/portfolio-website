@@ -22,3 +22,16 @@ export {
   type UseLazySectionOptions,
   type UseLazySectionReturn,
 } from './useLazySection';
+
+// Accessibility hooks
+export { useReducedMotion } from './useReducedMotion';
+export {
+  useFocusManagement,
+  type UseFocusManagementOptions,
+  type UseFocusManagementReturn,
+} from './useFocusManagement';
+export {
+  useAnnounce,
+  type Announcement,
+  type UseAnnounceReturn,
+} from './useAnnounce';
