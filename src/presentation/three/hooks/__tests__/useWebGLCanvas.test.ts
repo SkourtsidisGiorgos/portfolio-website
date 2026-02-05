@@ -13,10 +13,28 @@ describe('useWebGLCanvas', () => {
       vi.fn(() => ({}))
     );
 
+    // Mock WebGL context with required methods
+    const mockWebGLContext = {
+      getContextAttributes: () => ({
+        alpha: true,
+        antialias: true,
+        depth: true,
+        failIfMajorPerformanceCaveat: false,
+        powerPreference: 'default',
+        premultipliedAlpha: true,
+        preserveDrawingBuffer: false,
+        stencil: false,
+      }),
+    };
+
     HTMLCanvasElement.prototype.getContext = vi.fn(
       (contextId: string) => {
-        if (contextId === 'webgl' || contextId === 'experimental-webgl') {
-          return {}; // Return truthy object to indicate support
+        if (
+          contextId === 'webgl2' ||
+          contextId === 'webgl' ||
+          contextId === 'experimental-webgl'
+        ) {
+          return mockWebGLContext;
         }
         return null;
       }
@@ -147,9 +165,16 @@ describe('useWebGLCanvas', () => {
   });
 
   it('caches WebGL support check result', () => {
+    const mockContext = {
+      getContextAttributes: () => ({ alpha: true }),
+    };
     const getContextSpy = vi.fn((contextId: string) => {
-      if (contextId === 'webgl' || contextId === 'experimental-webgl') {
-        return {};
+      if (
+        contextId === 'webgl2' ||
+        contextId === 'webgl' ||
+        contextId === 'experimental-webgl'
+      ) {
+        return mockContext;
       }
       return null;
     });

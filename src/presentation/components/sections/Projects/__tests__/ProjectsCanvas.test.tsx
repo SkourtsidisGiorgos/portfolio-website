@@ -28,6 +28,7 @@ vi.mock('@/presentation/three/scenes/ProjectShowcase', () => ({
 // Mock useWebGLCanvas hook
 vi.mock('@/presentation/three/hooks', () => ({
   useWebGLCanvas: () => ({
+    isMounted: true,
     isSupported: true,
     hasError: false,
     contextLost: false,
