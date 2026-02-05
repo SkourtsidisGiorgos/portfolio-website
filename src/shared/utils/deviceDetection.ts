@@ -48,6 +48,33 @@ type NavigatorWithMemory = Navigator & {
   deviceMemory?: number;
 };
 
+/** Regex patterns for high-end GPU detection */
+const HIGH_END_GPU_PATTERN =
+  /nvidia|geforce|rtx|gtx|quadro|radeon (rx|pro)|amd|apple m[1-9]|intel (iris|arc)/i;
+
+/** Regex patterns for low-end GPU detection */
+const LOW_END_GPU_PATTERN =
+  /intel (hd|uhd) graphics [0-9]{3}|mali|adreno [0-5]|powervr|swiftshader/i;
+
+/**
+ * Classifies GPU tier based on renderer string.
+ */
+function classifyGPUByRenderer(renderer: string): GPUTier | null {
+  const rendererLower = renderer.toLowerCase();
+  if (HIGH_END_GPU_PATTERN.test(rendererLower)) return 'high';
+  if (LOW_END_GPU_PATTERN.test(rendererLower)) return 'low';
+  return null;
+}
+
+/**
+ * Classifies GPU tier based on max texture size.
+ */
+function classifyGPUByTextureSize(maxTextureSize: number): GPUTier {
+  if (maxTextureSize >= 16384) return 'high';
+  if (maxTextureSize >= 4096) return 'medium';
+  return 'low';
+}
+
 /**
  * Detects the GPU tier based on available APIs and heuristics.
  *
@@ -70,33 +97,13 @@ export function detectGPUTier(): GPUTier {
 
     if (debugInfo) {
       const renderer = webgl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-      const rendererLower = renderer.toLowerCase();
-
-      // High-end GPUs
-      if (
-        /nvidia|geforce|rtx|gtx|quadro/.test(rendererLower) ||
-        /radeon (rx|pro)|amd/i.test(rendererLower) ||
-        /apple m[1-9]/i.test(rendererLower) ||
-        /intel (iris|arc)/i.test(rendererLower)
-      ) {
-        return 'high';
-      }
-
-      // Low-end GPUs
-      if (
-        /intel (hd|uhd) graphics [0-9]{3}/i.test(rendererLower) ||
-        /mali|adreno [0-5]/i.test(rendererLower) ||
-        /powervr|swiftshader/i.test(rendererLower)
-      ) {
-        return 'low';
-      }
+      const tierByRenderer = classifyGPUByRenderer(renderer);
+      if (tierByRenderer) return tierByRenderer;
     }
 
     // Fallback: check max texture size as capability indicator
     const maxTextureSize = webgl.getParameter(webgl.MAX_TEXTURE_SIZE);
-    if (maxTextureSize >= 16384) return 'high';
-    if (maxTextureSize >= 4096) return 'medium';
-    return 'low';
+    return classifyGPUByTextureSize(maxTextureSize);
   } catch {
     return 'unknown';
   }

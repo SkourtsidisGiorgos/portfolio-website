@@ -41,9 +41,22 @@ export function ProjectsCanvas({
   className = '',
   ...sceneProps
 }: ProjectsCanvasProps) {
-  const { isSupported, hasError } = useWebGLCanvas({
+  const { isMounted, isSupported, hasError } = useWebGLCanvas({
     componentName: 'ProjectsCanvas',
   });
+
+  // Show loading fallback until mounted (prevents hydration mismatch)
+  if (!isMounted) {
+    return (
+      <div
+        className={`relative ${className}`}
+        style={{ height }}
+        aria-hidden="true"
+      >
+        {fallback || <LoadingFallback message="Initializing showcase..." />}
+      </div>
+    );
+  }
 
   // Show error fallback if WebGL not supported or context lost
   if (!isSupported || hasError) {

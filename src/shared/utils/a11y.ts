@@ -77,6 +77,40 @@ export function getFocusableElements(
 }
 
 /**
+ * Set of interactive HTML tag names.
+ */
+const INTERACTIVE_TAGS = new Set([
+  'a',
+  'button',
+  'input',
+  'select',
+  'textarea',
+]);
+
+/**
+ * Set of ARIA roles that imply interactivity.
+ */
+const INTERACTIVE_ROLES = new Set([
+  'button',
+  'link',
+  'checkbox',
+  'radio',
+  'switch',
+  'tab',
+  'menuitem',
+  'option',
+]);
+
+/**
+ * Checks if an interactive tag element is actually interactive.
+ */
+function isInteractiveTag(element: Element, tagName: string): boolean {
+  if (element.hasAttribute('disabled')) return false;
+  if (tagName === 'a' && !element.hasAttribute('href')) return false;
+  return true;
+}
+
+/**
  * Checks if an element is interactive (focusable and clickable).
  *
  * @param element - The element to check
@@ -90,14 +124,10 @@ export function isInteractiveElement(element: Element | null): boolean {
   if (!element) return false;
 
   const tagName = element.tagName.toLowerCase();
-  const interactiveTags = ['a', 'button', 'input', 'select', 'textarea'];
 
-  if (interactiveTags.includes(tagName)) {
-    // Check if not disabled
-    if (element.hasAttribute('disabled')) return false;
-    // Check if anchor has href
-    if (tagName === 'a' && !element.hasAttribute('href')) return false;
-    return true;
+  // Check for native interactive elements
+  if (INTERACTIVE_TAGS.has(tagName)) {
+    return isInteractiveTag(element, tagName);
   }
 
   // Check for tabindex
@@ -109,17 +139,7 @@ export function isInteractiveElement(element: Element | null): boolean {
 
   // Check for role that implies interactivity
   const role = element.getAttribute('role');
-  const interactiveRoles = [
-    'button',
-    'link',
-    'checkbox',
-    'radio',
-    'switch',
-    'tab',
-    'menuitem',
-    'option',
-  ];
-  if (role && interactiveRoles.includes(role)) return true;
+  if (role && INTERACTIVE_ROLES.has(role)) return true;
 
   return false;
 }

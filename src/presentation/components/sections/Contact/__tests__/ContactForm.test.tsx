@@ -15,13 +15,13 @@ vi.mock('framer-motion', () => {
       const {
         children,
         className,
-        animate,
-        initial,
-        exit,
-        transition,
-        whileHover,
-        whileTap,
-        variants,
+        animate: _animate,
+        initial: _initial,
+        exit: _exit,
+        transition: _transition,
+        whileHover: _whileHover,
+        whileTap: _whileTap,
+        variants: _variants,
         ...rest
       } = props;
       return React.createElement(

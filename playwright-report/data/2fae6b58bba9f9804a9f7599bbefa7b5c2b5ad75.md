@@ -1,0 +1,211 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+    - link "Skip to main content" [ref=e2] [cursor=pointer]:
+        - /url: '#main-content'
+    - banner [ref=e3]:
+        - generic [ref=e5]:
+            - button "Home GS" [ref=e6]:
+                - generic [ref=e7]: Home
+                - text: GS
+            - navigation [ref=e8]:
+                - button "Home" [ref=e9]
+                - button "About" [ref=e10]
+                - button "Skills" [ref=e11]
+                - button "Experience" [ref=e12]
+                - button "Projects" [ref=e13]
+                - button "Contact" [ref=e14]: Contact
+    - main [ref=e16]:
+        - generic [ref=e18]:
+            - link "Skip to main content" [ref=e19] [cursor=pointer]:
+                - /url: '#main-content'
+            - generic [ref=e27]:
+                - generic [ref=e28]: Big Data & Software Engineer
+                - heading "Giorgos Skourtsidis" [level=1] [ref=e30]
+                - paragraph [ref=e32]: Transforming raw data into actionable insights through elegant engineering solutions. Specializing in ETL pipelines, distributed systems, and cloud architecture.
+                - generic [ref=e33]:
+                    - link "View Projects" [ref=e34] [cursor=pointer]:
+                        - /url: '#projects'
+                    - link "Contact Me" [ref=e35] [cursor=pointer]:
+                        - /url: '#contact'
+            - generic [ref=e36]: Main content starts here
+        - region "Building Data Solutions" [ref=e41]:
+            - generic [ref=e43]:
+                - generic [ref=e44]:
+                    - text: About Me
+                    - heading "Building Data Solutions" [level=2] [ref=e45]
+                    - paragraph [ref=e46]: Big Data & Software Engineer with 4+ years of experience in telecommunications and fintech. Specialized in ETL pipelines, distributed systems, and data engineering. Passionate about building scalable data solutions and contributing to open-source projects.
+                - generic [ref=e47]:
+                    - generic [ref=e49]:
+                        - img "Giorgos Skourtsidis profile photo" [ref=e52]
+                        - generic [ref=e56]:
+                            - heading "Giorgos Skourtsidis" [level=4] [ref=e57]
+                            - paragraph [ref=e58]: Big Data & Software Engineer
+                            - generic [ref=e59]:
+                                - link "GitHub Profile" [ref=e60] [cursor=pointer]:
+                                    - /url: https://github.com/SkourtsidisGiorgos
+                                    - img [ref=e61]
+                                - link "LinkedIn Profile" [ref=e63] [cursor=pointer]:
+                                    - /url: https://linkedin.com/in/gskourtsidis
+                                    - img [ref=e64]
+                                - link "Email Contact" [ref=e66] [cursor=pointer]:
+                                    - /url: mailto:gskourts@gmail.com
+                                    - img [ref=e67]
+                    - generic [ref=e70]:
+                        - img [ref=e72]
+                        - generic [ref=e74]: 0+
+                        - generic [ref=e75]: Years Experience
+                        - generic [ref=e76]: In telecommunications & fintech
+                    - generic [ref=e78]:
+                        - img [ref=e80]
+                        - generic [ref=e82]: 0+
+                        - generic [ref=e83]: Projects Delivered
+                        - generic [ref=e84]: ETL pipelines & data systems
+                    - generic [ref=e86]:
+                        - img [ref=e88]
+                        - generic [ref=e90]: 0+
+                        - generic [ref=e91]: Technologies
+                        - generic [ref=e92]: Python, Spark, K8s & more
+                    - generic [ref=e94]:
+                        - img [ref=e96]
+                        - generic [ref=e98]: Active
+                        - generic [ref=e99]: Open Source
+                        - generic [ref=e100]: Contributor & maintainer
+                    - generic [ref=e103]:
+                        - generic [ref=e104]:
+                            - img [ref=e106]
+                            - generic [ref=e108]: Current Focus
+                        - paragraph [ref=e109]: MSc in Big Data & Machine Learning at NTUA
+                    - generic [ref=e112]:
+                        - generic [ref=e113]:
+                            - img [ref=e115]
+                            - generic [ref=e117]: Location
+                        - paragraph [ref=e118]: Athens, Greece (Remote Available)
+        - region "Technology Stack" [ref=e124]:
+            - generic [ref=e126]:
+                - generic [ref=e127]:
+                    - text: Technical Skills
+                    - heading "Technology Stack" [level=2] [ref=e128]
+                    - paragraph [ref=e129]: Explore my technical expertise across big data, cloud, and software engineering
+                - radiogroup "Filter skills by category" [ref=e131]:
+                    - radio "All 0" [checked] [ref=e133]:
+                        - text: All
+                        - generic [ref=e134]: '0'
+                - generic [ref=e136]:
+                    - paragraph [ref=e142]: Drag to rotate • Click a skill to see details
+                    - generic [ref=e146]:
+                        - img [ref=e148]
+                        - paragraph [ref=e150]: Select a skill to see details
+                        - paragraph [ref=e151]: Click on any skill node on the globe
+        - region "Work Experience" [ref=e156]:
+            - generic [ref=e158]:
+                - generic [ref=e159]:
+                    - text: Professional Journey
+                    - heading "Work Experience" [level=2] [ref=e160]
+                    - paragraph [ref=e161]: 0+ years building scalable data systems and software solutions across telecommunications and fintech
+                - generic [ref=e162]:
+                    - generic [ref=e163]:
+                        - paragraph [ref=e169]: Drag to rotate • Click a node to see details
+                        - generic [ref=e173]:
+                            - img [ref=e175]
+                            - paragraph [ref=e177]: Select an experience to see details
+                            - paragraph [ref=e178]: Click on any node on the timeline
+                    - generic:
+                        - navigation "Timeline navigation"
+        - region "Projects" [ref=e184]:
+            - generic [ref=e186]:
+                - generic [ref=e187]:
+                    - text: Featured Work
+                    - heading "Projects" [level=2] [ref=e188]
+                    - paragraph [ref=e189]: A selection of projects showcasing my expertise in big data, software engineering, and open-source contributions
+                - radiogroup "Filter projects by type" [ref=e191]:
+                    - radio "All Projects 0" [checked] [ref=e192]:
+                        - generic [ref=e194]:
+                            - text: All Projects
+                            - generic [ref=e195]: '0'
+                - paragraph [ref=e201]: Drag to rotate • Double-click to flip • Click to view details
+        - region "Let's Work Together" [ref=e206]:
+            - generic [ref=e208]:
+                - generic [ref=e209]:
+                    - text: Get In Touch
+                    - heading "Let's Work Together" [level=2] [ref=e210]
+                    - paragraph [ref=e211]: Have a project in mind or want to discuss opportunities? I'd love to hear from you. Feel free to reach out through the form or connect via social media.
+                - generic [ref=e212]:
+                    - generic [ref=e214]:
+                        - heading "Send a Message" [level=4] [ref=e215]
+                        - form "Contact form" [ref=e216]:
+                            - generic [ref=e217]:
+                                - generic [ref=e218]:
+                                    - generic [ref=e219]: Name
+                                    - textbox "Name" [ref=e220]:
+                                        - /placeholder: Your name
+                                - generic [ref=e221]:
+                                    - generic [ref=e222]: Email
+                                    - textbox "Email" [ref=e223]:
+                                        - /placeholder: your@email.com
+                            - generic [ref=e224]:
+                                - generic [ref=e225]: Subject
+                                - textbox "Subject" [ref=e226]:
+                                    - /placeholder: What's this about?
+                                - alert [ref=e227]: Subject is required
+                            - generic [ref=e228]:
+                                - generic [ref=e229]: Message
+                                - textbox "Message" [active] [ref=e230]:
+                                    - /placeholder: Tell me about your project or idea...
+                                    - text: This is a test message that is long enough for validation.
+                            - generic [ref=e231]:
+                                - paragraph [ref=e232]: All fields are required
+                                - button "Send Message" [disabled] [ref=e233]
+                    - generic [ref=e234]:
+                        - generic [ref=e235]:
+                            - heading "Contact Information" [level=4] [ref=e236]
+                            - generic [ref=e237]:
+                                - link "Email gskourts@gmail.com" [ref=e239] [cursor=pointer]:
+                                    - /url: mailto:gskourts@gmail.com
+                                    - generic [ref=e240]:
+                                        - img [ref=e242]
+                                        - generic [ref=e244]:
+                                            - paragraph [ref=e245]: Email
+                                            - paragraph [ref=e246]: gskourts@gmail.com
+                                - generic [ref=e248]:
+                                    - img [ref=e250]
+                                    - generic [ref=e253]:
+                                        - paragraph [ref=e254]: Location
+                                        - paragraph [ref=e255]: Athens, Greece
+                                - generic [ref=e257]:
+                                    - img [ref=e259]
+                                    - generic [ref=e261]:
+                                        - paragraph [ref=e262]: Availability
+                                        - paragraph [ref=e263]: Open to opportunities
+                        - generic [ref=e264]:
+                            - heading "Follow Me" [level=5] [ref=e265]
+                            - paragraph [ref=e266]: Stay connected and follow my work on social media.
+                            - generic [ref=e267]:
+                                - link "View my GitHub profile" [ref=e268] [cursor=pointer]:
+                                    - /url: https://github.com/SkourtsidisGiorgos
+                                    - img [ref=e269]
+                                    - generic: GitHub
+                                - link "Connect on LinkedIn" [ref=e271] [cursor=pointer]:
+                                    - /url: https://linkedin.com/in/gskourtsidis
+                                    - img [ref=e272]
+                                    - generic: LinkedIn
+                                - link "Send me an email" [ref=e274] [cursor=pointer]:
+                                    - /url: mailto:gskourts@gmail.com
+                                    - img [ref=e275]
+                                    - generic: Email
+    - contentinfo [ref=e277]:
+        - generic [ref=e280]:
+            - generic [ref=e281]:
+                - link "GitHub" [ref=e282] [cursor=pointer]:
+                    - /url: https://github.com/SkourtsidisGiorgos
+                    - img [ref=e283]
+                - link "LinkedIn" [ref=e285] [cursor=pointer]:
+                    - /url: https://linkedin.com/in/gskourtsidis
+                    - img [ref=e286]
+                - link "Email" [ref=e288] [cursor=pointer]:
+                    - /url: mailto:gskourts@gmail.com
+                    - img [ref=e289]
+            - paragraph [ref=e291]: © 2026 Giorgos Skourtsidis. All rights reserved.
+    - alert [ref=e292]
+```

@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   QUALITY_CONFIGS as PERF_QUALITY_CONFIGS,
-  getAnimationConfig,
   scaleByQuality,
 } from '@/shared/config/performance.config';
 import {
@@ -26,22 +25,6 @@ export interface UsePerformanceModeOptions {
   baseParticleCount?: number;
   /** Respect user's stored preference */
   respectUserPreference?: boolean;
-}
-
-/**
- * Extended performance configuration with additional settings
- */
-export interface ExtendedPerformanceConfig extends IPerformanceConfig {
-  /** Device capabilities snapshot */
-  capabilities: DeviceCapabilities;
-  /** Animation configuration */
-  animationConfig: ReturnType<typeof getAnimationConfig>;
-  /** Whether reduced motion is preferred */
-  prefersReducedMotion: boolean;
-  /** Pixel ratio to use for rendering */
-  pixelRatio: number;
-  /** User-set quality preference (if any) */
-  userPreference: QualityLevel | null;
 }
 
 /**
@@ -120,22 +103,6 @@ function getUserPreference(): QualityLevel | null {
 }
 
 /**
- * Stores user preference in localStorage
- */
-function setUserPreference(quality: QualityLevel | null): void {
-  if (typeof window === 'undefined') return;
-  try {
-    if (quality) {
-      localStorage.setItem(QUALITY_PREFERENCE_KEY, quality);
-    } else {
-      localStorage.removeItem(QUALITY_PREFERENCE_KEY);
-    }
-  } catch {
-    // localStorage not available
-  }
-}
-
-/**
  * Hook that detects device capabilities and returns performance configuration.
  * Components depend on this abstraction for graceful degradation (SOLID - D).
  *
@@ -167,8 +134,8 @@ export function usePerformanceMode(
         }
   );
 
-  const [userPreference, setStoredPreference] = useState<QualityLevel | null>(
-    () => (respectUserPreference ? getUserPreference() : null)
+  const [userPreference] = useState<QualityLevel | null>(() =>
+    respectUserPreference ? getUserPreference() : null
   );
 
   // Re-detect on resize (for screen size/device type changes)
@@ -217,96 +184,6 @@ export function usePerformanceMode(
       particleCount,
       isMobile,
       isLowPower,
-    };
-  }, [capabilities, forceQuality, userPreference, baseParticleCount]);
-}
-
-/**
- * Extended hook that returns additional performance configuration.
- * Use this when you need access to animation configs, capabilities, etc.
- */
-export function useExtendedPerformanceMode(
-  options: UsePerformanceModeOptions = {}
-): ExtendedPerformanceConfig {
-  const {
-    forceQuality,
-    baseParticleCount,
-    respectUserPreference = true,
-  } = options;
-
-  const [capabilities, setCapabilities] = useState<DeviceCapabilities>(() =>
-    typeof window !== 'undefined'
-      ? getDeviceCapabilities()
-      : {
-          gpuTier: 'unknown',
-          deviceType: 'desktop',
-          isLowPower: false,
-          deviceMemory: 0,
-          hardwareConcurrency: 0,
-          pixelRatio: 1,
-          hasTouch: false,
-          webGLVersion: 2,
-          prefersReducedMotion: false,
-        }
-  );
-
-  const [userPreference, setUserPref] = useState<QualityLevel | null>(() =>
-    respectUserPreference ? getUserPreference() : null
-  );
-
-  // Callback to let components update user preference
-  const setQualityPreference = useCallback((quality: QualityLevel | null) => {
-    setUserPreference(quality);
-    setUserPref(quality);
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setCapabilities(prev => ({
-        ...prev,
-        deviceType: detectDeviceType(),
-      }));
-    };
-
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const handleMotionChange = (e: MediaQueryListEvent) => {
-      setCapabilities(prev => ({
-        ...prev,
-        prefersReducedMotion: e.matches,
-      }));
-    };
-
-    window.addEventListener('resize', handleResize);
-    mediaQuery.addEventListener('change', handleMotionChange);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      mediaQuery.removeEventListener('change', handleMotionChange);
-    };
-  }, []);
-
-  return useMemo((): ExtendedPerformanceConfig => {
-    const quality =
-      forceQuality ?? userPreference ?? determineQuality(capabilities);
-    const baseConfig = QUALITY_CONFIGS[quality];
-
-    const particleCount = baseParticleCount
-      ? scaleByQuality(baseParticleCount, quality)
-      : baseConfig.particleCount;
-
-    const isMobile = capabilities.deviceType === 'mobile';
-    const isLowPower = capabilities.isLowPower;
-
-    return {
-      ...baseConfig,
-      particleCount,
-      isMobile,
-      isLowPower,
-      capabilities,
-      animationConfig: getAnimationConfig(quality),
-      prefersReducedMotion: capabilities.prefersReducedMotion,
-      pixelRatio: capabilities.pixelRatio,
-      userPreference,
     };
   }, [capabilities, forceQuality, userPreference, baseParticleCount]);
 }

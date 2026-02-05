@@ -38,9 +38,27 @@ export function HeroCanvas({
   className = '',
   ...sceneProps
 }: HeroCanvasProps) {
-  const { isSupported, hasError } = useWebGLCanvas({
+  const { isMounted, isSupported, hasError } = useWebGLCanvas({
     componentName: 'HeroCanvas',
   });
+
+  // Show loading fallback until mounted (prevents hydration mismatch)
+  if (!isMounted) {
+    return (
+      <div
+        className={`relative ${className}`}
+        style={{ height }}
+        aria-hidden="true"
+      >
+        {fallback || (
+          <LoadingFallback
+            message="Initializing 3D scene..."
+            background="primary"
+          />
+        )}
+      </div>
+    );
+  }
 
   // Show error fallback if WebGL not supported or context lost
   if (!isSupported || hasError) {

@@ -306,7 +306,7 @@ describe('a11y utilities', () => {
     it('cleanup removes event listener', () => {
       const cleanup = trapFocus(container);
       const lastButton = container.querySelector('#last') as HTMLElement;
-      const firstButton = container.querySelector('#first') as HTMLElement;
+      const _firstButton = container.querySelector('#first') as HTMLElement;
 
       cleanup();
 

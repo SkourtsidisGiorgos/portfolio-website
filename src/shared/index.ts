@@ -32,7 +32,6 @@ export type {
   ValueCallback,
   LoadingState,
   AsyncState,
-  PaginatedResult,
 } from './types/common';
 
 // Utils exports

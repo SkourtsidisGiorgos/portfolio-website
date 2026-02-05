@@ -1,0 +1,47 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+    - link "Skip to main content" [ref=e2] [cursor=pointer]:
+        - /url: '#main-content'
+    - banner [ref=e3]:
+        - generic [ref=e5]:
+            - button "Home GS" [ref=e6]:
+                - generic [ref=e7]: Home
+                - text: GS
+            - navigation [ref=e8]:
+                - button "Home" [ref=e9]
+                - button "About" [ref=e10]
+                - button "Skills" [ref=e11]
+                - button "Experience" [ref=e12]
+                - button "Projects" [ref=e13]
+                - button "Contact" [ref=e14]: Contact
+    - main [ref=e16]:
+        - generic [ref=e18]:
+            - img [ref=e20]
+            - heading "Something went wrong" [level=1] [ref=e22]
+            - paragraph [ref=e23]: An unexpected error occurred. Don't worry, these things happen sometimes.
+            - paragraph [ref=e25]: Cannot read properties of null (reading 'alpha')
+            - generic [ref=e26]:
+                - button "Try again" [ref=e27]:
+                    - img [ref=e28]
+                    - text: Try again
+                - link "Go home" [ref=e30] [cursor=pointer]:
+                    - /url: /
+                    - img [ref=e31]
+                    - text: Go home
+    - contentinfo [ref=e33]:
+        - generic [ref=e36]:
+            - generic [ref=e37]:
+                - link "GitHub" [ref=e38] [cursor=pointer]:
+                    - /url: https://github.com/SkourtsidisGiorgos
+                    - img [ref=e39]
+                - link "LinkedIn" [ref=e41] [cursor=pointer]:
+                    - /url: https://linkedin.com/in/gskourtsidis
+                    - img [ref=e42]
+                - link "Email" [ref=e44] [cursor=pointer]:
+                    - /url: mailto:gskourts@gmail.com
+                    - img [ref=e45]
+            - paragraph [ref=e47]: © 2026 Giorgos Skourtsidis. All rights reserved.
+    - alert [ref=e48]
+```

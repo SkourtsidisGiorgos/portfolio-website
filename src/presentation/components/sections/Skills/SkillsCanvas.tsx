@@ -38,9 +38,22 @@ export function SkillsCanvas({
   className = '',
   ...sceneProps
 }: SkillsCanvasProps) {
-  const { isSupported, hasError } = useWebGLCanvas({
+  const { isMounted, isSupported, hasError } = useWebGLCanvas({
     componentName: 'SkillsCanvas',
   });
+
+  // Show loading fallback until mounted (prevents hydration mismatch)
+  if (!isMounted) {
+    return (
+      <div
+        className={`relative ${className}`}
+        style={{ height }}
+        aria-hidden="true"
+      >
+        {fallback || <LoadingFallback message="Initializing globe..." />}
+      </div>
+    );
+  }
 
   // Show error fallback if WebGL not supported or context lost
   if (!isSupported || hasError) {

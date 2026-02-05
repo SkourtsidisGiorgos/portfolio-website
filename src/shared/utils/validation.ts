@@ -30,6 +30,73 @@ export interface ValidationOptions {
   ErrorClass?: ValidationErrorConstructor;
 }
 
+/** Context for validation helper functions */
+interface ValidationContext {
+  field: string;
+  value: unknown;
+  stringValue: string;
+  ErrorClass: ValidationErrorConstructor;
+}
+
+/**
+ * Validates the required constraint.
+ */
+function validateRequired(ctx: ValidationContext): void {
+  if (!ctx.value || ctx.stringValue.length === 0) {
+    throw new ctx.ErrorClass(`${capitalize(ctx.field)} is required`, ctx.field);
+  }
+}
+
+/**
+ * Validates length constraints.
+ */
+function validateLength(
+  ctx: ValidationContext,
+  minLength: number | undefined,
+  maxLength: number | undefined
+): void {
+  if (minLength !== undefined && ctx.stringValue.length < minLength) {
+    throw new ctx.ErrorClass(
+      `${capitalize(ctx.field)} must be at least ${minLength} characters`,
+      ctx.field
+    );
+  }
+  if (maxLength !== undefined && ctx.stringValue.length > maxLength) {
+    throw new ctx.ErrorClass(
+      `${capitalize(ctx.field)} must be at most ${maxLength} characters`,
+      ctx.field
+    );
+  }
+}
+
+/** Options for pattern and custom validation */
+interface PatternValidationOptions {
+  pattern?: RegExp;
+  customValidator?: (value: unknown) => boolean;
+  customMessage?: string;
+}
+
+/**
+ * Validates pattern and custom validator constraints.
+ */
+function validatePatternAndCustom(
+  ctx: ValidationContext,
+  opts: PatternValidationOptions
+): void {
+  if (opts.pattern && !opts.pattern.test(ctx.stringValue)) {
+    throw new ctx.ErrorClass(
+      opts.customMessage || `${capitalize(ctx.field)} format is invalid`,
+      ctx.field
+    );
+  }
+  if (opts.customValidator && !opts.customValidator(ctx.value)) {
+    throw new ctx.ErrorClass(
+      opts.customMessage || `${capitalize(ctx.field)} is invalid`,
+      ctx.field
+    );
+  }
+}
+
 /**
  * Validate a single field against rules.
  * @throws ValidationError (or custom ErrorClass) if validation fails
@@ -38,23 +105,13 @@ export function validateField(
   rule: ValidationRule,
   options: ValidationOptions = {}
 ): void {
-  const {
-    field,
-    value,
-    required,
-    minLength,
-    maxLength,
-    pattern,
-    customValidator,
-    customMessage,
-  } = rule;
+  const { field, value, required, minLength, maxLength } = rule;
   const ErrorClass = options.ErrorClass || ValidationError;
-
   const stringValue = typeof value === 'string' ? value.trim() : '';
+  const ctx: ValidationContext = { field, value, stringValue, ErrorClass };
 
-  // Required check
-  if (required && (!value || stringValue.length === 0)) {
-    throw new ErrorClass(`${capitalize(field)} is required`, field);
+  if (required) {
+    validateRequired(ctx);
   }
 
   // Skip other validations if empty and not required
@@ -62,37 +119,12 @@ export function validateField(
     return;
   }
 
-  // Min length check
-  if (minLength !== undefined && stringValue.length < minLength) {
-    throw new ErrorClass(
-      `${capitalize(field)} must be at least ${minLength} characters`,
-      field
-    );
-  }
-
-  // Max length check
-  if (maxLength !== undefined && stringValue.length > maxLength) {
-    throw new ErrorClass(
-      `${capitalize(field)} must be at most ${maxLength} characters`,
-      field
-    );
-  }
-
-  // Pattern check
-  if (pattern && !pattern.test(stringValue)) {
-    throw new ErrorClass(
-      customMessage || `${capitalize(field)} format is invalid`,
-      field
-    );
-  }
-
-  // Custom validator
-  if (customValidator && !customValidator(value)) {
-    throw new ErrorClass(
-      customMessage || `${capitalize(field)} is invalid`,
-      field
-    );
-  }
+  validateLength(ctx, minLength, maxLength);
+  validatePatternAndCustom(ctx, {
+    pattern: rule.pattern,
+    customValidator: rule.customValidator,
+    customMessage: rule.customMessage,
+  });
 }
 
 /**

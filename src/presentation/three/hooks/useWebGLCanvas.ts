@@ -6,6 +6,8 @@ import { useState, useEffect, useSyncExternalStore } from 'react';
  * WebGL support state returned by useWebGLCanvas hook
  */
 export interface WebGLSupportState {
+  /** Whether the component is mounted (client-side) */
+  isMounted: boolean;
   /** Whether WebGL is supported in the current browser */
   isSupported: boolean;
   /** Whether there's an active error (e.g., context lost) */
@@ -27,6 +29,7 @@ let webGLSupportCache: boolean | null = null;
 
 /**
  * Check if WebGL is supported (cached result)
+ * Performs a more thorough check to ensure context can be created with required attributes
  * @internal
  */
 function checkWebGLSupport(): boolean {
@@ -36,10 +39,46 @@ function checkWebGLSupport(): boolean {
 
   try {
     const canvas = document.createElement('canvas');
-    webGLSupportCache = !!(
-      window.WebGLRenderingContext &&
-      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-    );
+    // Check for WebGLRenderingContext availability
+    if (!window.WebGLRenderingContext) {
+      webGLSupportCache = false;
+      return false;
+    }
+
+    // Try to create a context with the attributes R3F uses
+    const contextAttributes: WebGLContextAttributes = {
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance',
+    };
+
+    const gl =
+      (canvas.getContext(
+        'webgl2',
+        contextAttributes
+      ) as WebGL2RenderingContext | null) ||
+      (canvas.getContext(
+        'webgl',
+        contextAttributes
+      ) as WebGLRenderingContext | null) ||
+      (canvas.getContext(
+        'experimental-webgl',
+        contextAttributes
+      ) as WebGLRenderingContext | null);
+
+    if (!gl) {
+      webGLSupportCache = false;
+      return false;
+    }
+
+    // Verify we can access context attributes (WebGLRenderingContext has this method)
+    const attrs = gl.getContextAttributes();
+    if (!attrs) {
+      webGLSupportCache = false;
+      return false;
+    }
+
+    webGLSupportCache = true;
   } catch {
     webGLSupportCache = false;
   }
@@ -73,6 +112,27 @@ function getWebGLSupportServerSnapshot(): boolean {
   return true;
 }
 
+// Mounted state tracking for client-side detection
+let _isMounted = false;
+
+function subscribeMounted(callback: () => void): () => void {
+  // On first subscription, mark as mounted
+  if (!_isMounted) {
+    _isMounted = true;
+    // Use microtask to batch with React's updates
+    queueMicrotask(callback);
+  }
+  return () => {};
+}
+
+function getMountedSnapshot(): boolean {
+  return _isMounted;
+}
+
+function getMountedServerSnapshot(): boolean {
+  return false; // Server always returns false
+}
+
 /**
  * Hook for WebGL Canvas support detection and context management.
  *
@@ -101,6 +161,13 @@ export function useWebGLCanvas(
 
   const [contextLost, setContextLost] = useState(false);
 
+  // Use useSyncExternalStore for SSR-safe mounted detection
+  const isMounted = useSyncExternalStore(
+    subscribeMounted,
+    getMountedSnapshot,
+    getMountedServerSnapshot
+  );
+
   // Use useSyncExternalStore for SSR-safe WebGL support check
   const isSupported = useSyncExternalStore(
     subscribeToWebGLSupport,
@@ -117,7 +184,8 @@ export function useWebGLCanvas(
     };
 
     const handleContextRestored = () => {
-      console.info(`WebGL context restored in ${componentName}`);
+      // Using warn level since info is not allowed by ESLint config
+      console.warn(`WebGL context restored in ${componentName}`);
       setContextLost(false);
     };
 
@@ -131,6 +199,7 @@ export function useWebGLCanvas(
   }, [componentName]);
 
   return {
+    isMounted,
     isSupported,
     hasError: contextLost,
     contextLost,

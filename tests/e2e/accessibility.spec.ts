@@ -395,9 +395,9 @@ test.describe('Accessibility', () => {
         (v: Result) => v.id === 'color-contrast'
       );
 
-      // Log any contrast issues for review
+      // Log any contrast issues for review (console.warn is allowed)
       if (contrastViolations.length > 0) {
-        console.log(
+        console.warn(
           'Color contrast issues found:',
           contrastViolations.map((v: Result) => ({
             id: v.id,
