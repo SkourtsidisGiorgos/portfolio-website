@@ -9,6 +9,8 @@ vi.mock('@/shared/utils/a11y', () => ({
 }));
 
 describe('useAnnounce', () => {
+  const TEST_MESSAGE = 'Test message';
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -34,11 +36,11 @@ describe('useAnnounce', () => {
     const { result } = renderHook(() => useAnnounce());
 
     act(() => {
-      result.current.announce('Test message');
+      result.current.announce(TEST_MESSAGE);
     });
 
     expect(result.current.announcement).toEqual({
-      message: 'Test message',
+      message: TEST_MESSAGE,
       politeness: 'polite',
     });
   });
@@ -47,13 +49,10 @@ describe('useAnnounce', () => {
     const { result } = renderHook(() => useAnnounce());
 
     act(() => {
-      result.current.announce('Test message');
+      result.current.announce(TEST_MESSAGE);
     });
 
-    expect(announceToScreenReader).toHaveBeenCalledWith(
-      'Test message',
-      'polite'
-    );
+    expect(announceToScreenReader).toHaveBeenCalledWith(TEST_MESSAGE, 'polite');
   });
 
   it('announce supports assertive politeness', () => {
@@ -77,7 +76,7 @@ describe('useAnnounce', () => {
     const { result } = renderHook(() => useAnnounce());
 
     act(() => {
-      result.current.announce('Test message');
+      result.current.announce(TEST_MESSAGE);
     });
 
     expect(result.current.announcement).not.toBeNull();

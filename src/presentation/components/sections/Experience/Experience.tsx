@@ -159,5 +159,3 @@ export function Experience({ id = 'experience', className }: ExperienceProps) {
     </Section>
   );
 }
-
-export default Experience;
